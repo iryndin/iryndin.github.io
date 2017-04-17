@@ -6,10 +6,22 @@
     <description>Recent content on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Apr 2017 23:34:18 +0300</lastBuildDate>
+    <lastBuildDate>Mon, 17 Apr 2017 11:38:06 +0300</lastBuildDate>
     
 	<atom:link href="http://iryndin.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Timus 1005. Stone pile</title>
+      <link>http://iryndin.github.io/post/timus-1005-stone-pile/</link>
+      <pubDate>Mon, 17 Apr 2017 11:38:06 +0300</pubDate>
+      
+      <guid>http://iryndin.github.io/post/timus-1005-stone-pile/</guid>
+      <description>This is a first post which describes how to solve some particular programming task. Today we will consider Stone pile task from Timus. It is clear and easy. The task sounds like:
+Task Stone pile
+Task You have a number of stones with known weights w1, …, wn. Write a program that will rearrange the stones into two piles such that weight difference between the piles is minimal.
+Input Input contains the number of stones n (1 ≤ n ≤ 20) and weights of the stones w1, …, wn (integers, 1 ≤ wi ≤ 100000) delimited by white spaces.</description>
+    </item>
     
     <item>
       <title>First post</title>

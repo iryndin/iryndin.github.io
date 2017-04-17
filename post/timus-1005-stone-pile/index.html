@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Timus 1005. Stone pile // Just my blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.21-DEV" />
+
+  <meta property="og:title" content="Timus 1005. Stone pile" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="http://iryndin.github.io/post/timus-1005-stone-pile/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="http://iryndin.github.io//css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Just my blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    
+    
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://iryndin.github.io/">Home</a></li>
+        
+      </ul>
+    </nav>
+
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li><a href="#task">Task</a>
+<ul>
+<li><a href="#task-1">Task</a></li>
+<li><a href="#input">Input</a></li>
+<li><a href="#output">Output</a></li>
+<li><a href="#limits">Limits</a></li>
+</ul></li>
+<li><a href="#solution">Solution</a></li>
+<li><a href="#solution-code">Solution code</a></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/post/timus-1005-stone-pile/">Timus 1005. Stone pile</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>17</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Apr</span> <span class="post-date-year">2017</span>
+            	</span>
+            	
+            
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            
+
+<p>This is a first post which describes how to solve some particular programming task. Today we will consider
+<a href="http://acm.timus.ru/problem.aspx?space=1&amp;num=1005">Stone pile</a> task from <a href="http://acm.timus.ru/">Timus</a>.
+It is clear and easy. The task sounds like:</p>
+
+<h1 id="task">Task</h1>
+
+<p><a href="http://acm.timus.ru/problem.aspx?space=1&amp;num=1005">Stone pile</a></p>
+
+<h2 id="task-1">Task</h2>
+
+<p>You have a number of stones with known weights w<sub>1</sub>, …, w<sub>n</sub>.
+Write a program that will rearrange the stones into two piles
+such that weight difference between the piles is minimal.</p>
+
+<h2 id="input">Input</h2>
+
+<p>Input contains the number of stones n (1 ≤ n ≤ 20) and weights of the stones w<sub>1</sub>, …, w<sub>n</sub>
+(integers, 1 ≤ w<sub>i</sub> ≤ 100000) delimited by white spaces.</p>
+
+<h2 id="output">Output</h2>
+
+<p>Your program should output a number representing the minimal possible weight difference between stone piles.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>Time limit: 1.0 second</p>
+
+<p>Memory limit: 64 MB</p>
+
+<h1 id="solution">Solution</h1>
+
+<p>The easiest approach is to check all possible stone pile variants and to test which one has minimal weight difference.
+I.e. this is <code>brute force</code> approach.</p>
+
+<p>How can we generate all these variants? So, we have 2 piles - first and second.
+Let&rsquo;s designate that stone is in the first pile with value <code>0</code>, and that stone is in the second pile with value <code>1</code>.
+Let&rsquo;s imagine that we have 3 stones, so let&rsquo;s generate all possible stone placements in 2 piles:</p>
+
+<ul>
+<li>0 0 0 (all 3 stones (w<sub>1</sub>, w<sub>2</sub>, w<sub>3</sub>)are in the first pile)</li>
+<li>0 0 1 (w<sub>1</sub>, w<sub>2</sub> are in 1st pile, w<sub>3</sub> is in the 2nd pile)</li>
+<li>0 1 0 (w<sub>1</sub>, w<sub>3</sub> are in 1st pile, w<sub>2</sub> is in the 2nd pile)</li>
+<li>0 1 1 (etc&hellip;)</li>
+<li>1 0 0</li>
+<li>1 0 1</li>
+<li>1 1 0</li>
+<li>1 1 1 (all 3 stones (w<sub>1</sub>, w<sub>2</sub>, w<sub>3</sub>)are in the 2nd pile)</li>
+</ul>
+
+<p>Also we can see that regarding the weight difference first 4 variants are identical to the next 4 variants of stone
+placements. This means that is it sufficient to check only half of all possible stone placements, i.e. <code>n/2</code>.</p>
+
+<p>Also we can see that stone placements are bit sequences. So all possible placements will be 2<sup>n</sup>.
+But since we can check only half of them, then we need to check only 2<sup>n-1</sup> placements.
+In Java/C++ it will be equal to <code>1 &lt;&lt; n-1</code>.</p>
+
+<p>So, summarizing all that, we will have following algorithm:</p>
+
+<ul>
+<li>Read input values</li>
+<li>Generate maximum number of variants we want to check: <code>LIMIT = 1 &lt;&lt; n-1</code></li>
+<li>Loop from <code>1</code> to <code>LIMIT</code>, incrementing by <code>1</code> on each loop cycle. Loop variable designates a particular placement variant.</li>
+<li>In each loop generate weight sum for each stone pile regarding bit order in the loop variable and check if this placement generates minimal weight difference.</li>
+</ul>
+
+<h1 id="solution-code">Solution code</h1>
+
+<pre><code class="language-java">import java.io.*;
+import java.util.*;
+
+public class Timus1005
+{
+   public static void main(String[] args)
+   {
+      Scanner scanner = new Scanner(System.in);
+      
+      int n = scanner.nextInt();
+      int[] stones = new int[n];
+      
+      for (int i=0; i&lt;n; i++) {
+          stones[i] = scanner.nextInt();
+      }
+      
+      int diff = bruteForce(stones);
+      
+      PrintWriter out = new PrintWriter(System.out);
+      out.println(diff);
+      out.flush();
+   }
+   
+   static int bruteForce(int[] stones) {
+       final int N = stones.length;
+       final int LIMIT = 1 &lt;&lt; N-1;
+       int diff = Integer.MAX_VALUE;
+       
+       for (int i=0; i&lt;=LIMIT; i++) {
+           int sum1=0, sum2=0;
+           int k=i;
+           for (int j=0; j&lt;N; j++) {
+               if ((k &amp; 0x1) == 0) sum1+=stones[j];
+               else sum2+=stones[j];
+               k = k&gt;&gt;1;
+           }
+           int diffi = (sum1&gt;=sum2) ? sum1-sum2 : sum2-sum1;
+           if (diffi&lt;diff) diff = diffi;
+       }
+       return diff;
+   }
+}
+</code></pre>
+
+	
+			
+
+			
+				<div class="tags-list">
+					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+					
+	                <a class="post-tag post-tag-programming-problems" href="http://iryndin.github.io//tags/programming-problems">programming problems</a>,
+	                
+	                <a class="post-tag post-tag-timus" href="http://iryndin.github.io//tags/timus">timus</a>,
+	                
+	                <a class="post-tag post-tag-brute-force" href="http://iryndin.github.io//tags/brute-force">brute force</a>,
+	                
+				</div>
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/post/first-post/">First post</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2017. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>
