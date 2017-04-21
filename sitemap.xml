@@ -2,69 +2,80 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://iryndin.github.io/post/blockchain-and-bitcoin-links/</loc>
+    <loc>http://iryndin.net/post/interesting-hacker-news-posts-by-21-april-2017/</loc>
+    <lastmod>2017-04-21T19:57:28+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iryndin.net/post/blockchain-and-bitcoin-links/</loc>
     <lastmod>2017-04-17T22:50:22+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/post/timus-1005-stone-pile/</loc>
+    <loc>http://iryndin.net/post/timus-1005-stone-pile/</loc>
     <lastmod>2017-04-17T11:38:06+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/post/first-post/</loc>
+    <loc>http://iryndin.net/post/first-post/</loc>
     <lastmod>2017-04-14T23:34:18+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/tags/blockchain/</loc>
+    <loc>http://iryndin.net/tags/blockchain/</loc>
     <lastmod>2017-04-17T22:50:22+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/tags/brute-force/</loc>
+    <loc>http://iryndin.net/tags/brute-force/</loc>
     <lastmod>2017-04-17T11:38:06+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/categories/</loc>
+    <loc>http://iryndin.net/tags/bunch-of-links/</loc>
+    <lastmod>2017-04-21T19:57:28+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/</loc>
-    <lastmod>2017-04-17T22:50:22+03:00</lastmod>
+    <loc>http://iryndin.net/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/tags/misc/</loc>
+    <loc>http://iryndin.net/</loc>
+    <lastmod>2017-04-21T19:57:28+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iryndin.net/tags/misc/</loc>
     <lastmod>2017-04-14T23:34:18+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/post/</loc>
-    <lastmod>2017-04-17T22:50:22+03:00</lastmod>
+    <loc>http://iryndin.net/post/</loc>
+    <lastmod>2017-04-21T19:57:28+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/tags/programming-problems/</loc>
+    <loc>http://iryndin.net/tags/programming-problems/</loc>
     <lastmod>2017-04-17T11:38:06+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/tags/</loc>
+    <loc>http://iryndin.net/tags/</loc>
     <lastmod>2017-04-17T22:50:22+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://iryndin.github.io/tags/timus/</loc>
+    <loc>http://iryndin.net/tags/timus/</loc>
     <lastmod>2017-04-17T11:38:06+03:00</lastmod>
     <priority>0</priority>
   </url>

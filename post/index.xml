@@ -2,21 +2,35 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Just my blog</title>
-    <link>http://iryndin.github.io/post/</link>
+    <link>http://iryndin.net/post/</link>
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Apr 2017 22:50:22 +0300</lastBuildDate>
+    <lastBuildDate>Fri, 21 Apr 2017 19:57:28 +0300</lastBuildDate>
     
-	<atom:link href="http://iryndin.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Interesting HackerNews posts by 21 April 2017</title>
+      <link>http://iryndin.net/post/interesting-hacker-news-posts-by-21-april-2017/</link>
+      <pubDate>Fri, 21 Apr 2017 19:57:28 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/interesting-hacker-news-posts-by-21-april-2017/</guid>
+      <description>Recursive DNS Server Fingerprint
+They try to identify DNS hijacking by creating a database of DNS server fingerprints and comparing response of a particular DNS server (suspected to be hijacked) with its normal fingerprint.
+Introducing Token
+Token is a browser for the Ethereum network that provides universal access to financial services. It combines messaging app, Ethereum wallet and browser for Ethereum apps.
+Scalable, Lie-Detecting Timeserving with Roughtime
+Roughtime is a protocol designed to provide internet-scale secure time synchronization and address shortcomings of older protocols like NTP.</description>
+    </item>
+    
+    <item>
       <title>Blockchain and Bitcoin links</title>
-      <link>http://iryndin.github.io/post/blockchain-and-bitcoin-links/</link>
+      <link>http://iryndin.net/post/blockchain-and-bitcoin-links/</link>
       <pubDate>Mon, 17 Apr 2017 22:50:22 +0300</pubDate>
       
-      <guid>http://iryndin.github.io/post/blockchain-and-bitcoin-links/</guid>
+      <guid>http://iryndin.net/post/blockchain-and-bitcoin-links/</guid>
       <description>This posts contains links to some articles, blog posts and other materials which looks interesting for me, give good explanation/description of the field and simply put are pleasure to read.
 A blockchain in 200 lines of code
 The blockchain explained to web developers. Part 1: The Theory
@@ -27,10 +41,10 @@ Awesome Bitcoin - GitHub repo with bitcoin-related links collection</description
     
     <item>
       <title>Timus 1005. Stone pile</title>
-      <link>http://iryndin.github.io/post/timus-1005-stone-pile/</link>
+      <link>http://iryndin.net/post/timus-1005-stone-pile/</link>
       <pubDate>Mon, 17 Apr 2017 11:38:06 +0300</pubDate>
       
-      <guid>http://iryndin.github.io/post/timus-1005-stone-pile/</guid>
+      <guid>http://iryndin.net/post/timus-1005-stone-pile/</guid>
       <description>This is a first post which describes how to solve some particular programming task. Today we will consider Stone pile task from Timus. It is clear and easy. The task sounds like:
 Task Stone pile
 Task You have a number of stones with known weights w1, …, wn. Write a program that will rearrange the stones into two piles such that weight difference between the piles is minimal.
@@ -39,10 +53,10 @@ Input Input contains the number of stones n (1 ≤ n ≤ 20) and weights of the 
     
     <item>
       <title>First post</title>
-      <link>http://iryndin.github.io/post/first-post/</link>
+      <link>http://iryndin.net/post/first-post/</link>
       <pubDate>Fri, 14 Apr 2017 23:34:18 +0300</pubDate>
       
-      <guid>http://iryndin.github.io/post/first-post/</guid>
+      <guid>http://iryndin.net/post/first-post/</guid>
       <description>Hi, after a long pause I decided to relaunch my blog. Here I am planning to tell mostly about technical things, put some useful findings, etc.</description>
     </item>
     

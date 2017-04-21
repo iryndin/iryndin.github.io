@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blockchain on Just my blog</title>
-    <link>http://iryndin.github.io/tags/blockchain/</link>
+    <link>http://iryndin.net/tags/blockchain/</link>
     <description>Recent content in Blockchain on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 17 Apr 2017 22:50:22 +0300</lastBuildDate>
     
-	<atom:link href="http://iryndin.github.io/tags/blockchain/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://iryndin.net/tags/blockchain/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Blockchain and Bitcoin links</title>
-      <link>http://iryndin.github.io/post/blockchain-and-bitcoin-links/</link>
+      <link>http://iryndin.net/post/blockchain-and-bitcoin-links/</link>
       <pubDate>Mon, 17 Apr 2017 22:50:22 +0300</pubDate>
       
-      <guid>http://iryndin.github.io/post/blockchain-and-bitcoin-links/</guid>
+      <guid>http://iryndin.net/post/blockchain-and-bitcoin-links/</guid>
       <description>This posts contains links to some articles, blog posts and other materials which looks interesting for me, give good explanation/description of the field and simply put are pleasure to read.
 A blockchain in 200 lines of code
 The blockchain explained to web developers. Part 1: The Theory
