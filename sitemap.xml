@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://iryndin.net/post/how-ssh-get-port-22/</loc>
+    <lastmod>2017-04-23T18:56:58+03:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/interesting-hacker-news-posts-by-21-april-2017/</loc>
     <lastmod>2017-04-21T19:57:28+03:00</lastmod>
   </url>
@@ -46,19 +51,19 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2017-04-21T19:57:28+03:00</lastmod>
+    <lastmod>2017-04-23T18:56:58+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://iryndin.net/tags/misc/</loc>
-    <lastmod>2017-04-14T23:34:18+03:00</lastmod>
+    <lastmod>2017-04-23T18:56:58+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2017-04-21T19:57:28+03:00</lastmod>
+    <lastmod>2017-04-23T18:56:58+03:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Apr 2017 19:57:28 +0300</lastBuildDate>
+    <lastBuildDate>Sun, 23 Apr 2017 18:56:58 +0300</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How SSH get port 22</title>
+      <link>http://iryndin.net/post/how-ssh-get-port-22/</link>
+      <pubDate>Sun, 23 Apr 2017 18:56:58 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/how-ssh-get-port-22/</guid>
+      <description>A nice story from SSH creator (Tatu Ylonen) about how SSH got its port 22.
+Briefly, initial SSH version was created in Spring 1995, time when FTP and Telnet were widely used. SSH was designed to replace FTP (port 21) and Telnet (port 23). Port 22 was free. So it was chosen to be used in SSH. At that time Internet was small, and port numbers were allocated by IANA, managed by Internet pioneers Jon Postel and Joyce K.</description>
+    </item>
     
     <item>
       <title>Interesting HackerNews posts by 21 April 2017</title>
