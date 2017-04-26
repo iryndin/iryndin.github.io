@@ -6,10 +6,20 @@
     <description>Recent content on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Apr 2017 18:56:58 +0300</lastBuildDate>
+    <lastBuildDate>Wed, 26 Apr 2017 23:46:17 +0300</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>AWS permissions to S3 folder</title>
+      <link>http://iryndin.net/post/aws-permissions-to-s3-folder/</link>
+      <pubDate>Wed, 26 Apr 2017 23:46:17 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/aws-permissions-to-s3-folder/</guid>
+      <description>Let&amp;rsquo;s imagine that we have a project, which actually use AWS S3 as file storage. The project consists of 2 parts: one part puts files into S3, and the other part only reads them from S3. Moreover, files are stored not in the bucket root, but in some folder which is placed in the bucket root.
+According to best AWS practices, we need 2 security and access control policies. One policy is for that part of software which puts files into S3 folder.</description>
+    </item>
     
     <item>
       <title>How SSH get port 22</title>
