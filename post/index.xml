@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Apr 2017 23:46:17 +0300</lastBuildDate>
+    <lastBuildDate>Wed, 20 Sep 2017 15:08:51 +0300</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Spring Boot and AWT headless</title>
+      <link>http://iryndin.net/post/spring_boot_and_awt_headless/</link>
+      <pubDate>Wed, 20 Sep 2017 15:08:51 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/spring_boot_and_awt_headless/</guid>
+      <description>The problem with AWT headless app in Spring Boot Recently I needed to create console Java Spring Boot app that does some stuff with AWT (not so important what exactly). I found that simple run with a normat Sprint Boot stub simply does not work. Running this:
+@SpringBootApplication public class MyAwtApplication { public static void main(String[] args) { SpringApplication.run(MyAwtApplication.class, args); } }  generates following exception when AWT-related processing happens:</description>
+    </item>
     
     <item>
       <title>AWS permissions to S3 folder</title>
