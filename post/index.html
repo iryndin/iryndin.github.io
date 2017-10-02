@@ -105,6 +105,38 @@
             <header class="post-header">
             
             <h1 class="post-title">
+              <a href="/post/json-serialize-list-of-dates-with-jackson/">Serialize list of dates into JSON with Jackson</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>2</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Oct</span> <span class="post-date-year">2017</span>
+		          </span>
+      				
+      				
+      					
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>2 min. read</em></span>
+              
+      				
+            </p>
+            
+              <article class="post-summary">
+            	Problem Let&rsquo;s imagine that we need to return JSON form of the following Java object:
+import java.util.Date; public class A { private String name; private List&lt;Date&gt; dates; public String getName() { return name; } public void setName(String name) { this.name = name; } public List&lt;Date&gt; getDates() { return dates; } public void setDates(List&lt;Date&gt; dates) { this.dates = dates; } }  If we return this class &lsquo;as is&rsquo;, without any helping directives to JSON serializer, we could get it in the following form:
+              </article>
+			  <div class="read-more-link">
+				<a href="/post/json-serialize-list-of-dates-with-jackson/"><span class="read-more-slashes">//</span>Read More...</a>
+			  </div>
+            
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <h1 class="post-title">
               <a href="/post/spring_boot_and_awt_headless/">Spring Boot and AWT headless</a>
             </h1>
             </header>
@@ -124,7 +156,7 @@
             </p>
             
               <article class="post-summary">
-            	The problem with AWT headless app in Spring Boot Recently I needed to create console Java Spring Boot app that does some stuff with AWT (not so important what exactly). I found that simple run with a normat Sprint Boot stub simply does not work. Running this:
+            	The problem with AWT headless app in Spring Boot Recently I needed to create console Java Spring Boot app that does some stuff with AWT (not so important what exactly). I found that simple run with a normat Spring Boot stub simply does not work. Running this:
 @SpringBootApplication public class MyAwtApplication { public static void main(String[] args) { SpringApplication.run(MyAwtApplication.class, args); } }  generates following exception when AWT-related processing happens:
               </article>
 			  <div class="read-more-link">

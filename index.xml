@@ -6,10 +6,20 @@
     <description>Recent content on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 Sep 2017 15:08:51 +0300</lastBuildDate>
+    <lastBuildDate>Mon, 02 Oct 2017 10:50:35 +0300</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Serialize list of dates into JSON with Jackson</title>
+      <link>http://iryndin.net/post/json-serialize-list-of-dates-with-jackson/</link>
+      <pubDate>Mon, 02 Oct 2017 10:50:35 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/json-serialize-list-of-dates-with-jackson/</guid>
+      <description>Problem Let&amp;rsquo;s imagine that we need to return JSON form of the following Java object:
+import java.util.Date; public class A { private String name; private List&amp;lt;Date&amp;gt; dates; public String getName() { return name; } public void setName(String name) { this.name = name; } public List&amp;lt;Date&amp;gt; getDates() { return dates; } public void setDates(List&amp;lt;Date&amp;gt; dates) { this.dates = dates; } }  If we return this class &amp;lsquo;as is&amp;rsquo;, without any helping directives to JSON serializer, we could get it in the following form:</description>
+    </item>
     
     <item>
       <title>Spring Boot and AWT headless</title>
@@ -17,7 +27,7 @@
       <pubDate>Wed, 20 Sep 2017 15:08:51 +0300</pubDate>
       
       <guid>http://iryndin.net/post/spring_boot_and_awt_headless/</guid>
-      <description>The problem with AWT headless app in Spring Boot Recently I needed to create console Java Spring Boot app that does some stuff with AWT (not so important what exactly). I found that simple run with a normat Sprint Boot stub simply does not work. Running this:
+      <description>The problem with AWT headless app in Spring Boot Recently I needed to create console Java Spring Boot app that does some stuff with AWT (not so important what exactly). I found that simple run with a normat Spring Boot stub simply does not work. Running this:
 @SpringBootApplication public class MyAwtApplication { public static void main(String[] args) { SpringApplication.run(MyAwtApplication.class, args); } }  generates following exception when AWT-related processing happens:</description>
     </item>
     
