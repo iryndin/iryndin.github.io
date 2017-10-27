@@ -6,10 +6,21 @@
     <description>Recent content on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Oct 2017 10:50:35 +0300</lastBuildDate>
+    <lastBuildDate>Fri, 27 Oct 2017 16:40:07 +0300</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java objects memory size</title>
+      <link>http://iryndin.net/post/java_objects_memory_size/</link>
+      <pubDate>Fri, 27 Oct 2017 16:40:07 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/java_objects_memory_size/</guid>
+      <description>All numbers here are given for 64-bit JVMs.
+Primitive types    Type Size, bytes     byte 1   char 2   short 2   int 4   long 8   float 4   double 8    boolean is 1 bit.
+Size of objects Generally, size of any Java object in memory is a sum of following:</description>
+    </item>
     
     <item>
       <title>Serialize list of dates into JSON with Jackson</title>
