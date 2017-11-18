@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://iryndin.net/post/copy_folder_from_aws_s3/</loc>
+    <lastmod>2017-11-18T12:19:37+03:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/java_objects_memory_size/</loc>
     <lastmod>2017-10-27T16:40:07+03:00</lastmod>
   </url>
@@ -48,7 +53,7 @@
   
   <url>
     <loc>http://iryndin.net/tags/aws/</loc>
-    <lastmod>2017-04-26T23:46:17+03:00</lastmod>
+    <lastmod>2017-11-18T12:19:37+03:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -77,7 +82,7 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2017-10-27T16:40:07+03:00</lastmod>
+    <lastmod>2017-11-18T12:19:37+03:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -89,7 +94,7 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2017-10-27T16:40:07+03:00</lastmod>
+    <lastmod>2017-11-18T12:19:37+03:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -101,7 +106,7 @@
   
   <url>
     <loc>http://iryndin.net/tags/</loc>
-    <lastmod>2017-04-26T23:46:17+03:00</lastmod>
+    <lastmod>2017-11-18T12:19:37+03:00</lastmod>
     <priority>0</priority>
   </url>
   

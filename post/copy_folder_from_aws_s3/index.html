@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <title>
-    Aws // Just my blog
+    Copy folder from AWS S3 // Just my blog
   </title>
 
   <link href="http://gmpg.org/xfn/11" rel="profile">
@@ -16,11 +16,11 @@
 <meta name="author" content="">
 <meta name="generator" content="Hugo 0.21-DEV" />
 
-  <meta property="og:title" content="Aws" />
+  <meta property="og:title" content="Copy folder from AWS S3" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:url" content="http://iryndin.net/tags/aws/" />
+<meta property="og:url" content="http://iryndin.net/post/copy_folder_from_aws_s3/" />
 
 
   
@@ -42,7 +42,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
 
   
-  <link href="http://iryndin.net/tags/aws/index.xml" rel="alternate" type="application/rss+xml" title="Just my blog" />
+  <link href="" rel="alternate" type="application/rss+xml" title="Just my blog" />
 
     
   
@@ -72,6 +72,8 @@
 </head>
 
 <body>
+	
+
 	<div id="layout" class="pure-g">
     <div class="sidebar pure-u-1 pure-u-md-1-4">
   <div class="header">
@@ -94,80 +96,115 @@
   </div>
 </div>
 
+	
+	
 
     <div class="content pure-u-1 pure-u-md-3-4">
-      <a name="top"></a>
-      
+		<a name="top"></a>
+		
 
-      <div class="posts">
-        
-          <section  class="post">
-            <header class="post-header">
-            
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#use-cp-command">Use cp command</a></li>
+<li><a href="#use-sync-command">Use sync command</a></li>
+<li><a href="#useful-links">Useful links</a></li>
+</ul></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
             <h1 class="post-title">
               <a href="/post/copy_folder_from_aws_s3/">Copy folder from AWS S3</a>
             </h1>
-            </header>
-            <p class="post-meta">
+            <h3 class="post-subtitle">
             	
-		          <span class="post-date">
-		            <span class="post-date-day"><sup>18</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Nov</span> <span class="post-date-year">2017</span>
-		          </span>
-      				
-      				
-      					
-      				
-              
-                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>1 min. read</em></span>
-              
-      				
-            </p>
+            </h3>
             
-              <article class="post-summary">
-            	How could we copy a folder from AWS S3 to local machine using AWS CLI?
-Use cp command We can use cp command to copy folder or file from S3 to local machine. If we add parameter --recursive then we will get folder with all its files and folder inside. Example:
-aws s3 cp s3://bucketname/foldername localdirname --recursive  This will copy folder foldername with all its content inside from S3 to local folder named localdirname.
-              </article>
-			  <div class="read-more-link">
-				<a href="/post/copy_folder_from_aws_s3/"><span class="read-more-slashes">//</span>Read More...</a>
-			  </div>
-            
-          </section>
-        
-          <section  class="post">
-            <header class="post-header">
-            
-            <h1 class="post-title">
-              <a href="/post/aws-permissions-to-s3-folder/">AWS permissions to S3 folder</a>
-            </h1>
-            </header>
-            <p class="post-meta">
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>18</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Nov</span> <span class="post-date-year">2017</span>
+            	</span>
             	
-		          <span class="post-date">
-		            <span class="post-date-day"><sup>26</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Apr</span> <span class="post-date-year">2017</span>
-		          </span>
-      				
-      				
-      					
-      				
-              
-                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>3 min. read</em></span>
-              
-      				
-            </p>
             
-              <article class="post-summary">
-            	Let&rsquo;s imagine that we have a project, which actually use AWS S3 as file storage. The project consists of 2 parts: one part puts files into S3, and the other part only reads them from S3. Moreover, files are stored not in the bucket root, but in some folder which is placed in the bucket root.
-According to best AWS practices, we need 2 security and access control policies. One policy is for that part of software which puts files into S3 folder.
-              </article>
-			  <div class="read-more-link">
-				<a href="/post/aws-permissions-to-s3-folder/"><span class="read-more-slashes">//</span>Read More...</a>
-			  </div>
+            	
             
-          </section>
-        
-      </div>
 
+			
+			
+
+			
+
+			
+
+            
+
+<p>How could we copy a folder from AWS S3 to local machine using AWS CLI?</p>
+
+<h2 id="use-cp-command">Use cp command</h2>
+
+<p>We can use <code>cp</code> command to copy folder or file from S3 to local machine. If we add parameter <code>--recursive</code> then
+we will get folder with all its files and folder inside. Example:</p>
+
+<pre><code>aws s3 cp s3://bucketname/foldername localdirname --recursive
+</code></pre>
+
+<p>This will copy folder <code>foldername</code> with all its content inside from S3 to local folder named <code>localdirname</code>.</p>
+
+<h2 id="use-sync-command">Use sync command</h2>
+
+<p>We have also <code>sync</code> command that will, by default, copy a whole directory. But it will only copy new and modified files.
+Unchanged files remain untouched. Example:</p>
+
+<pre><code>aws s3 sync s3://bucketname/foldername localdirname
+</code></pre>
+
+<p>This will synchronize S3 folder <code>foldername</code> with local folder <code>localdirname</code>.</p>
+
+<h2 id="useful-links">Useful links</h2>
+
+<ul>
+<li><a href="http://docs.aws.amazon.com/cli/latest/reference/s3/sync.html">AWS sync command</a></li>
+<li><a href="http://docs.aws.amazon.com/cli/latest/reference/s3/cp.html">AWS cp command</a></li>
+<li><a href="https://stackoverflow.com/questions/27932345/downloading-folders-from-aws-s3-cp-or-sync">StackOverflow - Downloading folders from aws s3, cp or sync?</a></li>
+</ul>
+
+	
+			
+
+			
+				<div class="tags-list">
+					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+					
+	                <a class="post-tag post-tag-aws" href="http://iryndin.net/tags/aws">aws</a>,
+	                
+				</div>
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/post/java_objects_memory_size/">Java objects memory size</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	
+          
+        
       <div class="footer">
 	<hr class="thin" />
 	<div class="pure-menu pure-menu-horizontal pure-menu-open">
@@ -180,6 +217,10 @@ According to best AWS practices, we need 2 security and access control policies.
 </div>
     </div>
   </div>
+	
+
+	
+
   
 </body>
 </html>
