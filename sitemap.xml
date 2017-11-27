@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://iryndin.net/post/spring_destroy_prototype_beans/</loc>
+    <lastmod>2017-11-27T18:53:22+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://iryndin.net/post/spring_beanpostprocessors/</loc>
+    <lastmod>2017-11-27T15:45:43+03:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/copy_folder_from_aws_s3/</loc>
     <lastmod>2017-11-18T12:19:37+03:00</lastmod>
   </url>
@@ -82,7 +92,7 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2017-11-18T12:19:37+03:00</lastmod>
+    <lastmod>2017-11-27T18:53:22+03:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -94,13 +104,19 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2017-11-18T12:19:37+03:00</lastmod>
+    <lastmod>2017-11-27T18:53:22+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://iryndin.net/tags/programming-problems/</loc>
     <lastmod>2017-04-17T11:38:06+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iryndin.net/tags/spring/</loc>
+    <lastmod>2017-11-27T18:53:22+03:00</lastmod>
     <priority>0</priority>
   </url>
   

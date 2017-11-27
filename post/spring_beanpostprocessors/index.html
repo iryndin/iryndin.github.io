@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Spring Bean PostProcessors // Just my blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.21-DEV" />
+
+  <meta property="og:title" content="Spring Bean PostProcessors" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="http://iryndin.net/post/spring_beanpostprocessors/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="http://iryndin.net/css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Just my blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', "UA-55566999-1", 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    
+    
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://iryndin.net">Home</a></li>
+        
+      </ul>
+    </nav>
+
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#example-1-inject-some-random-variable-on-integer-fields-in-beans">Example 1. Inject some random variable on integer fields in beans</a></li>
+<li><a href="#example-2-inject-logger-with-annotation">Example 2. Inject logger with annotation</a></li>
+<li><a href="#links">Links</a></li>
+</ul></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/post/spring_beanpostprocessors/">Spring Bean PostProcessors</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>27</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Nov</span> <span class="post-date-year">2017</span>
+            	</span>
+            	
+            
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            
+
+<p>Let&rsquo;s speak about Bean PostProcessors in Spring Framework.</p>
+
+<p>The <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html">BeanPostProcessor</a>
+interface defines callback methods that you can implement to provide your own (or override the container’s default) instantiation logic,
+dependency-resolution logic, and so forth. In Spring Framework Reference you can read about Bean PostProcessors in more details here:
+<a href="https://docs.spring.io/spring/docs/4.3.9.RELEASE/spring-framework-reference/html/beans.html#beans-factory-extension-bpp">7.8.1 Customizing beans using a BeanPostProcessor</a>.</p>
+
+<p>Shortly, you can use <code>BeanPostProcessor</code> for various initialization actions, as well as destroying actions, do some smart init/destroy actions <em>en masse</em> etc.
+Here let me give some examples on using BeanPostProcessors.</p>
+
+<h2 id="example-1-inject-some-random-variable-on-integer-fields-in-beans">Example 1. Inject some random variable on integer fields in beans</h2>
+
+<p>Here let&rsquo;s create <code>BeanPostProcessor</code> that injects random integer variable for bean fields marked with special annotation: <code>InjectRandomInt</code>.</p>
+
+<p>Here is this annotation code:</p>
+
+<pre><code>@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface InjectRandomInt {
+    int min();
+    int max();
+}
+</code></pre>
+
+<p>And here is <code>BeanPostProcessor</code> code, which is really self-descriptive:</p>
+
+<pre><code>/**
+ * Bean PostProcessor that injects random int value for fields marked with annotation &lt;link&gt;@InjectRandomInt&lt;/link&gt;
+ */
+public class InjectRandomIntBeanPostProcessor implements BeanPostProcessor {
+
+    static final Class[] allowedTypes = new Class[]{Integer.class, Long.class, int.class, long.class};
+
+    private Random random = new Random();
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        Field[] fields = bean.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            InjectRandomInt annotation = field.getAnnotation(InjectRandomInt.class);
+            if (annotation != null) {
+                if (!isAllowedType(field)) {
+                    throw new RuntimeException(&quot;Don't put @InjectRandomInt above &quot; + field.getType());
+                }
+                if (Modifier.isFinal(field.getModifiers())) {
+                    throw new RuntimeException(&quot;Can't inject to final fields&quot;);
+                }
+                int randomInt = generateRadomIntValue(annotation);
+                try {
+                    field.setAccessible(true);
+                    field.set(bean, randomInt);
+                    System.out.println(format(&quot;Init bean '%s.%s' with value %d&quot;, beanName, field.getName(), randomInt));
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
+    private int generateRadomIntValue(InjectRandomInt annotation) {
+        int min = annotation.min();
+        int max = annotation.max();
+        int randomInt = min + random.nextInt(max - min);
+        return randomInt;
+    }
+
+    private boolean isAllowedType(Field field) {
+        for (Class c : allowedTypes) {
+            if (field.getType().equals(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+</code></pre>
+
+<p>Please see full code of the project here: <a href="https://github.com/iryndin/misc/tree/master/blogprjs/01-beanpostprocessor-injectrandomvar">https://github.com/iryndin/misc/tree/master/blogprjs/01-beanpostprocessor-injectrandomvar</a></p>
+
+<p>This example is inspired by this article: <a href="https://www.dataart.ru/news/malen-kie-sekrety-spring/">Small Spring secrets</a>.</p>
+
+<h2 id="example-2-inject-logger-with-annotation">Example 2. Inject logger with annotation</h2>
+
+<p>This is another example of using <code>BeanPostProcessor</code> - here we inject logger for each bean that is marked with proper annotation.
+This example is inspired by this article: <a href="https://memorynotfound.com/spring-inject-logger-annotation-example/">Spring Inject Logger by Annotation Example</a>.</p>
+
+<p>Here is <code>InjectLog</code> annotation:</p>
+
+<pre><code>@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+    public @interface InjectLog {
+}
+</code></pre>
+
+<p>and its processor:</p>
+
+<pre><code>/**
+ * Bean PostProcessor that injects properly created logger into Spring bean
+ */
+@Component
+public class InjectLogPostProcessor implements BeanPostProcessor {
+
+    private Logger log = LoggerFactory.getLogger(InjectLogPostProcessor.class);
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        ReflectionUtils.doWithFields(bean.getClass(), field -&gt; {
+            if (field.getAnnotation(InjectLog.class) != null) {
+                ReflectionUtils.makeAccessible(field);
+                Logger logger = LoggerFactory.getLogger(bean.getClass());
+                field.set(bean, logger);
+                log.info(&quot;Injected logger into bean '{}'&quot;, beanName);
+            }
+        });
+        return bean;
+    }
+}
+</code></pre>
+
+<p>Here is example of bean with this annotation:</p>
+
+<pre><code>@Component
+public class SimpleBean {
+
+    @InjectLog
+    private Logger log;
+
+    public void doSmth() {
+        log.info(&quot;doSmth is called&quot;);
+    }
+}
+</code></pre>
+
+<p>You can see that this is pretty much similar to the first example.</p>
+
+<p>You can see the code of the project here: <a href="https://github.com/iryndin/misc/tree/master/blogprjs/02-beanpostprocessor-injectlogger">https://github.com/iryndin/misc/tree/master/blogprjs/02-beanpostprocessor-injectlogger</a></p>
+
+<h2 id="links">Links</h2>
+
+<p>Here are some good examples of usage of <code>BeanPostProcessor</code>:</p>
+
+<ul>
+<li><a href="https://www.dataart.ru/news/malen-kie-sekrety-spring/">Small Spring secrets</a> (in Russian)</li>
+<li><a href="https://memorynotfound.com/spring-inject-logger-annotation-example/">Spring Inject Logger by Annotation Example</a></li>
+<li><a href="http://www.baeldung.com/spring-annotation-bean-pre-processor">A Spring Custom Annotation for a Better DAO</a></li>
+</ul>
+
+	
+			
+
+			
+				<div class="tags-list">
+					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+					
+	                <a class="post-tag post-tag-spring" href="http://iryndin.net/tags/spring">spring</a>,
+	                
+				</div>
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+					<div class="paging-newer">
+						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
+						<a class="paging-link" href="/post/spring_destroy_prototype_beans/">Spring: destroy prototype beans</a>
+		            </div>
+		            
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/post/copy_folder_from_aws_s3/">Copy folder from AWS S3</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2017. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>
