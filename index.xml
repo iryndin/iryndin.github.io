@@ -6,10 +6,31 @@
     <description>Recent content on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Nov 2017 18:53:22 +0300</lastBuildDate>
+    <lastBuildDate>Tue, 28 Nov 2017 09:59:58 +0300</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>PostgreSQL transaction isolation levels</title>
+      <link>http://iryndin.net/post/postgresql_transaction_isolation_levels/</link>
+      <pubDate>Tue, 28 Nov 2017 09:59:58 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/postgresql_transaction_isolation_levels/</guid>
+      <description>On previous post about transaction isolation levels we considered what is transaction isolation level and how this influence the result we get from transaction. But from database to database details are diferent, so let&amp;rsquo;s consider transaction isolation details for PostgreSQL.
+Let&amp;rsquo;s again repeat a little bit about transaction islolation level. The SQL standard defines four levels of transaction isolation. The most strict is Serializable, which is defined by the standard in a paragraph which says that any concurrent execution of a set of Serializable transactions is guaranteed to produce the same effect as running them one at a time in some order.</description>
+    </item>
+    
+    <item>
+      <title>Transaction isolation levels</title>
+      <link>http://iryndin.net/post/transaction_isolation_levels/</link>
+      <pubDate>Tue, 28 Nov 2017 07:14:59 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/transaction_isolation_levels/</guid>
+      <description>Let&amp;rsquo;s speak about transaction isolation levels.
+ANSI/SQL standard isolation levels We have 4 standard-defined transaction isolation levels:
+ Read uncommited. Dirty reads - YES, Non-Repeatable reads - YES, Phantom reads - YES. Read commited. Dirty reads - NO, Non-Repeatable reads - YES, Phantom reads - YES. Repeatable read. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - YES. Serializable. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - NO.</description>
+    </item>
     
     <item>
       <title>Spring: destroy prototype beans</title>

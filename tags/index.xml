@@ -48,11 +48,38 @@
     </item>
     
     <item>
+      <title>Database</title>
+      <link>http://iryndin.net/tags/database/</link>
+      <pubDate>Tue, 28 Nov 2017 09:59:58 +0300</pubDate>
+      
+      <guid>http://iryndin.net/tags/database/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jdbc</title>
+      <link>http://iryndin.net/tags/jdbc/</link>
+      <pubDate>Tue, 28 Nov 2017 07:14:59 +0300</pubDate>
+      
+      <guid>http://iryndin.net/tags/jdbc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Misc</title>
       <link>http://iryndin.net/tags/misc/</link>
       <pubDate>Sun, 23 Apr 2017 18:56:58 +0300</pubDate>
       
       <guid>http://iryndin.net/tags/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Postgresql</title>
+      <link>http://iryndin.net/tags/postgresql/</link>
+      <pubDate>Tue, 28 Nov 2017 09:59:58 +0300</pubDate>
+      
+      <guid>http://iryndin.net/tags/postgresql/</guid>
       <description></description>
     </item>
     
