@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Nov 2017 09:59:58 +0300</lastBuildDate>
+    <lastBuildDate>Mon, 04 Dec 2017 16:14:52 +0300</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Optimistic and pessimistic concurrency control</title>
+      <link>http://iryndin.net/post/optimistic_and_pessimistic_concurrency_control/</link>
+      <pubDate>Mon, 04 Dec 2017 16:14:52 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/optimistic_and_pessimistic_concurrency_control/</guid>
+      <description>Transactional isolation is usually implemented by locking whatever is accessed in a transaction. There are two different approaches to transactional locking:
+ Pessimistic locking Optimistic locking  Pessimistic concurrency control (locking) Pessimistic locking is called &amp;ldquo;pessimistic&amp;rdquo; because the system assumes the worst — it assumes that two or more users will want to update the same record at the same time, and then prevents that possibility by locking the record, no matter how unlikely conflicts actually are.</description>
+    </item>
     
     <item>
       <title>PostgreSQL transaction isolation levels</title>
