@@ -17,8 +17,9 @@
       <pubDate>Mon, 04 Dec 2017 16:14:52 +0300</pubDate>
       
       <guid>http://iryndin.net/post/optimistic_and_pessimistic_concurrency_control/</guid>
-      <description>Transactional isolation is usually implemented by locking whatever is accessed in a transaction. There are two different approaches to transactional locking:
- Pessimistic locking Optimistic locking  Pessimistic concurrency control (locking) Pessimistic locking is called &amp;ldquo;pessimistic&amp;rdquo; because the system assumes the worst — it assumes that two or more users will want to update the same record at the same time, and then prevents that possibility by locking the record, no matter how unlikely conflicts actually are.</description>
+      <description>&lt;p&gt;Here we consider two most widely used approaches to transactional locking: pessimistic and optimistic locking.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -27,8 +28,9 @@
       <pubDate>Tue, 28 Nov 2017 09:59:58 +0300</pubDate>
       
       <guid>http://iryndin.net/post/postgresql_transaction_isolation_levels/</guid>
-      <description>On previous post about transaction isolation levels we considered what is transaction isolation level and how this influence the result we get from transaction. But from database to database details are diferent, so let&amp;rsquo;s consider transaction isolation details for PostgreSQL.
-Let&amp;rsquo;s again repeat a little bit about transaction islolation level. The SQL standard defines four levels of transaction isolation. The most strict is Serializable, which is defined by the standard in a paragraph which says that any concurrent execution of a set of Serializable transactions is guaranteed to produce the same effect as running them one at a time in some order.</description>
+      <description>&lt;p&gt;Details of transaction isolation in PostgreSQL.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -37,9 +39,9 @@ Let&amp;rsquo;s again repeat a little bit about transaction islolation level. Th
       <pubDate>Tue, 28 Nov 2017 07:14:59 +0300</pubDate>
       
       <guid>http://iryndin.net/post/transaction_isolation_levels/</guid>
-      <description>Let&amp;rsquo;s speak about transaction isolation levels.
-ANSI/SQL standard isolation levels We have 4 standard-defined transaction isolation levels:
- Read uncommited. Dirty reads - YES, Non-Repeatable reads - YES, Phantom reads - YES. Read commited. Dirty reads - NO, Non-Repeatable reads - YES, Phantom reads - YES. Repeatable read. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - YES. Serializable. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - NO.</description>
+      <description>&lt;p&gt;Transaction isolation levels in relational databases. A reminder post.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -48,8 +50,10 @@ ANSI/SQL standard isolation levels We have 4 standard-defined transaction isolat
       <pubDate>Mon, 27 Nov 2017 18:53:22 +0300</pubDate>
       
       <guid>http://iryndin.net/post/spring_destroy_prototype_beans/</guid>
-      <description>In previos post (Spring Bean PostProcessors) we considered some trivial examples of using BeanPostProcessor. Now let&amp;rsquo;s consider more interesting case - destruction of prototype-scoped beans. The reason for this is that Spring does not manage desctruction phase of prototype-scoped beans, as it is mentioned in the docs: 7.5.2 The prototype scope:
- In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean: the container instantiates, configures, and otherwise assembles a prototype object, and hands it to the client, with no further record of that prototype instance.</description>
+      <description>&lt;p&gt;Prototype-scoped beans destruction is not managed by Spring container (only construction is managed).
+But we can manage it ourselves with Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt;s.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -58,9 +62,10 @@ ANSI/SQL standard isolation levels We have 4 standard-defined transaction isolat
       <pubDate>Mon, 27 Nov 2017 15:45:43 +0300</pubDate>
       
       <guid>http://iryndin.net/post/spring_beanpostprocessors/</guid>
-      <description>Let&amp;rsquo;s speak about Bean PostProcessors in Spring Framework.
-The BeanPostProcessor interface defines callback methods that you can implement to provide your own (or override the container’s default) instantiation logic, dependency-resolution logic, and so forth. In Spring Framework Reference you can read about Bean PostProcessors in more details here: 7.8.1 Customizing beans using a BeanPostProcessor.
-Shortly, you can use BeanPostProcessor for various initialization actions, as well as destroying actions, do some smart init/destroy actions en masse etc.</description>
+      <description>&lt;p&gt;Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt; is a nice feature that gives you much power into hands.
+You can do a lot of fun things with &lt;code&gt;BeanPostProcessor&lt;/code&gt;s, and this post demonstrates some of them with a series of short examples.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -69,9 +74,9 @@ Shortly, you can use BeanPostProcessor for various initialization actions, as we
       <pubDate>Sat, 18 Nov 2017 12:19:37 +0300</pubDate>
       
       <guid>http://iryndin.net/post/copy_folder_from_aws_s3/</guid>
-      <description>How could we copy a folder from AWS S3 to local machine using AWS CLI?
-Use cp command We can use cp command to copy folder or file from S3 to local machine. If we add parameter --recursive then we will get folder with all its files and folder inside. Example:
-aws s3 cp s3://bucketname/foldername localdirname --recursive  This will copy folder foldername with all its content inside from S3 to local folder named localdirname.</description>
+      <description>&lt;p&gt;How could we copy a folder from AWS S3 to local machine using AWS CLI?&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -80,9 +85,9 @@ aws s3 cp s3://bucketname/foldername localdirname --recursive  This will copy fo
       <pubDate>Fri, 27 Oct 2017 16:40:07 +0300</pubDate>
       
       <guid>http://iryndin.net/post/java_objects_memory_size/</guid>
-      <description>All numbers here are given for 64-bit JVMs.
-Primitive types    Type Size, bytes     byte 1   char 2   short 2   int 4   long 8   float 4   double 8    boolean is 1 bit.
-Size of objects Generally, size of any Java object in memory is a sum of following:</description>
+      <description>&lt;p&gt;Here we try to analyze how much memory will consume Java objects. All numbers are given for 64-bit machines.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -91,8 +96,11 @@ Size of objects Generally, size of any Java object in memory is a sum of followi
       <pubDate>Mon, 02 Oct 2017 10:50:35 +0300</pubDate>
       
       <guid>http://iryndin.net/post/json-serialize-list-of-dates-with-jackson/</guid>
-      <description>Problem Let&amp;rsquo;s imagine that we need to return JSON form of the following Java object:
-import java.util.Date; public class A { private String name; private List&amp;lt;Date&amp;gt; dates; public String getName() { return name; } public void setName(String name) { this.name = name; } public List&amp;lt;Date&amp;gt; getDates() { return dates; } public void setDates(List&amp;lt;Date&amp;gt; dates) { this.dates = dates; } }  If we return this class &amp;lsquo;as is&amp;rsquo;, without any helping directives to JSON serializer, we could get it in the following form:</description>
+      <description>&lt;p&gt;There are a lot of examples about how to serialize &lt;code&gt;Date&lt;/code&gt; objects into JSON.
+But I was not able to find examples that explain how to serialize a collection of dates: &lt;code&gt;Collection&amp;lt;Date&amp;gt;&lt;/code&gt;.
+I had to dive into code and find out it myself. In this post I share my findings with you.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>

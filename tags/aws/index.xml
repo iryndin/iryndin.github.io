@@ -17,9 +17,9 @@
       <pubDate>Sat, 18 Nov 2017 12:19:37 +0300</pubDate>
       
       <guid>http://iryndin.net/post/copy_folder_from_aws_s3/</guid>
-      <description>How could we copy a folder from AWS S3 to local machine using AWS CLI?
-Use cp command We can use cp command to copy folder or file from S3 to local machine. If we add parameter --recursive then we will get folder with all its files and folder inside. Example:
-aws s3 cp s3://bucketname/foldername localdirname --recursive  This will copy folder foldername with all its content inside from S3 to local folder named localdirname.</description>
+      <description>&lt;p&gt;How could we copy a folder from AWS S3 to local machine using AWS CLI?&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>

@@ -143,7 +143,10 @@
 
 			
 
-            
+            <p>Prototype-scoped beans destruction is not managed by Spring container (only construction is managed).
+But we can manage it ourselves with Spring <code>BeanPostProcessor</code>s.</p>
+
+<p></p>
 
 <p>In previos post (<a href="/post/spring_beanpostprocessors/">Spring Bean PostProcessors</a>) we considered some trivial examples of using <code>BeanPostProcessor</code>.
 Now let&rsquo;s consider more interesting case - destruction of prototype-scoped beans.
@@ -259,7 +262,6 @@ public class DestroyPrototypeBeansPostProcessor implements BeanPostProcessor, Be
 <a href="https://github.com/spring-projects/spring-framework/blob/v4.3.13.RELEASE/spring-context/src/main/java/org/springframework/scheduling/annotation/ScheduledAnnotationBeanPostProcessor.java">ScheduledAnnotationBeanPostProcessor</a>.
 This class handles desctruction actions for sheduled tasks. Exactly the case where additional actions should be taken.
 Also this class implements <code>DestructionAwareBeanPostProcessor</code> methods, so it is always useful to see how these methods can be implemented.</p>
-
 	
 			
 

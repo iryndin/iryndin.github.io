@@ -125,8 +125,9 @@
             </p>
             
               <article class="post-summary">
-                  Transactional isolation is usually implemented by locking whatever is accessed in a transaction. There are two different approaches to transactional locking:
- Pessimistic locking Optimistic locking  Pessimistic concurrency control (locking) Pessimistic locking is called &ldquo;pessimistic&rdquo; because the system assumes the worst — it assumes that two or more users will want to update the same record at the same time, and then prevents that possibility by locking the record, no matter how unlikely conflicts actually are.
+                  <p>Here we consider two most widely used approaches to transactional locking: pessimistic and optimistic locking.</p>
+
+<p></p>
               </article>
               <div class="read-more-link">
                   <a href="/post/optimistic_and_pessimistic_concurrency_control/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -157,8 +158,9 @@
             </p>
             
               <article class="post-summary">
-                  On previous post about transaction isolation levels we considered what is transaction isolation level and how this influence the result we get from transaction. But from database to database details are diferent, so let&rsquo;s consider transaction isolation details for PostgreSQL.
-Let&rsquo;s again repeat a little bit about transaction islolation level. The SQL standard defines four levels of transaction isolation. The most strict is Serializable, which is defined by the standard in a paragraph which says that any concurrent execution of a set of Serializable transactions is guaranteed to produce the same effect as running them one at a time in some order.
+                  <p>Details of transaction isolation in PostgreSQL.</p>
+
+<p></p>
               </article>
               <div class="read-more-link">
                   <a href="/post/postgresql_transaction_isolation_levels/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -189,9 +191,9 @@ Let&rsquo;s again repeat a little bit about transaction islolation level. The SQ
             </p>
             
               <article class="post-summary">
-                  Let&rsquo;s speak about transaction isolation levels.
-ANSI/SQL standard isolation levels We have 4 standard-defined transaction isolation levels:
- Read uncommited. Dirty reads - YES, Non-Repeatable reads - YES, Phantom reads - YES. Read commited. Dirty reads - NO, Non-Repeatable reads - YES, Phantom reads - YES. Repeatable read. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - YES. Serializable. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - NO.
+                  <p>Transaction isolation levels in relational databases. A reminder post.</p>
+
+<p></p>
               </article>
               <div class="read-more-link">
                   <a href="/post/transaction_isolation_levels/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -222,8 +224,10 @@ ANSI/SQL standard isolation levels We have 4 standard-defined transaction isolat
             </p>
             
               <article class="post-summary">
-                  In previos post (Spring Bean PostProcessors) we considered some trivial examples of using BeanPostProcessor. Now let&rsquo;s consider more interesting case - destruction of prototype-scoped beans. The reason for this is that Spring does not manage desctruction phase of prototype-scoped beans, as it is mentioned in the docs: 7.5.2 The prototype scope:
- In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean: the container instantiates, configures, and otherwise assembles a prototype object, and hands it to the client, with no further record of that prototype instance.
+                  <p>Prototype-scoped beans destruction is not managed by Spring container (only construction is managed).
+But we can manage it ourselves with Spring <code>BeanPostProcessor</code>s.</p>
+
+<p></p>
               </article>
               <div class="read-more-link">
                   <a href="/post/spring_destroy_prototype_beans/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -254,9 +258,10 @@ ANSI/SQL standard isolation levels We have 4 standard-defined transaction isolat
             </p>
             
               <article class="post-summary">
-                  Let&rsquo;s speak about Bean PostProcessors in Spring Framework.
-The BeanPostProcessor interface defines callback methods that you can implement to provide your own (or override the container’s default) instantiation logic, dependency-resolution logic, and so forth. In Spring Framework Reference you can read about Bean PostProcessors in more details here: 7.8.1 Customizing beans using a BeanPostProcessor.
-Shortly, you can use BeanPostProcessor for various initialization actions, as well as destroying actions, do some smart init/destroy actions en masse etc.
+                  <p>Spring <code>BeanPostProcessor</code> is a nice feature that gives you much power into hands.
+You can do a lot of fun things with <code>BeanPostProcessor</code>s, and this post demonstrates some of them with a series of short examples.</p>
+
+<p></p>
               </article>
               <div class="read-more-link">
                   <a href="/post/spring_beanpostprocessors/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -287,9 +292,9 @@ Shortly, you can use BeanPostProcessor for various initialization actions, as we
             </p>
             
               <article class="post-summary">
-                  How could we copy a folder from AWS S3 to local machine using AWS CLI?
-Use cp command We can use cp command to copy folder or file from S3 to local machine. If we add parameter --recursive then we will get folder with all its files and folder inside. Example:
-aws s3 cp s3://bucketname/foldername localdirname --recursive  This will copy folder foldername with all its content inside from S3 to local folder named localdirname.
+                  <p>How could we copy a folder from AWS S3 to local machine using AWS CLI?</p>
+
+<p></p>
               </article>
               <div class="read-more-link">
                   <a href="/post/copy_folder_from_aws_s3/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -320,9 +325,9 @@ aws s3 cp s3://bucketname/foldername localdirname --recursive  This will copy fo
             </p>
             
               <article class="post-summary">
-                  All numbers here are given for 64-bit JVMs.
-Primitive types    Type Size, bytes     byte 1   char 2   short 2   int 4   long 8   float 4   double 8    boolean is 1 bit.
-Size of objects Generally, size of any Java object in memory is a sum of following:
+                  <p>Here we try to analyze how much memory will consume Java objects. All numbers are given for 64-bit machines.</p>
+
+<p></p>
               </article>
               <div class="read-more-link">
                   <a href="/post/java_objects_memory_size/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -353,8 +358,11 @@ Size of objects Generally, size of any Java object in memory is a sum of followi
             </p>
             
               <article class="post-summary">
-                  Problem Let&rsquo;s imagine that we need to return JSON form of the following Java object:
-import java.util.Date; public class A { private String name; private List&lt;Date&gt; dates; public String getName() { return name; } public void setName(String name) { this.name = name; } public List&lt;Date&gt; getDates() { return dates; } public void setDates(List&lt;Date&gt; dates) { this.dates = dates; } }  If we return this class &lsquo;as is&rsquo;, without any helping directives to JSON serializer, we could get it in the following form:
+                  <p>There are a lot of examples about how to serialize <code>Date</code> objects into JSON.
+But I was not able to find examples that explain how to serialize a collection of dates: <code>Collection&lt;Date&gt;</code>.
+I had to dive into code and find out it myself. In this post I share my findings with you.</p>
+
+<p></p>
               </article>
               <div class="read-more-link">
                   <a href="/post/json-serialize-list-of-dates-with-jackson/"><span class="read-more-slashes">//</span>Read More...</a>

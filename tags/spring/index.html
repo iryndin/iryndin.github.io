@@ -124,8 +124,10 @@
             </p>
             
               <article class="post-summary">
-            	In previos post (Spring Bean PostProcessors) we considered some trivial examples of using BeanPostProcessor. Now let&rsquo;s consider more interesting case - destruction of prototype-scoped beans. The reason for this is that Spring does not manage desctruction phase of prototype-scoped beans, as it is mentioned in the docs: 7.5.2 The prototype scope:
- In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean: the container instantiates, configures, and otherwise assembles a prototype object, and hands it to the client, with no further record of that prototype instance.
+            	<p>Prototype-scoped beans destruction is not managed by Spring container (only construction is managed).
+But we can manage it ourselves with Spring <code>BeanPostProcessor</code>s.</p>
+
+<p></p>
               </article>
 			  <div class="read-more-link">
 				<a href="/post/spring_destroy_prototype_beans/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -156,9 +158,10 @@
             </p>
             
               <article class="post-summary">
-            	Let&rsquo;s speak about Bean PostProcessors in Spring Framework.
-The BeanPostProcessor interface defines callback methods that you can implement to provide your own (or override the container’s default) instantiation logic, dependency-resolution logic, and so forth. In Spring Framework Reference you can read about Bean PostProcessors in more details here: 7.8.1 Customizing beans using a BeanPostProcessor.
-Shortly, you can use BeanPostProcessor for various initialization actions, as well as destroying actions, do some smart init/destroy actions en masse etc.
+            	<p>Spring <code>BeanPostProcessor</code> is a nice feature that gives you much power into hands.
+You can do a lot of fun things with <code>BeanPostProcessor</code>s, and this post demonstrates some of them with a series of short examples.</p>
+
+<p></p>
               </article>
 			  <div class="read-more-link">
 				<a href="/post/spring_beanpostprocessors/"><span class="read-more-slashes">//</span>Read More...</a>

@@ -124,8 +124,9 @@
             </p>
             
               <article class="post-summary">
-            	Transactional isolation is usually implemented by locking whatever is accessed in a transaction. There are two different approaches to transactional locking:
- Pessimistic locking Optimistic locking  Pessimistic concurrency control (locking) Pessimistic locking is called &ldquo;pessimistic&rdquo; because the system assumes the worst — it assumes that two or more users will want to update the same record at the same time, and then prevents that possibility by locking the record, no matter how unlikely conflicts actually are.
+            	<p>Here we consider two most widely used approaches to transactional locking: pessimistic and optimistic locking.</p>
+
+<p></p>
               </article>
 			  <div class="read-more-link">
 				<a href="/post/optimistic_and_pessimistic_concurrency_control/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -156,8 +157,9 @@
             </p>
             
               <article class="post-summary">
-            	On previous post about transaction isolation levels we considered what is transaction isolation level and how this influence the result we get from transaction. But from database to database details are diferent, so let&rsquo;s consider transaction isolation details for PostgreSQL.
-Let&rsquo;s again repeat a little bit about transaction islolation level. The SQL standard defines four levels of transaction isolation. The most strict is Serializable, which is defined by the standard in a paragraph which says that any concurrent execution of a set of Serializable transactions is guaranteed to produce the same effect as running them one at a time in some order.
+            	<p>Details of transaction isolation in PostgreSQL.</p>
+
+<p></p>
               </article>
 			  <div class="read-more-link">
 				<a href="/post/postgresql_transaction_isolation_levels/"><span class="read-more-slashes">//</span>Read More...</a>
@@ -188,9 +190,9 @@ Let&rsquo;s again repeat a little bit about transaction islolation level. The SQ
             </p>
             
               <article class="post-summary">
-            	Let&rsquo;s speak about transaction isolation levels.
-ANSI/SQL standard isolation levels We have 4 standard-defined transaction isolation levels:
- Read uncommited. Dirty reads - YES, Non-Repeatable reads - YES, Phantom reads - YES. Read commited. Dirty reads - NO, Non-Repeatable reads - YES, Phantom reads - YES. Repeatable read. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - YES. Serializable. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - NO.
+            	<p>Transaction isolation levels in relational databases. A reminder post.</p>
+
+<p></p>
               </article>
 			  <div class="read-more-link">
 				<a href="/post/transaction_isolation_levels/"><span class="read-more-slashes">//</span>Read More...</a>

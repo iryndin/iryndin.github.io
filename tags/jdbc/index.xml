@@ -17,9 +17,9 @@
       <pubDate>Tue, 28 Nov 2017 07:14:59 +0300</pubDate>
       
       <guid>http://iryndin.net/post/transaction_isolation_levels/</guid>
-      <description>Let&amp;rsquo;s speak about transaction isolation levels.
-ANSI/SQL standard isolation levels We have 4 standard-defined transaction isolation levels:
- Read uncommited. Dirty reads - YES, Non-Repeatable reads - YES, Phantom reads - YES. Read commited. Dirty reads - NO, Non-Repeatable reads - YES, Phantom reads - YES. Repeatable read. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - YES. Serializable. Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - NO.</description>
+      <description>&lt;p&gt;Transaction isolation levels in relational databases. A reminder post.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

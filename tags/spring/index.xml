@@ -17,8 +17,10 @@
       <pubDate>Mon, 27 Nov 2017 18:53:22 +0300</pubDate>
       
       <guid>http://iryndin.net/post/spring_destroy_prototype_beans/</guid>
-      <description>In previos post (Spring Bean PostProcessors) we considered some trivial examples of using BeanPostProcessor. Now let&amp;rsquo;s consider more interesting case - destruction of prototype-scoped beans. The reason for this is that Spring does not manage desctruction phase of prototype-scoped beans, as it is mentioned in the docs: 7.5.2 The prototype scope:
- In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean: the container instantiates, configures, and otherwise assembles a prototype object, and hands it to the client, with no further record of that prototype instance.</description>
+      <description>&lt;p&gt;Prototype-scoped beans destruction is not managed by Spring container (only construction is managed).
+But we can manage it ourselves with Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt;s.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -27,9 +29,10 @@
       <pubDate>Mon, 27 Nov 2017 15:45:43 +0300</pubDate>
       
       <guid>http://iryndin.net/post/spring_beanpostprocessors/</guid>
-      <description>Let&amp;rsquo;s speak about Bean PostProcessors in Spring Framework.
-The BeanPostProcessor interface defines callback methods that you can implement to provide your own (or override the container’s default) instantiation logic, dependency-resolution logic, and so forth. In Spring Framework Reference you can read about Bean PostProcessors in more details here: 7.8.1 Customizing beans using a BeanPostProcessor.
-Shortly, you can use BeanPostProcessor for various initialization actions, as well as destroying actions, do some smart init/destroy actions en masse etc.</description>
+      <description>&lt;p&gt;Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt; is a nice feature that gives you much power into hands.
+You can do a lot of fun things with &lt;code&gt;BeanPostProcessor&lt;/code&gt;s, and this post demonstrates some of them with a series of short examples.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>
