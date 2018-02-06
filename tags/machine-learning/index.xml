@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning on Just my blog</title>
+    <link>http://iryndin.net/tags/machine-learning/</link>
+    <description>Recent content in Machine Learning on Just my blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 06 Feb 2018 07:48:06 -0500</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to standout as an entry level data scientist candidate</title>
+      <link>http://iryndin.net/post/how-to-standout-as-an-entry-level-data-scientist-candidate/</link>
+      <pubDate>Tue, 06 Feb 2018 07:48:06 -0500</pubDate>
+      
+      <guid>http://iryndin.net/post/how-to-standout-as-an-entry-level-data-scientist-candidate/</guid>
+      <description>&lt;p&gt;Today I found a nice post in LinkedIn: &lt;a href=&#34;https://www.linkedin.com/feed/update/urn:li:activity:6366260134636851200/&#34;&gt;How to Stand Out as an Entry-Level Data Scientist Candidate&lt;/a&gt;.
+I liked it very much, and I think it contains pretty much true points. Here they are.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
