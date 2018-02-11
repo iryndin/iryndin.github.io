@@ -6,10 +6,23 @@
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Feb 2018 07:48:06 -0500</lastBuildDate>
+    <lastBuildDate>Sun, 11 Feb 2018 16:04:46 -0500</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pandas dataset analysis example</title>
+      <link>http://iryndin.net/post/pandas-dataset-analysis-example/</link>
+      <pubDate>Sun, 11 Feb 2018 16:04:46 -0500</pubDate>
+      
+      <guid>http://iryndin.net/post/pandas-dataset-analysis-example/</guid>
+      <description>&lt;p&gt;Let&amp;rsquo;s show how can we use &lt;a href=&#34;https://pandas.pydata.org/&#34;&gt;Pandas&lt;/a&gt; for data analysis.
+Let&amp;rsquo;s take a &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/blob/master/data/01-cardio/cardio.csv&#34;&gt;cardio dataset&lt;/a&gt;
+from here: &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/tree/master/data/01-cardio&#34;&gt;https://github.com/iryndin/Machine-Learning/tree/master/data/01-cardio&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>How to standout as an entry level data scientist candidate</title>

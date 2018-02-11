@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://iryndin.net/post/pandas-dataset-analysis-example/</loc>
+    <lastmod>2018-02-11T16:04:46-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/how-to-standout-as-an-entry-level-data-scientist-candidate/</loc>
     <lastmod>2018-02-06T07:48:06-05:00</lastmod>
   </url>
@@ -112,7 +117,7 @@
   
   <url>
     <loc>http://iryndin.net/tags/data-science/</loc>
-    <lastmod>2018-02-06T07:48:06-05:00</lastmod>
+    <lastmod>2018-02-11T16:04:46-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -130,19 +135,25 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2018-02-06T07:48:06-05:00</lastmod>
+    <lastmod>2018-02-11T16:04:46-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://iryndin.net/tags/machine-learning/</loc>
-    <lastmod>2018-02-06T07:48:06-05:00</lastmod>
+    <lastmod>2018-02-11T16:04:46-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://iryndin.net/tags/misc/</loc>
     <lastmod>2017-04-23T18:56:58+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iryndin.net/tags/pandas/</loc>
+    <lastmod>2018-02-11T16:04:46-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -154,7 +165,7 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2018-02-06T07:48:06-05:00</lastmod>
+    <lastmod>2018-02-11T16:04:46-05:00</lastmod>
     <priority>0</priority>
   </url>
   
