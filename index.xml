@@ -6,10 +6,21 @@
     <description>Recent content on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Feb 2018 16:04:46 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 22 Mar 2018 19:59:44 -0400</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Useful ML articles</title>
+      <link>http://iryndin.net/post/useful-ml-articles/</link>
+      <pubDate>Thu, 22 Mar 2018 19:59:44 -0400</pubDate>
+      
+      <guid>http://iryndin.net/post/useful-ml-articles/</guid>
+      <description>&lt;p&gt;I have got a list of useful ML articles from ODS slack (&lt;a href=&#34;https://opendatascience.slack.com/archives/C047H3N8L/p1520445318000067&#34;&gt;message link&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Pandas dataset analysis example</title>

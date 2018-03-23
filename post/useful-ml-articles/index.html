@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Useful ML articles // Just my blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.21-DEV" />
+
+  <meta property="og:title" content="Useful ML articles" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="http://iryndin.net/post/useful-ml-articles/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="http://iryndin.net/css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Just my blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', "UA-55566999-1", 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    
+    
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://iryndin.net">Home</a></li>
+        
+      </ul>
+    </nav>
+
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#architectures">Architectures</a></li>
+<li><a href="#semantic-segmentation">Semantic Segmentation</a></li>
+<li><a href="#generative-adversarial-networks">Generative adversarial networks</a></li>
+<li><a href="#object-detection">Object detection</a></li>
+</ul></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/post/useful-ml-articles/">Useful ML articles</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>22</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2018</span>
+            	</span>
+            	
+            
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            <p>I have got a list of useful ML articles from ODS slack (<a href="https://opendatascience.slack.com/archives/C047H3N8L/p1520445318000067">message link</a>).</p>
+
+<p></p>
+
+<p>Brief context: there was a task to study a person with almost zero programming experience and absolutely absent ML knowledge
+to become able to do ML research. So, how it was achieved? Simple! This person was charged to implement all articles from the list
+using <code>pytorch</code>. It took almost a month for the person to learn to read, implement and sometimes analyze articles from the list.</p>
+
+<p>So here is this list:</p>
+
+<h2 id="architectures">Architectures</h2>
+
+<ul>
+<li>AlexNet: <a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks</a></li>
+<li>ZFNet: <a href="https://arxiv.org/abs/1311.2901">https://arxiv.org/abs/1311.2901</a></li>
+<li>VGG16: <a href="https://arxiv.org/abs/1505.06798">https://arxiv.org/abs/1505.06798</a></li>
+<li>ResNet: <a href="https://arxiv.org/abs/1704.06904">https://arxiv.org/abs/1704.06904</a></li>
+<li>GoogLeNet: <a href="https://arxiv.org/abs/1409.4842">https://arxiv.org/abs/1409.4842</a></li>
+<li>Inception: <a href="https://arxiv.org/abs/1512.00567">https://arxiv.org/abs/1512.00567</a></li>
+<li>Xception: <a href="https://arxiv.org/abs/1610.02357">https://arxiv.org/abs/1610.02357</a></li>
+<li>MobileNet: <a href="https://arxiv.org/abs/1704.04861">https://arxiv.org/abs/1704.04861</a></li>
+</ul>
+
+<h2 id="semantic-segmentation">Semantic Segmentation</h2>
+
+<ul>
+<li>FCN: <a href="https://arxiv.org/abs/1411.4038">https://arxiv.org/abs/1411.4038</a></li>
+<li>SegNet: <a href="https://arxiv.org/abs/1511.00561">https://arxiv.org/abs/1511.00561</a></li>
+<li>UNet: <a href="https://arxiv.org/abs/1505.04597">https://arxiv.org/abs/1505.04597</a></li>
+<li>PSPNet: <a href="https://arxiv.org/abs/1612.01105">https://arxiv.org/abs/1612.01105</a></li>
+<li>DeepLab: <a href="https://arxiv.org/abs/1606.00915">https://arxiv.org/abs/1606.00915</a></li>
+<li>ICNet: <a href="https://arxiv.org/abs/1704.08545">https://arxiv.org/abs/1704.08545</a></li>
+<li>ENet: <a href="https://arxiv.org/abs/1606.02147">https://arxiv.org/abs/1606.02147</a></li>
+</ul>
+
+<h2 id="generative-adversarial-networks">Generative adversarial networks</h2>
+
+<ul>
+<li>GAN: <a href="https://arxiv.org/abs/1406.2661">https://arxiv.org/abs/1406.2661</a></li>
+<li>DCGAN: <a href="https://arxiv.org/abs/1511.06434">https://arxiv.org/abs/1511.06434</a></li>
+<li>WGAN: <a href="https://arxiv.org/abs/1701.07875">https://arxiv.org/abs/1701.07875</a></li>
+<li>Pix2Pix: <a href="https://arxiv.org/abs/1611.07004">https://arxiv.org/abs/1611.07004</a></li>
+<li>CycleGAN: <a href="https://arxiv.org/abs/1703.10593">https://arxiv.org/abs/1703.10593</a></li>
+</ul>
+
+<h2 id="object-detection">Object detection</h2>
+
+<ul>
+<li>RCNN: <a href="https://arxiv.org/abs/1311.2524">https://arxiv.org/abs/1311.2524</a></li>
+<li>Fast-RCNN: <a href="https://arxiv.org/abs/1504.08083">https://arxiv.org/abs/1504.08083</a></li>
+<li>Faster-RCNN: <a href="https://arxiv.org/abs/1506.01497">https://arxiv.org/abs/1506.01497</a></li>
+<li>SSD: <a href="https://arxiv.org/abs/1512.02325">https://arxiv.org/abs/1512.02325</a></li>
+<li>YOLO: <a href="https://arxiv.org/abs/1506.02640">https://arxiv.org/abs/1506.02640</a></li>
+<li>YOLO9000: <a href="https://arxiv.org/abs/1612.08242">https://arxiv.org/abs/1612.08242</a></li>
+</ul>
+
+<p>Also, here is a couple of another links:</p>
+
+<ul>
+<li><a href="http://cs231n.stanford.edu/">CS231n: Convolutional Neural Networks for Visual Recognition</a> and <a href="http://cs231n.github.io/">it&rsquo;s Github page</a>.</li>
+<li><a href="http://www.fast.ai/">Fast.AI</a></li>
+</ul>
+	
+			
+
+			
+				<div class="tags-list">
+					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+					
+	                <a class="post-tag post-tag-machine-learning" href="http://iryndin.net/tags/machine-learning">machine learning</a>,
+	                
+				</div>
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/post/pandas-dataset-analysis-example/">Pandas dataset analysis example</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2018. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>
