@@ -2,14 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Data Science on Just my blog</title>
-    <link>http://iryndin.net/tags/data-science/</link>
+    <link>http://iryndin.net/tags/data-science/index.xml</link>
     <description>Recent content in Data Science on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Feb 2018 16:04:46 -0500</lastBuildDate>
-    
-	<atom:link href="http://iryndin.net/tags/data-science/index.xml" rel="self" type="application/rss+xml" />
-    
+    <atom:link href="http://iryndin.net/tags/data-science/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Pandas dataset analysis example</title>
@@ -21,7 +18,325 @@
 Let&amp;rsquo;s take a &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/blob/master/data/01-cardio/cardio.csv&#34;&gt;cardio dataset&lt;/a&gt;
 from here: &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/tree/master/data/01-cardio&#34;&gt;https://github.com/iryndin/Machine-Learning/tree/master/data/01-cardio&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;task-0-import-dataset&#34;&gt;Task 0. Import dataset&lt;/h2&gt;
+
+&lt;p&gt;First, import necessary libs and read the data:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import pandas as pd
+import numpy as np
+
+df = pd.read_csv(&#39;cardio.csv&#39;, sep=&#39;;&#39;, index_col=&#39;id&#39;)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we have DataFrame (&lt;code&gt;df&lt;/code&gt;), which is one of main entities Pandas work with.&lt;/p&gt;
+
+&lt;p&gt;This dataset contains following fields:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Field&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;id&lt;/td&gt;
+&lt;td&gt;Patient ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;age&lt;/td&gt;
+&lt;td&gt;Age in days&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;gender&lt;/td&gt;
+&lt;td&gt;Male or female&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;age&lt;/td&gt;
+&lt;td&gt;Age in days&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;height&lt;/td&gt;
+&lt;td&gt;Height in cm&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;weight&lt;/td&gt;
+&lt;td&gt;Weight in kg&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ap_hi&lt;/td&gt;
+&lt;td&gt;Arterial Pressure (high)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ap_lo&lt;/td&gt;
+&lt;td&gt;Arterial Pressure (low)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;cholesterol&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;gluc&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;smoke&lt;/td&gt;
+&lt;td&gt;Smoking or not&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;alco&lt;/td&gt;
+&lt;td&gt;Drinks alco or not&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;active&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;cardio&lt;/td&gt;
+&lt;td&gt;Has cardio probem or not&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;task-1-count-males-and-females&#34;&gt;Task 1. Count males and females&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s count total number of males and females. OK, we have a column &lt;code&gt;gender&lt;/code&gt; which contains values &lt;code&gt;1&lt;/code&gt; and &lt;code&gt;2&lt;/code&gt;.
+But which of them is male, and which is female? It is not clear.&lt;/p&gt;
+
+&lt;p&gt;We can determine this using reasonable assumption that males are in average higher than females. So, we need to filter those rows
+which have &lt;code&gt;gender=1&lt;/code&gt; and calculate mean height for them. Then we should calculate mean height value for rows with &lt;code&gt;gender=2&lt;/code&gt;.
+Then we should check which of values if bigger, and hence assume that those are for males. Let&amp;rsquo;s do this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;] == 1][&#39;height&#39;].mean()
+161.35561168460356
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;] == 2][&#39;height&#39;].mean()
+169.94789538210054
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we see that for rows with &lt;code&gt;gender=2&lt;/code&gt; mean height is greater that for rows with &lt;code&gt;gender=1&lt;/code&gt;.
+So we can conclude that &lt;code&gt;gender=2&lt;/code&gt; is for males, while &lt;code&gt;gender=1&lt;/code&gt; is for females. Let&amp;rsquo;s create separate dataframes
+bot for males and females:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;males = df[df[&#39;gender&#39;] == 2]
+females = df[df[&#39;gender&#39;] == 1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s answer this task&amp;rsquo;s question about number of males and females:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[&#39;age&#39;].count()
+24470
+&amp;gt;&amp;gt;&amp;gt; females[&#39;age&#39;].count()
+45530
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So the answer to Task 1 is:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;24470 males&lt;/li&gt;
+&lt;li&gt;45530 females&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;task-2-calculate-who-drinks-alcohol-less-in-average-males-or-females&#34;&gt;Task 2. Calculate who drinks alcohol less (in average): males or females&lt;/h2&gt;
+
+&lt;p&gt;Alcohol usage column is &lt;code&gt;alco&lt;/code&gt; and it contains values &lt;code&gt;1&lt;/code&gt; (in use) and &lt;code&gt;0&lt;/code&gt; (not in use).
+So we simply need to calculate a portion of alco drinkes for males and females and compare these values.&lt;/p&gt;
+
+&lt;p&gt;We can do it in two ways:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;filter by &lt;code&gt;alco&lt;/code&gt; column value and calculate proportion&lt;/li&gt;
+&lt;li&gt;simply sum &lt;code&gt;alco&lt;/code&gt; column values and divide by total number of males/females respectively.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;rsquo;s do both. First one:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[males[&#39;alco&#39;]==1][&#39;age&#39;].count()/float(males[&#39;age&#39;].count())
+0.10637515324887617
+&amp;gt;&amp;gt;&amp;gt; females[females[&#39;alco&#39;]==1][&#39;age&#39;].count()/float(females[&#39;age&#39;].count())
+0.025499670546892159
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Second approach:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[&#39;alco&#39;].sum()/float(males[&#39;age&#39;].count())
+0.10637515324887617
+&amp;gt;&amp;gt;&amp;gt; females[&#39;alco&#39;].sum()/float(females[&#39;age&#39;].count())
+0.025499670546892159
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We see that portion of males drinking alco is 10.6%, while for females it is 2.5%.&lt;/p&gt;
+
+&lt;p&gt;So the answer to Task 2 is: females drink alco less.&lt;/p&gt;
+
+&lt;h2 id=&#34;task-3-calculate-how-many-times-greater-percentage-of-smoking-males-is-compared-to-that-of-females&#34;&gt;Task 3. Calculate how many times greater percentage of smoking males is compared to that of females?&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s calculate this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; smoking_males_percentage = 100*males[males[&#39;smoke&#39;]==1][&#39;age&#39;].count()/float(males[&#39;age&#39;].count())
+&amp;gt;&amp;gt;&amp;gt; smoking_females_percentage = 100*females[females[&#39;smoke&#39;]==1][&#39;age&#39;].count()/float(females[&#39;age&#39;].count())
+&amp;gt;&amp;gt;&amp;gt; round(smoking_males_percentage/smoking_females_percentage)
+12.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Answer to Task 3 is: 12&lt;/p&gt;
+
+&lt;h2 id=&#34;task-4-in-what-units-age-is-measured-here-what-is-difference-in-months-between-median-age-of-smokers-and-non-smokers&#34;&gt;Task 4. In what units age is measured here? What is difference (in months) between median age of smokers and non-smokers?&lt;/h2&gt;
+
+&lt;p&gt;OK, let&amp;rsquo;s look at age stats:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[&#39;age&#39;].describe()
+count    70000.000000
+mean     19468.865814
+std       2467.251667
+min      10798.000000
+25%      17664.000000
+50%      19703.000000
+75%      21327.000000
+max      23713.000000
+Name: age, dtype: float64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ok, this is not similar to years, and even to months. May be in days? Let&amp;rsquo;s check:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[&#39;age&#39;].mean()/365
+53.339358395303321
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is better. So age here is measured in days. Now let&amp;rsquo;s calculate difference (in months) between median age of smokers and non-smokers:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; round((df[df[&#39;smoke&#39;]==0][&#39;age&#39;].median() - df[df[&#39;smoke&#39;]==1][&#39;age&#39;].median())/30)
+20.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The answer for Task 4 is:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;age here is in days&lt;/li&gt;
+&lt;li&gt;difference (in months) between median age of smokers and non-smokers: 20&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;task-5-create-2-special-datasets-from-initial-one-and-calculate-in-how-many-times-portion-of-sick-people-in-one-dataset-is-greater-than-that-of-another-dataset&#34;&gt;Task 5. Create 2 special datasets from initial one and calculate in how many times portion of sick people in one dataset is greater than that of another dataset?&lt;/h2&gt;
+
+&lt;p&gt;Look at Wikipedia article about &lt;a href=&#34;https://ru.wikipedia.org/wiki/%D0%A1%D0%B5%D1%80%D0%B4%D0%B5%D1%87%D0%BD%D0%BE-%D1%81%D0%BE%D1%81%D1%83%D0%B4%D0%B8%D1%81%D1%82%D1%8B%D0%B9_%D1%80%D0%B8%D1%81%D0%BA&#34;&gt;HeartScore&lt;/a&gt;,
+it gives clarification to following actions.&lt;/p&gt;
+
+&lt;p&gt;Do following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create new column - &lt;code&gt;age_years&lt;/code&gt;, round its values to integers. Then for this task take only smoking males aged 60 to 64 (inclusive).&lt;/li&gt;
+&lt;li&gt;In the dataset cholesterol level 1 is equal to 4 mmol/liter, 2 -&amp;gt; 5-7 mmol/liter, 3 maps to 8 mmol/liter.&lt;/li&gt;
+&lt;li&gt;Create 2 datasets out of smoking males 60-64: &lt;code&gt;ap_hi &amp;lt; 120&lt;/code&gt; and &lt;code&gt;cholesterol=1&lt;/code&gt; , another:  &lt;code&gt;160 &amp;lt;= ap_hi &amp;lt; 180&lt;/code&gt; and &lt;code&gt;cholesterol=3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For given 2 datasets calculate in how many times portion of cardio-sick people in one dataset is greater than that of another dataset&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Do this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[&#39;age_years&#39;] = males.apply(lambda row: int(round(row.age/365.0)), axis=1)
+&amp;gt;&amp;gt;&amp;gt; smoking_males = males[(males[&#39;smoke&#39;]==1) &amp;amp; (males[&#39;age_years&#39;]&amp;gt;=60) &amp;amp; (males[&#39;age_years&#39;]&amp;lt;65)]
+&amp;gt;&amp;gt;&amp;gt; smoking_males_1 = smoking_males[(smoking_males[&#39;cholesterol&#39;]==1) &amp;amp; (smoking_males[&#39;ap_hi&#39;]&amp;lt;120)] 
+&amp;gt;&amp;gt;&amp;gt; smoking_males_2 = smoking_males[(smoking_males[&#39;cholesterol&#39;]==3) &amp;amp; (smoking_males[&#39;ap_hi&#39;]&amp;lt;180) &amp;amp; (smoking_males[&#39;ap_hi&#39;]&amp;gt;=160)] 
+&amp;gt;&amp;gt;&amp;gt; cardio_percentage_1 = 100*smoking_males_1[smoking_males_1[&#39;cardio&#39;]==1][&#39;age&#39;].count()/float(smoking_males_1[&#39;age&#39;].count())
+&amp;gt;&amp;gt;&amp;gt; cardio_percentage_2 = 100*smoking_males_2[smoking_males_2[&#39;cardio&#39;]==1][&#39;age&#39;].count()/float(smoking_males_2[&#39;age&#39;].count())
+&amp;gt;&amp;gt;&amp;gt; round(cardio_percentage_2/cardio_percentage_1)
+3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Answer to Task 5: 3&lt;/p&gt;
+
+&lt;h2 id=&#34;task-6-assess-some-bmi-statements&#34;&gt;Task 6. Assess some BMI statements&lt;/h2&gt;
+
+&lt;p&gt;BMI (Body Mass index) is calculated as weight in kg divided by square of height in meters. Normal BMI values are between 18.5 and 25.&lt;/p&gt;
+
+&lt;p&gt;Assess following statements (is it true of false):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Median BMI is greater than its normal values&lt;/li&gt;
+&lt;li&gt;Females BMI is in average less than males BMI&lt;/li&gt;
+&lt;li&gt;Cardio-healthy persons have in average greater BMI than cardio-sick ones&lt;/li&gt;
+&lt;li&gt;For cardio-healthy non-alco males BMI values in average are closer to norm than for cardio-healthy non-alco females&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Solution:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[&#39;bmi&#39;] = df.apply(lambda row: row.weight/((row.height**2)/10000.0), axis=1)
+&amp;gt;&amp;gt;&amp;gt; df[&#39;bmi&#39;].median()
+26.374068120774975
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;]==1][&#39;bmi&#39;].mean()
+27.98758344183285
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;]==2][&#39;bmi&#39;].mean()
+26.754442357289349
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;cardio&#39;]==0][&#39;bmi&#39;].mean()
+26.548175206794504
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;cardio&#39;]==1][&#39;bmi&#39;].mean()
+28.56606062701535
+&amp;gt;&amp;gt;&amp;gt; df[(df[&#39;cardio&#39;]==0) &amp;amp; (df[&#39;alco&#39;]==0) &amp;amp; (df[&#39;gender&#39;]==2)][&#39;bmi&#39;].mean()
+25.872638075460163
+&amp;gt;&amp;gt;&amp;gt; df[(df[&#39;cardio&#39;]==0) &amp;amp; (df[&#39;alco&#39;]==0) &amp;amp; (df[&#39;gender&#39;]==1)][&#39;bmi&#39;].mean()
+26.845406594131507
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Answer to Task 6:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Median BMI is greater than its normal values. TRUE. (Because &lt;code&gt;26.374068120774975 &amp;gt; 25&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Females BMI is in average less than males BMI. FALSE (Because &lt;code&gt;27.98758344183285 &amp;gt; 26.754442357289349&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Cardio-healthy persons have in average greater BMI than cardio-sick ones. FALSE. (Because &lt;code&gt;26.548175206794504 &amp;lt; 28.56606062701535&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;For cardio-healthy non-alco males BMI values in average are closer to norm than for cardio-healthy non-alco females. TRUE. (Because &lt;code&gt;25.872638075460163&lt;/code&gt; is closer to &lt;code&gt;25&lt;/code&gt; than &lt;code&gt;26.845406594131507&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;task-7-clean-up-data&#34;&gt;Task 7. Clean up data.&lt;/h2&gt;
+
+&lt;p&gt;Filter data according to the following (throw out rows matching following criteria):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ap_lo &amp;gt; ap_hi&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;height is less than 2.5 percentile or greater than 97.5 percentile&lt;/li&gt;
+&lt;li&gt;weight is less than 2.5 percentile or greater than 97.5 percentile&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;How many percents of data was thrown out?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; dfclean = df[df[&#39;ap_lo&#39;] &amp;lt;= df[&#39;ap_hi&#39;]]
+&amp;gt;&amp;gt;&amp;gt; h025 = df[&#39;height&#39;].quantile(0.025)
+&amp;gt;&amp;gt;&amp;gt; h975 = df[&#39;height&#39;].quantile(0.975)
+&amp;gt;&amp;gt;&amp;gt; dfclean = dfclean[(dfclean[&#39;height&#39;] &amp;gt;= h025) &amp;amp; (dfclean[&#39;height&#39;] &amp;lt;= h975)]
+&amp;gt;&amp;gt;&amp;gt; w025 = df[&#39;weight&#39;].quantile(0.025)
+&amp;gt;&amp;gt;&amp;gt; w975 = df[&#39;weight&#39;].quantile(0.975)
+&amp;gt;&amp;gt;&amp;gt; dfclean = dfclean[(dfclean[&#39;weight&#39;] &amp;gt;= w025) &amp;amp; (dfclean[&#39;weight&#39;] &amp;lt;= w975)]
+&amp;gt;&amp;gt;&amp;gt; size = df[&#39;age&#39;].count()
+&amp;gt;&amp;gt;&amp;gt; sizeclean = dfclean[&#39;age&#39;].count()
+&amp;gt;&amp;gt;&amp;gt; round(100.0*(1 - sizeclean/float(size)))
+10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Answer to Task 7: 10&lt;/p&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/Yorko/mlcourse_open&#34;&gt;ML Course Open&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://habrahabr.ru/company/ods/blog/322626/&#34;&gt;ML Course Open. Lecture 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://nbviewer.jupyter.org/github/Yorko/mlcourse_open/blob/master/jupyter_russian/homeworks/hw1_session3_data_analysis_pandas.ipynb?flush_cache=true&#34;&gt;ML Course Open. Hometask 1.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.dataquest.io/blog/pandas-cheat-sheet/&#34;&gt;Pandas Cheat Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -33,7 +348,30 @@ from here: &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/tree/mast
       <description>&lt;p&gt;Today I found a nice post in LinkedIn: &lt;a href=&#34;https://www.linkedin.com/feed/update/urn:li:activity:6366260134636851200/&#34;&gt;How to Stand Out as an Entry-Level Data Scientist Candidate&lt;/a&gt;.
 I liked it very much, and I think it contains pretty much true points. Here they are.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Software engineering skills&lt;/li&gt;
+&lt;li&gt;Good GitHub projects, writing production-level code&lt;/li&gt;
+&lt;li&gt;Be able to deeply understand commonly used ML algorithms AND to explain them to a laymen:
+
+&lt;ul&gt;
+&lt;li&gt;Linear regression&lt;/li&gt;
+&lt;li&gt;Logistic regression&lt;/li&gt;
+&lt;li&gt;SVM&lt;/li&gt;
+&lt;li&gt;Random forest&lt;/li&gt;
+&lt;li&gt;Boosting&lt;/li&gt;
+&lt;li&gt;K-means&lt;/li&gt;
+&lt;li&gt;KNN&lt;/li&gt;
+&lt;li&gt;PCA&lt;/li&gt;
+&lt;li&gt;Collaborative filtering&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Be able to compare and contrast commonly used ML algorithms, explaining their relative pros and cons&lt;/li&gt;
+&lt;li&gt;Be able to walk through the business value of every project they worked on&lt;/li&gt;
+&lt;li&gt;Be able to complete every exercise from Cracking the Coding Interview in Python, writing clear, efficient code&lt;/li&gt;
+&lt;li&gt;High ranking on a public Kaggle board (top 3%)&lt;/li&gt;
+&lt;li&gt;CLEAR, PROFESSIONAL COMMUNICATION SKILLS!!!&lt;/li&gt;
+&lt;/ol&gt;</description>
     </item>
     
   </channel>

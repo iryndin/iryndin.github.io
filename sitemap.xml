@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://iryndin.net/post/how_to_run_hugo_under_docker/</loc>
+    <lastmod>2018-06-09T00:50:44+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/useful-ml-articles/</loc>
     <lastmod>2018-03-22T19:59:44-04:00</lastmod>
   </url>
@@ -72,7 +77,7 @@
   </url>
   
   <url>
-    <loc>http://iryndin.net/post/interesting-hacker-news-posts-by-21-april-2017/</loc>
+    <loc>http://iryndin.net/post/interesting-hacker-news-posts-by-21-April-2017/</loc>
     <lastmod>2017-04-21T19:57:28+03:00</lastmod>
   </url>
   
@@ -116,11 +121,6 @@
   </url>
   
   <url>
-    <loc>http://iryndin.net/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://iryndin.net/tags/data-science/</loc>
     <lastmod>2018-02-11T16:04:46-05:00</lastmod>
     <priority>0</priority>
@@ -133,6 +133,18 @@
   </url>
   
   <url>
+    <loc>http://iryndin.net/tags/docker/</loc>
+    <lastmod>2018-06-09T00:50:44+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iryndin.net/tags/hugo/</loc>
+    <lastmod>2018-06-09T00:50:44+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/tags/jdbc/</loc>
     <lastmod>2017-11-28T07:14:59+03:00</lastmod>
     <priority>0</priority>
@@ -140,7 +152,7 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2018-03-22T19:59:44-04:00</lastmod>
+    <lastmod>2018-06-09T00:50:44+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -170,7 +182,7 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2018-03-22T19:59:44-04:00</lastmod>
+    <lastmod>2018-06-09T00:50:44+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -188,7 +200,6 @@
   
   <url>
     <loc>http://iryndin.net/tags/</loc>
-    <lastmod>2017-11-18T12:19:37+03:00</lastmod>
     <priority>0</priority>
   </url>
   

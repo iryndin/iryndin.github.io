@@ -2,14 +2,90 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Just my blog</title>
-    <link>http://iryndin.net/post/</link>
+    <link>http://iryndin.net/post/index.xml</link>
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Mar 2018 19:59:44 -0400</lastBuildDate>
+    <lastBuildDate>Sat, 09 Jun 2018 00:50:44 +0000</lastBuildDate>
+    <atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
     
-	<atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>How to run HUGO under Docker</title>
+      <link>http://iryndin.net/post/how_to_run_hugo_under_docker/</link>
+      <pubDate>Sat, 09 Jun 2018 00:50:44 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/how_to_run_hugo_under_docker/</guid>
+      <description>&lt;p&gt;It is convenient to run such tool like Hugo (and many many others) under Docker,
+without installing it to a local machine. Here I will show you how to run Hugo
+under Docker, create new posts for the blog, generate static content - i.e. all basic operations
+that allow to add new and edit existing posts to the blog.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;what-docker-image-for-hugo-to-take&#34;&gt;What docker image for Hugo to take&lt;/h2&gt;
+
+&lt;p&gt;A lot of Hugo images are available on &lt;a href=&#34;https://hub.docker.com/search/?isAutomated=0&amp;amp;isOfficial=0&amp;amp;page=1&amp;amp;pullCount=0&amp;amp;q=hugo&amp;amp;starCount=1&#34;&gt;Docker Hub&lt;/a&gt;, let&amp;rsquo;s just take the most starred one: &lt;a href=&#34;https://hub.docker.com/r/jojomi/hugo/&#34;&gt;jojomi/hugo&lt;/a&gt;.
+One nice thing for this image is that it is updated on time and all versions of Hugo are available, starting from &lt;code&gt;0.15&lt;/code&gt;. I will show you how to run Hugo &lt;code&gt;0.19&lt;/code&gt;, but you can easily apply this knowledge to run Hugo of more late versions.&lt;/p&gt;
+
+&lt;h2 id=&#34;how-to-run-hugo-from-docker&#34;&gt;How to run hugo from docker&lt;/h2&gt;
+
+&lt;p&gt;First, let&amp;rsquo;s have two folders:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;src&lt;/code&gt; - for sources of our site&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;output&lt;/code&gt; - for generated output&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Then, let&amp;rsquo;s do following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;create some simple site (let it be blog) structure&lt;/li&gt;
+&lt;li&gt;download theme&lt;/li&gt;
+&lt;li&gt;run site on &lt;code&gt;localhost&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;then generate html from out content&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;create-simple-site-structure&#34;&gt;Create simple site structure&lt;/h2&gt;
+
+&lt;p&gt;Inside our &lt;code&gt;src&lt;/code&gt; folder we have following content:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;config.toml&lt;/code&gt; - file with config&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;content&lt;/code&gt; - folder with blog content&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;static&lt;/code&gt; - folder with static assets (images/css/scripts/etc)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;themes&lt;/code&gt; - folder which contain one or more theme we want to employ for our website&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To see example of initial folder, see it on github: &lt;a href=&#34;https://github.com/iryndin/hugoblog&#34;&gt;https://github.com/iryndin/hugoblog&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Folder &lt;code&gt;themes&lt;/code&gt; should contain Hugo theme which we are going to use. For this example, let it be &lt;code&gt;hugo-redlounge&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now, let&amp;rsquo;s run Hugo docker image to run a webserver on localhost, so that we would be able to look at our website in browser:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run --rm --name &amp;quot;hugo1&amp;quot; -p 1313:1313 -v $(pwd)/src:/src -v $(pwd)/output:/output -e HUGO_THEME=&amp;quot;hugo-redlounge&amp;quot; -e HUGO_WATCH=&amp;quot;true&amp;quot; jojomi/hugo:0.19
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we will be able to see our website in browser at &lt;code&gt;http://localhost:1313&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-new-post&#34;&gt;Creating new post&lt;/h2&gt;
+
+&lt;p&gt;To create new post, run following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker exec -it hugo1 hugo new post/example3.md
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;New file for this post will be created, and you can immediately start editing it.&lt;/p&gt;
+
+&lt;h2 id=&#34;generate-static-content&#34;&gt;Generate static content&lt;/h2&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s generate static content for our site. To generate static content in &lt;code&gt;output2&lt;/code&gt; folder you need to run command similar to what we used to run webserver on localhost, but without &lt;code&gt;HUGO_WATCH&lt;/code&gt; variable and without necessity to map ports. Also, you should run it under another name, if you do not want to shutdown
+container named &lt;code&gt;hugo1&lt;/code&gt; (that used in this example to run local webserver).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run --rm --name &amp;quot;hugo2&amp;quot; -v $(pwd)/src:/src -v $(pwd)/output2:/output -e HUGO_THEME=&amp;quot;hugo-redlounge&amp;quot; jojomi/hugo:0.19
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And you will have your static site in &lt;code&gt;output2&lt;/code&gt; folder.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Useful ML articles</title>
@@ -19,7 +95,66 @@
       <guid>http://iryndin.net/post/useful-ml-articles/</guid>
       <description>&lt;p&gt;I have got a list of useful ML articles from ODS slack (&lt;a href=&#34;https://opendatascience.slack.com/archives/C047H3N8L/p1520445318000067&#34;&gt;message link&lt;/a&gt;).&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Brief context: there was a task to study a person with almost zero programming experience and absolutely absent ML knowledge
+to become able to do ML research. So, how it was achieved? Simple! This person was charged to implement all articles from the list
+using &lt;code&gt;pytorch&lt;/code&gt;. It took almost a month for the person to learn to read, implement and sometimes analyze articles from the list.&lt;/p&gt;
+
+&lt;p&gt;So here is this list:&lt;/p&gt;
+
+&lt;h2 id=&#34;architectures&#34;&gt;Architectures&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;AlexNet: &lt;a href=&#34;https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks&#34;&gt;https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;ZFNet: &lt;a href=&#34;https://arxiv.org/abs/1311.2901&#34;&gt;https://arxiv.org/abs/1311.2901&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;VGG16: &lt;a href=&#34;https://arxiv.org/abs/1505.06798&#34;&gt;https://arxiv.org/abs/1505.06798&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;ResNet: &lt;a href=&#34;https://arxiv.org/abs/1704.06904&#34;&gt;https://arxiv.org/abs/1704.06904&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;GoogLeNet: &lt;a href=&#34;https://arxiv.org/abs/1409.4842&#34;&gt;https://arxiv.org/abs/1409.4842&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Inception: &lt;a href=&#34;https://arxiv.org/abs/1512.00567&#34;&gt;https://arxiv.org/abs/1512.00567&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Xception: &lt;a href=&#34;https://arxiv.org/abs/1610.02357&#34;&gt;https://arxiv.org/abs/1610.02357&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;MobileNet: &lt;a href=&#34;https://arxiv.org/abs/1704.04861&#34;&gt;https://arxiv.org/abs/1704.04861&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;semantic-segmentation&#34;&gt;Semantic Segmentation&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;FCN: &lt;a href=&#34;https://arxiv.org/abs/1411.4038&#34;&gt;https://arxiv.org/abs/1411.4038&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;SegNet: &lt;a href=&#34;https://arxiv.org/abs/1511.00561&#34;&gt;https://arxiv.org/abs/1511.00561&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;UNet: &lt;a href=&#34;https://arxiv.org/abs/1505.04597&#34;&gt;https://arxiv.org/abs/1505.04597&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;PSPNet: &lt;a href=&#34;https://arxiv.org/abs/1612.01105&#34;&gt;https://arxiv.org/abs/1612.01105&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;DeepLab: &lt;a href=&#34;https://arxiv.org/abs/1606.00915&#34;&gt;https://arxiv.org/abs/1606.00915&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;ICNet: &lt;a href=&#34;https://arxiv.org/abs/1704.08545&#34;&gt;https://arxiv.org/abs/1704.08545&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;ENet: &lt;a href=&#34;https://arxiv.org/abs/1606.02147&#34;&gt;https://arxiv.org/abs/1606.02147&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;generative-adversarial-networks&#34;&gt;Generative adversarial networks&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;GAN: &lt;a href=&#34;https://arxiv.org/abs/1406.2661&#34;&gt;https://arxiv.org/abs/1406.2661&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;DCGAN: &lt;a href=&#34;https://arxiv.org/abs/1511.06434&#34;&gt;https://arxiv.org/abs/1511.06434&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;WGAN: &lt;a href=&#34;https://arxiv.org/abs/1701.07875&#34;&gt;https://arxiv.org/abs/1701.07875&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Pix2Pix: &lt;a href=&#34;https://arxiv.org/abs/1611.07004&#34;&gt;https://arxiv.org/abs/1611.07004&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;CycleGAN: &lt;a href=&#34;https://arxiv.org/abs/1703.10593&#34;&gt;https://arxiv.org/abs/1703.10593&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;object-detection&#34;&gt;Object detection&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;RCNN: &lt;a href=&#34;https://arxiv.org/abs/1311.2524&#34;&gt;https://arxiv.org/abs/1311.2524&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fast-RCNN: &lt;a href=&#34;https://arxiv.org/abs/1504.08083&#34;&gt;https://arxiv.org/abs/1504.08083&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Faster-RCNN: &lt;a href=&#34;https://arxiv.org/abs/1506.01497&#34;&gt;https://arxiv.org/abs/1506.01497&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;SSD: &lt;a href=&#34;https://arxiv.org/abs/1512.02325&#34;&gt;https://arxiv.org/abs/1512.02325&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;YOLO: &lt;a href=&#34;https://arxiv.org/abs/1506.02640&#34;&gt;https://arxiv.org/abs/1506.02640&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;YOLO9000: &lt;a href=&#34;https://arxiv.org/abs/1612.08242&#34;&gt;https://arxiv.org/abs/1612.08242&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Also, here is a couple of another links:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://cs231n.stanford.edu/&#34;&gt;CS231n: Convolutional Neural Networks for Visual Recognition&lt;/a&gt; and &lt;a href=&#34;http://cs231n.github.io/&#34;&gt;it&amp;rsquo;s Github page&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.fast.ai/&#34;&gt;Fast.AI&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -32,7 +167,325 @@
 Let&amp;rsquo;s take a &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/blob/master/data/01-cardio/cardio.csv&#34;&gt;cardio dataset&lt;/a&gt;
 from here: &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/tree/master/data/01-cardio&#34;&gt;https://github.com/iryndin/Machine-Learning/tree/master/data/01-cardio&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;task-0-import-dataset&#34;&gt;Task 0. Import dataset&lt;/h2&gt;
+
+&lt;p&gt;First, import necessary libs and read the data:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import pandas as pd
+import numpy as np
+
+df = pd.read_csv(&#39;cardio.csv&#39;, sep=&#39;;&#39;, index_col=&#39;id&#39;)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we have DataFrame (&lt;code&gt;df&lt;/code&gt;), which is one of main entities Pandas work with.&lt;/p&gt;
+
+&lt;p&gt;This dataset contains following fields:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Field&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;id&lt;/td&gt;
+&lt;td&gt;Patient ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;age&lt;/td&gt;
+&lt;td&gt;Age in days&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;gender&lt;/td&gt;
+&lt;td&gt;Male or female&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;age&lt;/td&gt;
+&lt;td&gt;Age in days&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;height&lt;/td&gt;
+&lt;td&gt;Height in cm&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;weight&lt;/td&gt;
+&lt;td&gt;Weight in kg&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ap_hi&lt;/td&gt;
+&lt;td&gt;Arterial Pressure (high)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ap_lo&lt;/td&gt;
+&lt;td&gt;Arterial Pressure (low)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;cholesterol&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;gluc&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;smoke&lt;/td&gt;
+&lt;td&gt;Smoking or not&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;alco&lt;/td&gt;
+&lt;td&gt;Drinks alco or not&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;active&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;cardio&lt;/td&gt;
+&lt;td&gt;Has cardio probem or not&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;task-1-count-males-and-females&#34;&gt;Task 1. Count males and females&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s count total number of males and females. OK, we have a column &lt;code&gt;gender&lt;/code&gt; which contains values &lt;code&gt;1&lt;/code&gt; and &lt;code&gt;2&lt;/code&gt;.
+But which of them is male, and which is female? It is not clear.&lt;/p&gt;
+
+&lt;p&gt;We can determine this using reasonable assumption that males are in average higher than females. So, we need to filter those rows
+which have &lt;code&gt;gender=1&lt;/code&gt; and calculate mean height for them. Then we should calculate mean height value for rows with &lt;code&gt;gender=2&lt;/code&gt;.
+Then we should check which of values if bigger, and hence assume that those are for males. Let&amp;rsquo;s do this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;] == 1][&#39;height&#39;].mean()
+161.35561168460356
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;] == 2][&#39;height&#39;].mean()
+169.94789538210054
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we see that for rows with &lt;code&gt;gender=2&lt;/code&gt; mean height is greater that for rows with &lt;code&gt;gender=1&lt;/code&gt;.
+So we can conclude that &lt;code&gt;gender=2&lt;/code&gt; is for males, while &lt;code&gt;gender=1&lt;/code&gt; is for females. Let&amp;rsquo;s create separate dataframes
+bot for males and females:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;males = df[df[&#39;gender&#39;] == 2]
+females = df[df[&#39;gender&#39;] == 1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s answer this task&amp;rsquo;s question about number of males and females:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[&#39;age&#39;].count()
+24470
+&amp;gt;&amp;gt;&amp;gt; females[&#39;age&#39;].count()
+45530
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So the answer to Task 1 is:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;24470 males&lt;/li&gt;
+&lt;li&gt;45530 females&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;task-2-calculate-who-drinks-alcohol-less-in-average-males-or-females&#34;&gt;Task 2. Calculate who drinks alcohol less (in average): males or females&lt;/h2&gt;
+
+&lt;p&gt;Alcohol usage column is &lt;code&gt;alco&lt;/code&gt; and it contains values &lt;code&gt;1&lt;/code&gt; (in use) and &lt;code&gt;0&lt;/code&gt; (not in use).
+So we simply need to calculate a portion of alco drinkes for males and females and compare these values.&lt;/p&gt;
+
+&lt;p&gt;We can do it in two ways:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;filter by &lt;code&gt;alco&lt;/code&gt; column value and calculate proportion&lt;/li&gt;
+&lt;li&gt;simply sum &lt;code&gt;alco&lt;/code&gt; column values and divide by total number of males/females respectively.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;rsquo;s do both. First one:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[males[&#39;alco&#39;]==1][&#39;age&#39;].count()/float(males[&#39;age&#39;].count())
+0.10637515324887617
+&amp;gt;&amp;gt;&amp;gt; females[females[&#39;alco&#39;]==1][&#39;age&#39;].count()/float(females[&#39;age&#39;].count())
+0.025499670546892159
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Second approach:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[&#39;alco&#39;].sum()/float(males[&#39;age&#39;].count())
+0.10637515324887617
+&amp;gt;&amp;gt;&amp;gt; females[&#39;alco&#39;].sum()/float(females[&#39;age&#39;].count())
+0.025499670546892159
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We see that portion of males drinking alco is 10.6%, while for females it is 2.5%.&lt;/p&gt;
+
+&lt;p&gt;So the answer to Task 2 is: females drink alco less.&lt;/p&gt;
+
+&lt;h2 id=&#34;task-3-calculate-how-many-times-greater-percentage-of-smoking-males-is-compared-to-that-of-females&#34;&gt;Task 3. Calculate how many times greater percentage of smoking males is compared to that of females?&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s calculate this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; smoking_males_percentage = 100*males[males[&#39;smoke&#39;]==1][&#39;age&#39;].count()/float(males[&#39;age&#39;].count())
+&amp;gt;&amp;gt;&amp;gt; smoking_females_percentage = 100*females[females[&#39;smoke&#39;]==1][&#39;age&#39;].count()/float(females[&#39;age&#39;].count())
+&amp;gt;&amp;gt;&amp;gt; round(smoking_males_percentage/smoking_females_percentage)
+12.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Answer to Task 3 is: 12&lt;/p&gt;
+
+&lt;h2 id=&#34;task-4-in-what-units-age-is-measured-here-what-is-difference-in-months-between-median-age-of-smokers-and-non-smokers&#34;&gt;Task 4. In what units age is measured here? What is difference (in months) between median age of smokers and non-smokers?&lt;/h2&gt;
+
+&lt;p&gt;OK, let&amp;rsquo;s look at age stats:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[&#39;age&#39;].describe()
+count    70000.000000
+mean     19468.865814
+std       2467.251667
+min      10798.000000
+25%      17664.000000
+50%      19703.000000
+75%      21327.000000
+max      23713.000000
+Name: age, dtype: float64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ok, this is not similar to years, and even to months. May be in days? Let&amp;rsquo;s check:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[&#39;age&#39;].mean()/365
+53.339358395303321
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is better. So age here is measured in days. Now let&amp;rsquo;s calculate difference (in months) between median age of smokers and non-smokers:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; round((df[df[&#39;smoke&#39;]==0][&#39;age&#39;].median() - df[df[&#39;smoke&#39;]==1][&#39;age&#39;].median())/30)
+20.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The answer for Task 4 is:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;age here is in days&lt;/li&gt;
+&lt;li&gt;difference (in months) between median age of smokers and non-smokers: 20&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;task-5-create-2-special-datasets-from-initial-one-and-calculate-in-how-many-times-portion-of-sick-people-in-one-dataset-is-greater-than-that-of-another-dataset&#34;&gt;Task 5. Create 2 special datasets from initial one and calculate in how many times portion of sick people in one dataset is greater than that of another dataset?&lt;/h2&gt;
+
+&lt;p&gt;Look at Wikipedia article about &lt;a href=&#34;https://ru.wikipedia.org/wiki/%D0%A1%D0%B5%D1%80%D0%B4%D0%B5%D1%87%D0%BD%D0%BE-%D1%81%D0%BE%D1%81%D1%83%D0%B4%D0%B8%D1%81%D1%82%D1%8B%D0%B9_%D1%80%D0%B8%D1%81%D0%BA&#34;&gt;HeartScore&lt;/a&gt;,
+it gives clarification to following actions.&lt;/p&gt;
+
+&lt;p&gt;Do following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create new column - &lt;code&gt;age_years&lt;/code&gt;, round its values to integers. Then for this task take only smoking males aged 60 to 64 (inclusive).&lt;/li&gt;
+&lt;li&gt;In the dataset cholesterol level 1 is equal to 4 mmol/liter, 2 -&amp;gt; 5-7 mmol/liter, 3 maps to 8 mmol/liter.&lt;/li&gt;
+&lt;li&gt;Create 2 datasets out of smoking males 60-64: &lt;code&gt;ap_hi &amp;lt; 120&lt;/code&gt; and &lt;code&gt;cholesterol=1&lt;/code&gt; , another:  &lt;code&gt;160 &amp;lt;= ap_hi &amp;lt; 180&lt;/code&gt; and &lt;code&gt;cholesterol=3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For given 2 datasets calculate in how many times portion of cardio-sick people in one dataset is greater than that of another dataset&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Do this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[&#39;age_years&#39;] = males.apply(lambda row: int(round(row.age/365.0)), axis=1)
+&amp;gt;&amp;gt;&amp;gt; smoking_males = males[(males[&#39;smoke&#39;]==1) &amp;amp; (males[&#39;age_years&#39;]&amp;gt;=60) &amp;amp; (males[&#39;age_years&#39;]&amp;lt;65)]
+&amp;gt;&amp;gt;&amp;gt; smoking_males_1 = smoking_males[(smoking_males[&#39;cholesterol&#39;]==1) &amp;amp; (smoking_males[&#39;ap_hi&#39;]&amp;lt;120)] 
+&amp;gt;&amp;gt;&amp;gt; smoking_males_2 = smoking_males[(smoking_males[&#39;cholesterol&#39;]==3) &amp;amp; (smoking_males[&#39;ap_hi&#39;]&amp;lt;180) &amp;amp; (smoking_males[&#39;ap_hi&#39;]&amp;gt;=160)] 
+&amp;gt;&amp;gt;&amp;gt; cardio_percentage_1 = 100*smoking_males_1[smoking_males_1[&#39;cardio&#39;]==1][&#39;age&#39;].count()/float(smoking_males_1[&#39;age&#39;].count())
+&amp;gt;&amp;gt;&amp;gt; cardio_percentage_2 = 100*smoking_males_2[smoking_males_2[&#39;cardio&#39;]==1][&#39;age&#39;].count()/float(smoking_males_2[&#39;age&#39;].count())
+&amp;gt;&amp;gt;&amp;gt; round(cardio_percentage_2/cardio_percentage_1)
+3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Answer to Task 5: 3&lt;/p&gt;
+
+&lt;h2 id=&#34;task-6-assess-some-bmi-statements&#34;&gt;Task 6. Assess some BMI statements&lt;/h2&gt;
+
+&lt;p&gt;BMI (Body Mass index) is calculated as weight in kg divided by square of height in meters. Normal BMI values are between 18.5 and 25.&lt;/p&gt;
+
+&lt;p&gt;Assess following statements (is it true of false):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Median BMI is greater than its normal values&lt;/li&gt;
+&lt;li&gt;Females BMI is in average less than males BMI&lt;/li&gt;
+&lt;li&gt;Cardio-healthy persons have in average greater BMI than cardio-sick ones&lt;/li&gt;
+&lt;li&gt;For cardio-healthy non-alco males BMI values in average are closer to norm than for cardio-healthy non-alco females&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Solution:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[&#39;bmi&#39;] = df.apply(lambda row: row.weight/((row.height**2)/10000.0), axis=1)
+&amp;gt;&amp;gt;&amp;gt; df[&#39;bmi&#39;].median()
+26.374068120774975
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;]==1][&#39;bmi&#39;].mean()
+27.98758344183285
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;]==2][&#39;bmi&#39;].mean()
+26.754442357289349
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;cardio&#39;]==0][&#39;bmi&#39;].mean()
+26.548175206794504
+&amp;gt;&amp;gt;&amp;gt; df[df[&#39;cardio&#39;]==1][&#39;bmi&#39;].mean()
+28.56606062701535
+&amp;gt;&amp;gt;&amp;gt; df[(df[&#39;cardio&#39;]==0) &amp;amp; (df[&#39;alco&#39;]==0) &amp;amp; (df[&#39;gender&#39;]==2)][&#39;bmi&#39;].mean()
+25.872638075460163
+&amp;gt;&amp;gt;&amp;gt; df[(df[&#39;cardio&#39;]==0) &amp;amp; (df[&#39;alco&#39;]==0) &amp;amp; (df[&#39;gender&#39;]==1)][&#39;bmi&#39;].mean()
+26.845406594131507
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Answer to Task 6:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Median BMI is greater than its normal values. TRUE. (Because &lt;code&gt;26.374068120774975 &amp;gt; 25&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Females BMI is in average less than males BMI. FALSE (Because &lt;code&gt;27.98758344183285 &amp;gt; 26.754442357289349&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Cardio-healthy persons have in average greater BMI than cardio-sick ones. FALSE. (Because &lt;code&gt;26.548175206794504 &amp;lt; 28.56606062701535&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;For cardio-healthy non-alco males BMI values in average are closer to norm than for cardio-healthy non-alco females. TRUE. (Because &lt;code&gt;25.872638075460163&lt;/code&gt; is closer to &lt;code&gt;25&lt;/code&gt; than &lt;code&gt;26.845406594131507&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;task-7-clean-up-data&#34;&gt;Task 7. Clean up data.&lt;/h2&gt;
+
+&lt;p&gt;Filter data according to the following (throw out rows matching following criteria):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ap_lo &amp;gt; ap_hi&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;height is less than 2.5 percentile or greater than 97.5 percentile&lt;/li&gt;
+&lt;li&gt;weight is less than 2.5 percentile or greater than 97.5 percentile&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;How many percents of data was thrown out?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; dfclean = df[df[&#39;ap_lo&#39;] &amp;lt;= df[&#39;ap_hi&#39;]]
+&amp;gt;&amp;gt;&amp;gt; h025 = df[&#39;height&#39;].quantile(0.025)
+&amp;gt;&amp;gt;&amp;gt; h975 = df[&#39;height&#39;].quantile(0.975)
+&amp;gt;&amp;gt;&amp;gt; dfclean = dfclean[(dfclean[&#39;height&#39;] &amp;gt;= h025) &amp;amp; (dfclean[&#39;height&#39;] &amp;lt;= h975)]
+&amp;gt;&amp;gt;&amp;gt; w025 = df[&#39;weight&#39;].quantile(0.025)
+&amp;gt;&amp;gt;&amp;gt; w975 = df[&#39;weight&#39;].quantile(0.975)
+&amp;gt;&amp;gt;&amp;gt; dfclean = dfclean[(dfclean[&#39;weight&#39;] &amp;gt;= w025) &amp;amp; (dfclean[&#39;weight&#39;] &amp;lt;= w975)]
+&amp;gt;&amp;gt;&amp;gt; size = df[&#39;age&#39;].count()
+&amp;gt;&amp;gt;&amp;gt; sizeclean = dfclean[&#39;age&#39;].count()
+&amp;gt;&amp;gt;&amp;gt; round(100.0*(1 - sizeclean/float(size)))
+10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Answer to Task 7: 10&lt;/p&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/Yorko/mlcourse_open&#34;&gt;ML Course Open&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://habrahabr.ru/company/ods/blog/322626/&#34;&gt;ML Course Open. Lecture 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://nbviewer.jupyter.org/github/Yorko/mlcourse_open/blob/master/jupyter_russian/homeworks/hw1_session3_data_analysis_pandas.ipynb?flush_cache=true&#34;&gt;ML Course Open. Hometask 1.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.dataquest.io/blog/pandas-cheat-sheet/&#34;&gt;Pandas Cheat Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -44,7 +497,30 @@ from here: &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/tree/mast
       <description>&lt;p&gt;Today I found a nice post in LinkedIn: &lt;a href=&#34;https://www.linkedin.com/feed/update/urn:li:activity:6366260134636851200/&#34;&gt;How to Stand Out as an Entry-Level Data Scientist Candidate&lt;/a&gt;.
 I liked it very much, and I think it contains pretty much true points. Here they are.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Software engineering skills&lt;/li&gt;
+&lt;li&gt;Good GitHub projects, writing production-level code&lt;/li&gt;
+&lt;li&gt;Be able to deeply understand commonly used ML algorithms AND to explain them to a laymen:
+
+&lt;ul&gt;
+&lt;li&gt;Linear regression&lt;/li&gt;
+&lt;li&gt;Logistic regression&lt;/li&gt;
+&lt;li&gt;SVM&lt;/li&gt;
+&lt;li&gt;Random forest&lt;/li&gt;
+&lt;li&gt;Boosting&lt;/li&gt;
+&lt;li&gt;K-means&lt;/li&gt;
+&lt;li&gt;KNN&lt;/li&gt;
+&lt;li&gt;PCA&lt;/li&gt;
+&lt;li&gt;Collaborative filtering&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Be able to compare and contrast commonly used ML algorithms, explaining their relative pros and cons&lt;/li&gt;
+&lt;li&gt;Be able to walk through the business value of every project they worked on&lt;/li&gt;
+&lt;li&gt;Be able to complete every exercise from Cracking the Coding Interview in Python, writing clear, efficient code&lt;/li&gt;
+&lt;li&gt;High ranking on a public Kaggle board (top 3%)&lt;/li&gt;
+&lt;li&gt;CLEAR, PROFESSIONAL COMMUNICATION SKILLS!!!&lt;/li&gt;
+&lt;/ol&gt;</description>
     </item>
     
     <item>
@@ -55,7 +531,65 @@ I liked it very much, and I think it contains pretty much true points. Here they
       <guid>http://iryndin.net/post/optimistic_and_pessimistic_concurrency_control/</guid>
       <description>&lt;p&gt;Here we consider two most widely used approaches to transactional locking: pessimistic and optimistic locking.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Transactional isolation is usually implemented by locking whatever is accessed in a transaction.
+There are two different approaches to transactional locking:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Pessimistic locking&lt;/li&gt;
+&lt;li&gt;Optimistic locking&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;pessimistic-concurrency-control-locking&#34;&gt;Pessimistic concurrency control (locking)&lt;/h2&gt;
+
+&lt;p&gt;Pessimistic locking is called &amp;ldquo;pessimistic&amp;rdquo; because the system assumes the worst —
+it assumes that two or more users will want to update the same record at the same time,
+and then prevents that possibility by locking the record, no matter how unlikely conflicts actually are.&lt;/p&gt;
+
+&lt;p&gt;Pessimistic locking assumes that data will be changed by another transaction and so locks it.
+Pessimistic locking locks the records as soon as it selects rows to update.
+The pessimistic locking strategy guarantees the changes are made safely and consistently.&lt;/p&gt;
+
+&lt;p&gt;The disadvantage of pessimistic locking is that a resource is locked from the time it is first accessed in a transaction
+until the transaction is finished, making it inaccessible to other transactions during that time.
+If most transactions simply look at the resource and never change it, an exclusive lock may be overkill
+as it may cause lock contention, and optimistic locking may be a better approach.&lt;/p&gt;
+
+&lt;h2 id=&#34;optimistic-concurrency-control-locking&#34;&gt;Optimistic concurrency control (locking)&lt;/h2&gt;
+
+&lt;p&gt;Optimistic locking assumes that although conflicts are possible, they will be very rare.
+Instead of locking every record every time that it is used, the system merely looks for indications
+that two users actually did try to update the same record at the same time.&lt;/p&gt;
+
+&lt;p&gt;Optimistic locking locks the record only when updating takes place.
+It ensures that the locks are held between selecting, updating, or deleting rows.
+This process needs a way to ensure that the changes to data are not performed between the time of being read and being altered.
+This is achieved using version numbers, timestamps, hashing, etc.&lt;/p&gt;
+
+&lt;p&gt;The primary advantage of optimistic locking is , it minimizes the time for which a given resource is unavailable
+which is used by another transaction and in this way it more scalable locking alternative.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-to-use-optimistic-or-pessimistic-concurrency-control&#34;&gt;What to use - optimistic or pessimistic concurrency control?&lt;/h2&gt;
+
+&lt;p&gt;In most scenarios, optimistic concurrency control is more efficient and offers higher performance.
+When choosing between pessimistic and optimistic locking, consider the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Pessimistic locking is useful if there are a lot of updates and relatively high chances of users trying to update data at the same time.&lt;/li&gt;
+&lt;li&gt;Pessimistic concurrency control is also more appropriate in applications that contain small tables that are frequently updated.&lt;/li&gt;
+&lt;li&gt;Optimistic locking is useful if the possibility for conflicts is very low – there are many records but relatively few users, or very few updates and mostly read-type operations.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So, there is no correct answer – it depends. You should pick your locking scheme based on your application requirements.&lt;/p&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Optimistic_concurrency_control&#34;&gt;Wikipedia - Optimistic concurrency control&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ibm.com/support/knowledgecenter/en/SSPK3V_7.0.0/com.ibm.swg.im.soliddb.sql.doc/doc/pessimistic.vs.optimistic.concurrency.control.html&#34;&gt;IBM SolidDB Guide - PESSIMISTIC vs. OPTIMISTIC concurrency control&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.objectdb.com/java/jpa/persistence/lock&#34;&gt;ObjectDB Manual - Locking in JPA&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -66,7 +600,70 @@ I liked it very much, and I think it contains pretty much true points. Here they
       <guid>http://iryndin.net/post/postgresql_transaction_isolation_levels/</guid>
       <description>&lt;p&gt;Details of transaction isolation in PostgreSQL.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;On previous post &lt;a href=&#34;http://iryndin.net/post/transaction_isolation_levels/&#34;&gt;about transaction isolation levels&lt;/a&gt; we considered what is
+transaction isolation level and how this influence the result we get from transaction. But from database to database
+details are diferent, so let&amp;rsquo;s consider transaction isolation details for PostgreSQL.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s again repeat a little bit about transaction islolation level.
+The SQL standard defines four levels of transaction isolation.
+The most strict is &lt;code&gt;Serializable&lt;/code&gt;, which is defined by the standard in a paragraph which says
+that any concurrent execution of a set of &lt;code&gt;Serializable&lt;/code&gt; transactions is guaranteed to produce the same effect
+as running them one at a time in some order.&lt;/p&gt;
+
+&lt;p&gt;The other three levels are defined in terms of phenomena, resulting from interaction between concurrent transactions, which must not occur at each level.&lt;/p&gt;
+
+&lt;p&gt;The phenomena which are prohibited at various levels are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;dirty read&lt;/strong&gt; - A transaction reads data written by a concurrent uncommitted transaction.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;nonrepeatable read&lt;/strong&gt; - A transaction re-reads data it has previously read and finds that data has been modified by another transaction (that committed since the initial read).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;phantom read&lt;/strong&gt; - A transaction re-executes a query returning a set of rows that satisfy a search condition and finds that the set of rows satisfying the condition has changed due to another recently-committed transaction.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;only-3-isolation-level-internally&#34;&gt;Only 3 isolation level internally&lt;/h2&gt;
+
+&lt;p&gt;Internally, there are only three distinct isolation levels, which correspond to the levels &lt;code&gt;Read Committed&lt;/code&gt;,
+&lt;code&gt;Repeatable Read&lt;/code&gt;, and &lt;code&gt;Serializable&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;When you select the level &lt;code&gt;Read Uncommitted&lt;/code&gt; you really get &lt;code&gt;Read Committed&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Phantom reads&lt;/code&gt; are not possible in the PostgreSQL implementation of &lt;code&gt;Repeatable Read&lt;/code&gt;, so the actual isolation level might be stricter than what you select.
+This is permitted by the SQL standard: the four isolation levels only define which phenomena must not happen, they do not define which phenomena must happen.&lt;/p&gt;
+
+&lt;p&gt;The reason that PostgreSQL only provides three isolation levels is that this is the only sensible way to map the standard isolation levels
+to the MVCC architecture.&lt;/p&gt;
+
+&lt;h2 id=&#34;read-commited-default&#34;&gt;Read commited (default)&lt;/h2&gt;
+
+&lt;p&gt;A &lt;code&gt;SELECT&lt;/code&gt; query (without a &lt;code&gt;FOR UPDATE/SHARE&lt;/code&gt; clause) sees only data &lt;strong&gt;committed before the query (not transaction!!) began&lt;/strong&gt;;
+it never sees either uncommitted data or changes committed during query execution by concurrent transactions.
+In effect, a SELECT query sees a snapshot of the database &lt;strong&gt;as of the instant the query (not transaction!!) begins to run&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;However, &lt;code&gt;SELECT&lt;/code&gt; does see the effects of previous updates executed within its own transaction, even though they are not yet committed.
+Also note that two successive &lt;code&gt;SELECT&lt;/code&gt; commands &lt;strong&gt;can see different data&lt;/strong&gt;, even though they are within a single transaction,
+if other transactions commit changes during execution of the first &lt;code&gt;SELECT&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;repeatable-read&#34;&gt;Repeatable read&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code&gt;Repeatable Read&lt;/code&gt; isolation level only sees data &lt;strong&gt;committed before the transaction began&lt;/strong&gt;. This is the difference wit hprevious level -
+&lt;code&gt;Read commited&lt;/code&gt; which sees data &lt;strong&gt;before query began&lt;/strong&gt;.
+Thus, successive &lt;code&gt;SELECT&lt;/code&gt; commands within a single transaction see the same data, i.e.,
+they do not see changes made by other transactions that committed after their own transaction started.&lt;/p&gt;
+
+&lt;p&gt;Applications using this level must be prepared to retry transactions due to serialization failures.
+Note that only updating transactions might need to be retried; read-only transactions will never have serialization conflicts.&lt;/p&gt;
+
+&lt;h2 id=&#34;serializable-isolation-level&#34;&gt;Serializable Isolation Level&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code&gt;Serializable&lt;/code&gt; isolation level provides the strictest transaction isolation.
+This level emulates serial transaction execution, as if transactions had been executed one after another, serially, rather than concurrently.
+However, like the Repeatable Read level, applications using this level must be prepared to retry transactions due to serialization failures.&lt;/p&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;p&gt;More details can be taken here: &lt;a href=&#34;https://www.postgresql.org/docs/9.2/static/transaction-iso.html&#34;&gt;PostgreSQL Documentation. Chapter 13. Concurrency Control. 13.2. Transaction Isolation&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -77,7 +674,262 @@ I liked it very much, and I think it contains pretty much true points. Here they
       <guid>http://iryndin.net/post/transaction_isolation_levels/</guid>
       <description>&lt;p&gt;Transaction isolation levels in relational databases. A reminder post.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;ansi-sql-standard-isolation-levels&#34;&gt;ANSI/SQL standard isolation levels&lt;/h2&gt;
+
+&lt;p&gt;We have 4 standard-defined transaction isolation levels:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Read uncommited.&lt;/strong&gt; Dirty reads - YES, Non-Repeatable reads - YES, Phantom reads - YES.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Read commited.&lt;/strong&gt; Dirty reads - NO, Non-Repeatable reads - YES, Phantom reads - YES.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repeatable read.&lt;/strong&gt; Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - YES.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Serializable.&lt;/strong&gt; Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - NO.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here &lt;code&gt;YES&lt;/code&gt; means &lt;code&gt;may occur&lt;/code&gt;, while &lt;code&gt;NO&lt;/code&gt; means &lt;code&gt;should not occur at all&lt;/code&gt;. So &lt;code&gt;NO&lt;/code&gt; here is more strong expression than &lt;code&gt;YES&lt;/code&gt;.
+Different DBMS may make this &lt;code&gt;YES&lt;/code&gt; more restrictive. E.g. PostgreSQL does not allow &lt;code&gt;Phantom Reads&lt;/code&gt; on its &lt;code&gt;Repeatable read&lt;/code&gt; level.
+See details here: &lt;a href=&#34;http://iryndin.net/post/postgresql_transaction_isolation_levels/&#34;&gt;PostgreSQL transaction isolation levels&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;read-phenomena&#34;&gt;Read phenomena&lt;/h2&gt;
+
+&lt;p&gt;The ANSI/ISO standard SQL 92 refers to three different read phenomena when Transaction 1 reads data
+that Transaction 2 might have changed:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Dirty reads&lt;/li&gt;
+&lt;li&gt;Non-Repeatable reads&lt;/li&gt;
+&lt;li&gt;Phantom reads&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;rsquo;s consider them. Let&amp;rsquo;s operate with following database table &lt;strong&gt;users&lt;/strong&gt; that has following data.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;id&lt;/th&gt;
+&lt;th&gt;name&lt;/th&gt;
+&lt;th&gt;age&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;John&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;Eva&lt;/td&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;dirty-reads&#34;&gt;Dirty reads&lt;/h2&gt;
+
+&lt;p&gt;A &lt;em&gt;dirty read&lt;/em&gt; (aka uncommitted dependency) occurs when a transaction is allowed to read data from a row
+that has been modified by another running transaction and not yet committed.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Transaction 1&lt;/th&gt;
+&lt;th&gt;Transaction 2&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/* Query 1. Will read 20*/&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;select age from users where id=1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;/* Query 2. No commit here. */&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;update users set age=50 where id=1&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/* Query 1. Will read 50 */&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;select age from users where id=1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;/* Lock-based dirty read. */&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;rollback&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We can see here that &lt;em&gt;dirty read&lt;/em&gt; will read age value of &lt;code&gt;50&lt;/code&gt; in the 2nd query, even if &lt;em&gt;Transaction 2&lt;/em&gt; will be rolled back afterwards.&lt;/p&gt;
+
+&lt;h2 id=&#34;non-repeatable-reads&#34;&gt;Non-Repeatable reads&lt;/h2&gt;
+
+&lt;p&gt;A &lt;em&gt;non-repeatable read&lt;/em&gt; occurs, when during the course of a transaction,
+a row is retrieved twice and the values within the row differ between reads.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Transaction 1&lt;/th&gt;
+&lt;th&gt;Transaction 2&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/* Query 1. */&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;select * from users where id=1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;/* Query 2. */&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;update users set age = 50 where id = 1;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;commit;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/* Query 1. */&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;select * from users where id=1;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;commit;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;During &lt;em&gt;Transaction 1&lt;/em&gt; &lt;em&gt;Transaction 2&lt;/em&gt; is started and committed, and it changes rows that should be returned as a result
+of &lt;em&gt;Transaction 1&lt;/em&gt;. But &lt;em&gt;Transaction 1&lt;/em&gt; has already seen the different value before &lt;em&gt;Transaction 2&lt;/em&gt; starts.
+So what value should it return?&lt;/p&gt;
+
+&lt;p&gt;If transaction isolation level is set to either to &lt;code&gt;Repeatable read&lt;/code&gt; or &lt;code&gt;Serializable&lt;/code&gt; (levels at which Non-Repeatable reads
+do not occur) - then &lt;em&gt;Transaction 1&lt;/em&gt; should return old values (where age is 20).&lt;/p&gt;
+
+&lt;p&gt;If transaction isolation level is set to either to &lt;code&gt;Read uncommited&lt;/code&gt; or &lt;code&gt;Read commited&lt;/code&gt; (levels at which Non-Repeatable reads
+may occur) - then &lt;em&gt;Transaction 1&lt;/em&gt; may return new values (which incorporate changes made by &lt;em&gt;Transaction 2&lt;/em&gt;, i.e. where age is 20).&lt;/p&gt;
+
+&lt;h2 id=&#34;phantom-reads&#34;&gt;Phantom reads&lt;/h2&gt;
+
+&lt;p&gt;A &lt;em&gt;phantom read&lt;/em&gt; occurs when, in the course of a transaction, two identical queries are executed,
+and the collection of rows returned by the second query is different from the first.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Transaction 1&lt;/th&gt;
+&lt;th&gt;Transaction 2&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/* Query 1. */&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;select * from users&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;where age between 10 and 30;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;/* Query 2. */&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;insert into users(id,name,age)&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;values (3, &#39;Bob&#39;, 27); commit;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/* Query 1. */&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;select * from users&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;where age between 10 and 30;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;At the highest isolation level (&lt;code&gt;Serializable&lt;/code&gt;) &lt;em&gt;Transaction 1&lt;/em&gt; will return the same set of rows
+(i.e. it will return 2 rows). While at lower transaction isolation levels (&lt;code&gt;Uncommited read&lt;/code&gt;, &lt;code&gt;Commited read&lt;/code&gt;, &lt;code&gt;Non-repeatable read&lt;/code&gt;)
+it will return set of rows including those rows added with &lt;em&gt;Transaction 2&lt;/em&gt;, i.e. it will return 3 rows.&lt;/p&gt;
+
+&lt;h2 id=&#34;jdbc&#34;&gt;JDBC&lt;/h2&gt;
+
+&lt;p&gt;JDBC driver can have following transaction isolation levels:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_NONE&lt;/code&gt; - a constant indicating that transactions are not supported&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_READ_UNCOMMITTED&lt;/code&gt; - read uncommited level&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_READ_COMMITTED&lt;/code&gt; - read commited level&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_REPEATABLE_READ&lt;/code&gt; - repeztable read level&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_SERIALIZABLE&lt;/code&gt; - serializable level&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;See more details here: &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html&#34;&gt;java.sql.Connection&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -89,7 +941,122 @@ I liked it very much, and I think it contains pretty much true points. Here they
       <description>&lt;p&gt;Prototype-scoped beans destruction is not managed by Spring container (only construction is managed).
 But we can manage it ourselves with Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt;s.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;In previos post (&lt;a href=&#34;http://iryndin.net/post/spring_beanpostprocessors/&#34;&gt;Spring Bean PostProcessors&lt;/a&gt;) we considered some trivial examples of using &lt;code&gt;BeanPostProcessor&lt;/code&gt;.
+Now let&amp;rsquo;s consider more interesting case - destruction of prototype-scoped beans.
+The reason for this is that &lt;strong&gt;Spring does not manage desctruction phase of prototype-scoped beans&lt;/strong&gt;, as it is mentioned in the docs:
+&lt;a href=&#34;https://docs.spring.io/spring/docs/4.3.9.RELEASE/spring-framework-reference/html/beans.html#beans-factory-scopes-prototype&#34;&gt;7.5.2 The prototype scope&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean:
+the container instantiates, configures, and otherwise assembles a prototype object,
+and hands it to the client, with no further record of that prototype instance.
+Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
+in the case of prototypes, configured destruction lifecycle callbacks are not called.
+The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s) are holding.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And Spring offers to use &lt;code&gt;BeanPostProcessor&lt;/code&gt; for this:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get the Spring container to release resources held by prototype-scoped beans,
+try using a custom bean post-processor, which holds a reference to beans that need to be cleaned up.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;OK, let&amp;rsquo;s consider how could we do this.&lt;/p&gt;
+
+&lt;h2 id=&#34;destructionawarebeanpostprocessor-can-we-use-it&#34;&gt;DestructionAwareBeanPostProcessor - can we use it?&lt;/h2&gt;
+
+&lt;p&gt;We have a special &lt;code&gt;BeanPostProcessor&lt;/code&gt; for applying some custom actions when destroying beans -
+&lt;a href=&#34;https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/config/DestructionAwareBeanPostProcessor.html&#34;&gt;DestructionAwareBeanPostProcessor&lt;/a&gt;.
+It defined 2 new methods:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException&lt;/li&gt;
+&lt;li&gt;boolean requiresDestruction(Object bean)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We should return &lt;code&gt;true&lt;/code&gt; in &lt;code&gt;requiresDestruction&lt;/code&gt; when beans comes into it, and then, when destruction phase begin,
+method &lt;code&gt;postProcessBeforeDestruction&lt;/code&gt; will be called, and this particular bean will be passed to this method.&lt;/p&gt;
+
+&lt;p&gt;Sounds like this is what we need, the only problem is that &lt;strong&gt;this is not applicable to prototype-scoped beans&lt;/strong&gt;!
+Yes, for this &lt;code&gt;DestructionAwareBeanPostProcessor&lt;/code&gt; only singletone-scoped beans are passed inso, so for desctruction of prototype-scoped beans this will not work.&lt;/p&gt;
+
+&lt;p&gt;OK, then it looks that we should create our own implementation of &lt;code&gt;BeanPostProcessor&lt;/code&gt; that handles destruction of prototype-scoped beans.&lt;/p&gt;
+
+&lt;h2 id=&#34;implement-beanpostprocessor-for-destruction-of-prototype-scoped-beans&#34;&gt;Implement BeanPostProcessor for destruction of prototype-scoped beans&lt;/h2&gt;
+
+&lt;p&gt;OK, let&amp;rsquo;s implement our prototype beans having one condition in mind: they all should implement &lt;code&gt;DisposableBean&lt;/code&gt;, and put destruction code
+into method &lt;code&gt;destroy&lt;/code&gt; - to allow unified processing. As we know, Spring container itself will not call this method itself (for prototype beans) -
+so we will take care about it.&lt;/p&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s consider the code of &lt;code&gt;BeanPostProcessor&lt;/code&gt; that handles destruction of prototype beans:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/**
+ * Bean PostProcessor that handles destruction of prototype beans
+ */
+@Component
+public class DestroyPrototypeBeansPostProcessor implements BeanPostProcessor, BeanFactoryAware, DisposableBean {
+
+    private BeanFactory beanFactory;
+
+    private final List&amp;lt;Object&amp;gt; prototypeBeans = new LinkedList&amp;lt;&amp;gt;();
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (beanFactory.isPrototype(beanName)) {
+            synchronized (prototypeBeans) {
+                prototypeBeans.add(bean);
+            }
+        }
+        return bean;
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        synchronized (prototypeBeans) {
+            for (Object bean : prototypeBeans) {
+                if (bean instanceof DisposableBean) {
+                    DisposableBean disposable = (DisposableBean)bean;
+                    try {
+                        disposable.destroy();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            prototypeBeans.clear();
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is simple:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Save reference to bean if and only if it is of prototype scope&lt;/li&gt;
+&lt;li&gt;This &lt;code&gt;DestroyPrototypeBeansPostProcessor&lt;/code&gt; is Spring bean itself, so when it&amp;rsquo;s &lt;code&gt;destroy&lt;/code&gt; method is called - we destroy all prototype beans.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here is full code of the project: &lt;a href=&#34;https://github.com/iryndin/misc/tree/master/blogprjs/03-beanpostprocessor-destroyprototypes&#34;&gt;https://github.com/iryndin/misc/tree/master/blogprjs/03-beanpostprocessor-destroyprototypes&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;useful&#34;&gt;Useful&lt;/h2&gt;
+
+&lt;p&gt;It is useful to take a look at implementation of
+&lt;a href=&#34;https://github.com/spring-projects/spring-framework/blob/v4.3.13.RELEASE/spring-context/src/main/java/org/springframework/scheduling/annotation/ScheduledAnnotationBeanPostProcessor.java&#34;&gt;ScheduledAnnotationBeanPostProcessor&lt;/a&gt;.
+This class handles desctruction actions for sheduled tasks. Exactly the case where additional actions should be taken.
+Also this class implements &lt;code&gt;DestructionAwareBeanPostProcessor&lt;/code&gt; methods, so it is always useful to see how these methods can be implemented.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -101,7 +1068,165 @@ But we can manage it ourselves with Spring &lt;code&gt;BeanPostProcessor&lt;/cod
       <description>&lt;p&gt;Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt; is a nice feature that gives you much power into hands.
 You can do a lot of fun things with &lt;code&gt;BeanPostProcessor&lt;/code&gt;s, and this post demonstrates some of them with a series of short examples.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s speak about Bean PostProcessors in Spring Framework.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&#34;https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html&#34;&gt;BeanPostProcessor&lt;/a&gt;
+interface defines callback methods that you can implement to provide your own (or override the container’s default) instantiation logic,
+dependency-resolution logic, and so forth. In Spring Framework Reference you can read about Bean PostProcessors in more details here:
+&lt;a href=&#34;https://docs.spring.io/spring/docs/4.3.9.RELEASE/spring-framework-reference/html/beans.html#beans-factory-extension-bpp&#34;&gt;7.8.1 Customizing beans using a BeanPostProcessor&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Shortly, you can use &lt;code&gt;BeanPostProcessor&lt;/code&gt; for various initialization actions, as well as destroying actions, do some smart init/destroy actions &lt;em&gt;en masse&lt;/em&gt; etc.
+Here let me give some examples on using BeanPostProcessors.&lt;/p&gt;
+
+&lt;h2 id=&#34;example-1-inject-some-random-variable-on-integer-fields-in-beans&#34;&gt;Example 1. Inject some random variable on integer fields in beans&lt;/h2&gt;
+
+&lt;p&gt;Here let&amp;rsquo;s create &lt;code&gt;BeanPostProcessor&lt;/code&gt; that injects random integer variable for bean fields marked with special annotation: &lt;code&gt;InjectRandomInt&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here is this annotation code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface InjectRandomInt {
+    int min();
+    int max();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And here is &lt;code&gt;BeanPostProcessor&lt;/code&gt; code, which is really self-descriptive:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/**
+ * Bean PostProcessor that injects random int value for fields marked with annotation &amp;lt;link&amp;gt;@InjectRandomInt&amp;lt;/link&amp;gt;
+ */
+public class InjectRandomIntBeanPostProcessor implements BeanPostProcessor {
+
+    static final Class[] allowedTypes = new Class[]{Integer.class, Long.class, int.class, long.class};
+
+    private Random random = new Random();
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        Field[] fields = bean.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            InjectRandomInt annotation = field.getAnnotation(InjectRandomInt.class);
+            if (annotation != null) {
+                if (!isAllowedType(field)) {
+                    throw new RuntimeException(&amp;quot;Don&#39;t put @InjectRandomInt above &amp;quot; + field.getType());
+                }
+                if (Modifier.isFinal(field.getModifiers())) {
+                    throw new RuntimeException(&amp;quot;Can&#39;t inject to final fields&amp;quot;);
+                }
+                int randomInt = generateRadomIntValue(annotation);
+                try {
+                    field.setAccessible(true);
+                    field.set(bean, randomInt);
+                    System.out.println(format(&amp;quot;Init bean &#39;%s.%s&#39; with value %d&amp;quot;, beanName, field.getName(), randomInt));
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
+    private int generateRadomIntValue(InjectRandomInt annotation) {
+        int min = annotation.min();
+        int max = annotation.max();
+        int randomInt = min + random.nextInt(max - min);
+        return randomInt;
+    }
+
+    private boolean isAllowedType(Field field) {
+        for (Class c : allowedTypes) {
+            if (field.getType().equals(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Please see full code of the project here: &lt;a href=&#34;https://github.com/iryndin/misc/tree/master/blogprjs/01-beanpostprocessor-injectrandomvar&#34;&gt;https://github.com/iryndin/misc/tree/master/blogprjs/01-beanpostprocessor-injectrandomvar&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This example is inspired by this article: &lt;a href=&#34;https://www.dataart.ru/news/malen-kie-sekrety-spring/&#34;&gt;Small Spring secrets&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;example-2-inject-logger-with-annotation&#34;&gt;Example 2. Inject logger with annotation&lt;/h2&gt;
+
+&lt;p&gt;This is another example of using &lt;code&gt;BeanPostProcessor&lt;/code&gt; - here we inject logger for each bean that is marked with proper annotation.
+This example is inspired by this article: &lt;a href=&#34;https://memorynotfound.com/spring-inject-logger-annotation-example/&#34;&gt;Spring Inject Logger by Annotation Example&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here is &lt;code&gt;InjectLog&lt;/code&gt; annotation:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+    public @interface InjectLog {
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and its processor:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/**
+ * Bean PostProcessor that injects properly created logger into Spring bean
+ */
+@Component
+public class InjectLogPostProcessor implements BeanPostProcessor {
+
+    private Logger log = LoggerFactory.getLogger(InjectLogPostProcessor.class);
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        ReflectionUtils.doWithFields(bean.getClass(), field -&amp;gt; {
+            if (field.getAnnotation(InjectLog.class) != null) {
+                ReflectionUtils.makeAccessible(field);
+                Logger logger = LoggerFactory.getLogger(bean.getClass());
+                field.set(bean, logger);
+                log.info(&amp;quot;Injected logger into bean &#39;{}&#39;&amp;quot;, beanName);
+            }
+        });
+        return bean;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here is example of bean with this annotation:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@Component
+public class SimpleBean {
+
+    @InjectLog
+    private Logger log;
+
+    public void doSmth() {
+        log.info(&amp;quot;doSmth is called&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see that this is pretty much similar to the first example.&lt;/p&gt;
+
+&lt;p&gt;You can see the code of the project here: &lt;a href=&#34;https://github.com/iryndin/misc/tree/master/blogprjs/02-beanpostprocessor-injectlogger&#34;&gt;https://github.com/iryndin/misc/tree/master/blogprjs/02-beanpostprocessor-injectlogger&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;p&gt;Here are some good examples of usage of &lt;code&gt;BeanPostProcessor&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.dataart.ru/news/malen-kie-sekrety-spring/&#34;&gt;Small Spring secrets&lt;/a&gt; (in Russian)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://memorynotfound.com/spring-inject-logger-annotation-example/&#34;&gt;Spring Inject Logger by Annotation Example&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.baeldung.com/spring-annotation-bean-pre-processor&#34;&gt;A Spring Custom Annotation for a Better DAO&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -112,7 +1237,35 @@ You can do a lot of fun things with &lt;code&gt;BeanPostProcessor&lt;/code&gt;s,
       <guid>http://iryndin.net/post/copy_folder_from_aws_s3/</guid>
       <description>&lt;p&gt;How could we copy a folder from AWS S3 to local machine using AWS CLI?&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;use-cp-command&#34;&gt;Use cp command&lt;/h2&gt;
+
+&lt;p&gt;We can use &lt;code&gt;cp&lt;/code&gt; command to copy folder or file from S3 to local machine. If we add parameter &lt;code&gt;--recursive&lt;/code&gt; then
+we will get folder with all its files and folder inside. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;aws s3 cp s3://bucketname/foldername localdirname --recursive
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will copy folder &lt;code&gt;foldername&lt;/code&gt; with all its content inside from S3 to local folder named &lt;code&gt;localdirname&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;use-sync-command&#34;&gt;Use sync command&lt;/h2&gt;
+
+&lt;p&gt;We have also &lt;code&gt;sync&lt;/code&gt; command that will, by default, copy a whole directory. But it will only copy new and modified files.
+Unchanged files remain untouched. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;aws s3 sync s3://bucketname/foldername localdirname
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will synchronize S3 folder &lt;code&gt;foldername&lt;/code&gt; with local folder &lt;code&gt;localdirname&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;useful-links&#34;&gt;Useful links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.aws.amazon.com/cli/latest/reference/s3/sync.html&#34;&gt;AWS sync command&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.aws.amazon.com/cli/latest/reference/s3/cp.html&#34;&gt;AWS cp command&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/27932345/downloading-folders-from-aws-s3-cp-or-sync&#34;&gt;StackOverflow - Downloading folders from aws s3, cp or sync?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -123,7 +1276,137 @@ You can do a lot of fun things with &lt;code&gt;BeanPostProcessor&lt;/code&gt;s,
       <guid>http://iryndin.net/post/java_objects_memory_size/</guid>
       <description>&lt;p&gt;Here we try to analyze how much memory will consume Java objects. All numbers are given for 64-bit machines.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;All numbers here are given for 64-bit JVMs.&lt;/p&gt;
+
+&lt;h2 id=&#34;primitive-types&#34;&gt;Primitive types&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;Size, bytes&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;byte&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;char&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;short&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;int&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;long&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;float&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;double&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;boolean is 1 bit.&lt;/p&gt;
+
+&lt;h2 id=&#34;size-of-objects&#34;&gt;Size of objects&lt;/h2&gt;
+
+&lt;p&gt;Generally, size of any Java object in memory is a sum of following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;object header&lt;/li&gt;
+&lt;li&gt;memory for primitive fields&lt;/li&gt;
+&lt;li&gt;memory for reference fields&lt;/li&gt;
+&lt;li&gt;padding, usually multiple by 8 byte :w&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;object-header&#34;&gt;Object header&lt;/h3&gt;
+
+&lt;p&gt;On 64-bit JVM object header has size 16 bytes and following form:&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/iryndin/563ae369764d52224d6e3881226a21e3.js?file=ObjectHeader64.txt&#34;&gt;&lt;/script&gt;
+
+&lt;h3 id=&#34;memory-for-primitive-types&#34;&gt;Memory for primitive types&lt;/h3&gt;
+
+&lt;p&gt;Memory for primitive types is allocated according to their respective sizes (see first section of this doc)&lt;/p&gt;
+
+&lt;h3 id=&#34;memory-for-reference-fields&#34;&gt;Memory for reference fields&lt;/h3&gt;
+
+&lt;p&gt;Each reference costs 8 bytes&lt;/p&gt;
+
+&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
+
+&lt;p&gt;Consider following class:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Person {
+  String name;
+  int age;
+  boolean male;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s calculate memory necessary for it:&lt;/p&gt;
+
+&lt;p&gt;16 bytes (object header) + 8 bytes (reference to String variable &lt;em&gt;name&lt;/em&gt;) + 4 bytes (int) + 1 byte (boolean) + 3 bytes (for padding) = 32 bytes&lt;/p&gt;
+
+&lt;h2 id=&#34;size-of-arrays&#34;&gt;Size of arrays&lt;/h2&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s talk about arrays. In Java each array is a object, and hence each array has a 16-bytes object header. Then array has integer &lt;em&gt;length&lt;/em&gt;
+field, and this adds another 4 bytes. 3rd pard is array itself, I mean array cells, and memory required for it is calculated as number of these cells multiplied
+by size of each cell. If it is array of primitive types, this means that each cell size will be in accordance with Section 1 of this doc, if it is
+array of objects this means that each cell size will be 8 bytes.&lt;/p&gt;
+
+&lt;p&gt;But referene to an array goes as a reference to an object and takes 8 bytes.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-1-arrays-of-primitives&#34;&gt;Example 1. Arrays of primitives&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s consider following array: &lt;strong&gt;int[100]&lt;/strong&gt;. 16 bytes (object header) + 4 bytes (length) + 400 bytes (100 ints) + 4 (padding) = 424 bytes.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-2-arrays-of-booleans&#34;&gt;Example 2. Arrays of booleans.&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s consider following array: &lt;strong&gt;boolean[10]&lt;/strong&gt;. 16 bytes (object header) + 4 bytes (length) + 16 bytes (100 ints) + 4 (padding) = 40 bytes.&lt;/p&gt;
+
+&lt;p&gt;You see that it is quite not effective to use array of booleans, and for boolean only 1 bit is informational, and another 7 are wasted.
+Hence, if you need to use array of booleans please consider usage of &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/BitSet.html&#34;&gt;BitSet&lt;/a&gt; for this.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-3-array-of-objects&#34;&gt;Example 3. Array of objects.&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s consider following array: &lt;strong&gt;String[10]&lt;/strong&gt;. 16 bytes (object header) + 4 bytes (length) + 80 bytes (10 references to String objects) + 4 (padding) = 104 bytes.&lt;/p&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;p&gt;Useful links:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.javamex.com/tutorials/memory/&#34;&gt;Memory usage in Java&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/9368764/calculate-size-of-object-in-java&#34;&gt;StackOverflow - Calculate size of Object in Java&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/DimitrisAndreou/memory-measurer&#34;&gt;GitHub - Java Memory Measurer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.javaworld.com/article/2077496/testing-debugging/java-tip-130--do-you-know-your-data-size-.html&#34;&gt;Javaworld - Java Tip 130: Do you know your data size?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.javaworld.com/article/2077408/core-java/sizeof-for-java.html&#34;&gt;Javaworld - Sizeof for Java&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://habrahabr.ru/post/134102/&#34;&gt;Habr - Size of java objects&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.openjdk.java.net/display/HotSpot/CompressedOops&#34;&gt;OpenJDK - CompressedOops&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -136,7 +1419,102 @@ You can do a lot of fun things with &lt;code&gt;BeanPostProcessor&lt;/code&gt;s,
 But I was not able to find examples that explain how to serialize a collection of dates: &lt;code&gt;Collection&amp;lt;Date&amp;gt;&lt;/code&gt;.
 I had to dive into code and find out it myself. In this post I share my findings with you.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s imagine that we need to return JSON form of the following Java object:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import java.util.Date;
+
+public class A {
+    private String name;
+    private List&amp;lt;Date&amp;gt; dates;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List&amp;lt;Date&amp;gt; getDates() {
+        return dates;
+    }
+
+    public void setDates(List&amp;lt;Date&amp;gt; dates) {
+        this.dates = dates;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If we return this class &amp;lsquo;as is&amp;rsquo;, without any helping directives to JSON serializer, we could get it in the following form:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;aaa&amp;quot;,
+  &amp;quot;dates&amp;quot;: [1506556800000,1506643200000,1506729600000,1506816000000]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Rather than that we would like to have it in the following form (format dates as &amp;lsquo;yyyy-MM-dd&amp;rsquo; rather than take is as epoch timestamp):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;aaa&amp;quot;,
+  &amp;quot;dates&amp;quot;: [&amp;quot;2017-09-27&amp;quot;,&amp;quot;2017-09-28&amp;quot;,&amp;quot;2017-09-29&amp;quot;,&amp;quot;2017-09-30&amp;quot;]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;solution&#34;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;To achieve this formatted response, we need to use
+&lt;a href=&#34;https://github.com/FasterXML/jackson-databind/blob/master/src/main/java/com/fasterxml/jackson/databind/ser/std/CollectionSerializer.java&#34;&gt;com.fasterxml.jackson.databind.ser.std.CollectionSerializer&lt;/a&gt; serializer:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ser.std.CollectionSerializer;
+import com.fasterxml.jackson.databind.type.SimpleType;
+
+import java.util.Date;
+
+public class JsonListOfDatesSerializer extends CollectionSerializer {
+
+    public JsonListOfDatesSerializer() {
+        super(SimpleType.constructUnsafe(Date.class), true, null, (JsonSerializer)new JsonDateSerializer());
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This serializer defines how to serilialize a list of dates, applying &lt;em&gt;JsonDateSerializer&lt;/em&gt; to each date.
+&lt;em&gt;JsonDateSerializer&lt;/em&gt; has following definition:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.text.SimpleDateFormat;
+import java.io.IOException;
+import java.util.Date;
+
+public class JsonDateSerializer extends JsonSerializer&amp;lt;Date&amp;gt; {
+
+    @Override
+    public void serialize(Date value, JsonGenerator jgen,
+                          SerializerProvider provider) throws IOException {
+        String formattedDate = new SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;).format(value);
+        jgen.writeString(formattedDate);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;another-serializers-suitable-for-collections&#34;&gt;Another serializers suitable for Collections&lt;/h2&gt;
+
+&lt;p&gt;Jackson also has another serializaers that can be extended to conveniently serialize collections of objects:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;com.fasterxml.jackson.databind.ser.std.IterableSerializer&lt;/li&gt;
+&lt;li&gt;com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer&lt;/li&gt;
+&lt;li&gt;com.fasterxml.jackson.databind.ser.std.MapSerializer&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -145,8 +1523,55 @@ I had to dive into code and find out it myself. In this post I share my findings
       <pubDate>Wed, 20 Sep 2017 15:08:51 +0300</pubDate>
       
       <guid>http://iryndin.net/post/spring_boot_and_awt_headless/</guid>
-      <description>The problem with AWT headless app in Spring Boot Recently I needed to create console Java Spring Boot app that does some stuff with AWT (not so important what exactly). I found that simple run with a normat Spring Boot stub simply does not work. Running this:
-@SpringBootApplication public class MyAwtApplication { public static void main(String[] args) { SpringApplication.run(MyAwtApplication.class, args); } }  generates following exception when AWT-related processing happens:</description>
+      <description>
+
+&lt;h2 id=&#34;the-problem-with-awt-headless-app-in-spring-boot&#34;&gt;The problem with AWT headless app in Spring Boot&lt;/h2&gt;
+
+&lt;p&gt;Recently I needed to create console Java Spring Boot app that does some stuff with AWT (not so important what exactly).
+I found that simple run with a normat Spring Boot stub simply does not work. Running this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@SpringBootApplication
+public class MyAwtApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(MyAwtApplication.class, args);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;generates following exception when AWT-related processing happens:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;java.awt.HeadlessException: null at 
+sun.java2d.HeadlessGraphicsEnvironment.getScreenDevices(HeadlessGraphicsEnvironment.java:72)
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All right, how to fix this?&lt;/p&gt;
+
+&lt;p&gt;We can fix this in two ways.&lt;/p&gt;
+
+&lt;h2 id=&#34;set-java-awt-headless-to-false-in-command-line&#34;&gt;Set java.awt.headless to false in command line&lt;/h2&gt;
+
+&lt;p&gt;One way, is to pass &lt;code&gt;-Djava.awt.headless=false&lt;/code&gt; command line argument to this app&lt;/p&gt;
+
+&lt;h2 id=&#34;use-springapplicationbuilder-to-construct-your-application-properly&#34;&gt;Use SpringApplicationBuilder to construct your Application properly&lt;/h2&gt;
+
+&lt;p&gt;Another way is to tweak a little the way how &lt;code&gt;SpringApplication&lt;/code&gt; is built using class &lt;code&gt;SpringApplicationBuilder&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@SpringBootApplication
+public class MyAwtApplication {
+
+    public static void main(String[] args) {
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(MyAwtApplication.class);
+        builder.headless(false).run(args);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;useful-links&#34;&gt;Useful links&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://stackoverflow.com/questions/23553755/run-spring-boot-headless&#34;&gt;Run Spring Boot Headless&lt;/a&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -155,8 +1580,131 @@ I had to dive into code and find out it myself. In this post I share my findings
       <pubDate>Wed, 26 Apr 2017 23:46:17 +0300</pubDate>
       
       <guid>http://iryndin.net/post/aws-permissions-to-s3-folder/</guid>
-      <description>Let&amp;rsquo;s imagine that we have a project, which actually use AWS S3 as file storage. The project consists of 2 parts: one part puts files into S3, and the other part only reads them from S3. Moreover, files are stored not in the bucket root, but in some folder which is placed in the bucket root.
-According to best AWS practices, we need 2 security and access control policies. One policy is for that part of software which puts files into S3 folder.</description>
+      <description>
+
+&lt;p&gt;Let&amp;rsquo;s imagine that we have a project, which actually use AWS S3 as file storage. The project consists of 2 parts: one part puts files into S3, and the other part only reads them from S3.
+Moreover, files are stored not in the bucket root, but in some folder which is placed in the bucket root.&lt;/p&gt;
+
+&lt;p&gt;According to best AWS practices, we need 2 security and access control policies. One policy is for that part of software which puts files into S3 folder. This will be READ/WRITE policy,
+and another policy, used by read-only part of the project, will have only READ permissions on the folder.&lt;/p&gt;
+
+&lt;p&gt;So, let&amp;rsquo;s create these 2 policies (which will be later assigned to 2 different users) and explain their details. Let&amp;rsquo;s start with the first, READ/WRITE policy.&lt;/p&gt;
+
+&lt;h2 id=&#34;read-write-policy&#34;&gt;Read/write policy&lt;/h2&gt;
+
+&lt;p&gt;Let us have following folder structure in the bucket named &lt;code&gt;bucket1&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;zf/cloud/2017&lt;/li&gt;
+&lt;li&gt;zf/coffee/2017&lt;/li&gt;
+&lt;li&gt;folder1/sdsd/11&lt;/li&gt;
+&lt;li&gt;folder1/sdsd/22&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And we want to give read/write access only to &lt;code&gt;zf&lt;/code&gt; folder and its subfolders. Let&amp;rsquo;s see what should we do for this. We will have a policy that will contain a set of statements.
+Here are these statements with brief explanation.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;Sid&amp;quot;: &amp;quot;AllowToSeeBucketListInTheConsole&amp;quot;,
+  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListAllMyBuckets&amp;quot;],
+  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::*&amp;quot;]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These permissios are granted to allow user to navigate within the AWS account using AWS console.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;Sid&amp;quot;: &amp;quot;AllowRootAndHomeListingOfBucket&amp;quot;,
+  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;],
+  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
+  &amp;quot;Condition&amp;quot;:{&amp;quot;StringEquals&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;&amp;quot;],&amp;quot;s3:delimiter&amp;quot;:[&amp;quot;/&amp;quot;]}}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This statement grants user permission to see a list of folders within &lt;code&gt;bucket1&lt;/code&gt; bucket. This is also required for navigation.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;Sid&amp;quot;: &amp;quot;AllowListingOfZfFolder&amp;quot;,
+  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;, &amp;quot;s3:PutObject&amp;quot;],
+  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
+  &amp;quot;Condition&amp;quot;:{&amp;quot;StringLike&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;zf/*&amp;quot;]}}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And finally, this statement grants user permission to get a list of objects inside &lt;code&gt;zf&lt;/code&gt; folder, as well as put objects there. So, final policy will look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
+  &amp;quot;Statement&amp;quot;: [
+     {
+       &amp;quot;Sid&amp;quot;: &amp;quot;AllowToSeeBucketListInTheConsole&amp;quot;,
+       &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListAllMyBuckets&amp;quot;],
+       &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+       &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::*&amp;quot;]
+     },
+     {
+       &amp;quot;Sid&amp;quot;: &amp;quot;AllowRootAndHomeListingOfBucket&amp;quot;,
+       &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;],
+       &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+       &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
+       &amp;quot;Condition&amp;quot;:{&amp;quot;StringEquals&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;&amp;quot;],&amp;quot;s3:delimiter&amp;quot;:[&amp;quot;/&amp;quot;]}}
+     },
+     {
+       &amp;quot;Sid&amp;quot;: &amp;quot;AllowReadWriteOfZfFolder&amp;quot;,
+       &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;, &amp;quot;s3:PutObject&amp;quot;],
+       &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+       &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
+       &amp;quot;Condition&amp;quot;:{&amp;quot;StringLike&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;zf/*&amp;quot;]}}
+     }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here are some commands that show how this works:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# this will give Access Denied because of --recursive flag (remember, we are not allowed to go in folder1!)
+aws --recursive --profile user.updater s3 ls s3://bucket1
+
+# this will work fine
+aws --profile user.updater s3 ls s3://bucket1
+
+# this will give Access Denied, because we should add final slash here
+aws --profile user.updater s3 ls s3://bucket1/zf
+
+# this will work fine
+aws --profile user.updater s3 ls s3://bucket1/zf1
+
+# this will work fine
+aws --recursive --profile user.updater s3 ls s3://bucket1/zf/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;read-only-policy&#34;&gt;Read-only policy&lt;/h2&gt;
+
+&lt;p&gt;Now, when we have read/write policy above, it is much easier to construct read-only policy from it. Actually, read-only policy is like the read/write policy above,
+but without &lt;code&gt;s3:PutObject&lt;/code&gt; permission. Insted, we need to add &lt;code&gt;s3:GetObject&lt;/code&gt; permission, so that the last statement will look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;Sid&amp;quot;: &amp;quot;AllowReadOfZfFolder&amp;quot;,
+  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;, &amp;quot;s3:GetObject&amp;quot;],
+  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
+  &amp;quot;Condition&amp;quot;:{&amp;quot;StringLike&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;zf/*&amp;quot;]}}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All previous statements will be the same as in read/write policy.&lt;/p&gt;
+
+&lt;h2 id=&#34;useful-links&#34;&gt;Useful links&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://aws.amazon.com/blogs/security/writing-iam-policies-grant-access-to-user-specific-folders-in-an-amazon-s3-bucket/&#34;&gt;Writing IAM Policies: Grant Access to User-Specific Folders in an Amazon S3 Bucket&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html#using-with-s3-actions-related-to-objects&#34;&gt;Specifying Permissions in a Policy&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.cloudberrylab.com/blog/how-to-give-user-access-to-an-s3-folder-with-cloudberry-explorer/&#34;&gt;How to Give User Access to an Amazon S3 Folder With CloudBerry Explorer&lt;/a&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -165,57 +1713,13 @@ According to best AWS practices, we need 2 security and access control policies.
       <pubDate>Sun, 23 Apr 2017 18:56:58 +0300</pubDate>
       
       <guid>http://iryndin.net/post/how-ssh-get-port-22/</guid>
-      <description>A nice story from SSH creator (Tatu Ylonen) about how SSH got its port 22.
-Briefly, initial SSH version was created in Spring 1995, time when FTP and Telnet were widely used. SSH was designed to replace FTP (port 21) and Telnet (port 23). Port 22 was free. So it was chosen to be used in SSH. At that time Internet was small, and port numbers were allocated by IANA, managed by Internet pioneers Jon Postel and Joyce K.</description>
-    </item>
-    
-    <item>
-      <title>Interesting HackerNews posts by 21 April 2017</title>
-      <link>http://iryndin.net/post/interesting-hacker-news-posts-by-21-april-2017/</link>
-      <pubDate>Fri, 21 Apr 2017 19:57:28 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/interesting-hacker-news-posts-by-21-april-2017/</guid>
-      <description>Recursive DNS Server Fingerprint
-They try to identify DNS hijacking by creating a database of DNS server fingerprints and comparing response of a particular DNS server (suspected to be hijacked) with its normal fingerprint.
-Introducing Token
-Token is a browser for the Ethereum network that provides universal access to financial services. It combines messaging app, Ethereum wallet and browser for Ethereum apps.
-Scalable, Lie-Detecting Timeserving with Roughtime
-Roughtime is a protocol designed to provide internet-scale secure time synchronization and address shortcomings of older protocols like NTP.</description>
-    </item>
-    
-    <item>
-      <title>Blockchain and Bitcoin links</title>
-      <link>http://iryndin.net/post/blockchain-and-bitcoin-links/</link>
-      <pubDate>Mon, 17 Apr 2017 22:50:22 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/blockchain-and-bitcoin-links/</guid>
-      <description>This posts contains links to some articles, blog posts and other materials which looks interesting for me, give good explanation/description of the field and simply put are pleasure to read.
-A blockchain in 200 lines of code
-The blockchain explained to web developers. Part 1: The Theory
-How migh we use blockchains outside cryptocurrencies
-Mastering Bitcoin - open source book on Bitcoin published by OReilly
-Awesome Bitcoin - GitHub repo with bitcoin-related links collection</description>
-    </item>
-    
-    <item>
-      <title>Timus 1005. Stone pile</title>
-      <link>http://iryndin.net/post/timus-1005-stone-pile/</link>
-      <pubDate>Mon, 17 Apr 2017 11:38:06 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/timus-1005-stone-pile/</guid>
-      <description>This is a first post which describes how to solve some particular programming task. Today we will consider Stone pile task from Timus. It is clear and easy. The task sounds like:
-Task Stone pile
-Task You have a number of stones with known weights w1, …, wn. Write a program that will rearrange the stones into two piles such that weight difference between the piles is minimal.
-Input Input contains the number of stones n (1 ≤ n ≤ 20) and weights of the stones w1, …, wn (integers, 1 ≤ wi ≤ 100000) delimited by white spaces.</description>
-    </item>
-    
-    <item>
-      <title>First post</title>
-      <link>http://iryndin.net/post/first-post/</link>
-      <pubDate>Fri, 14 Apr 2017 23:34:18 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/first-post/</guid>
-      <description>Hi, after a long pause I decided to relaunch my blog. Here I am planning to tell mostly about technical things, put some useful findings, etc.</description>
+      <description>&lt;p&gt;A nice story from SSH creator (Tatu Ylonen) about how &lt;a href=&#34;https://www.ssh.com/ssh/port&#34;&gt;SSH got its port 22&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Briefly, initial SSH version was created in Spring 1995, time when FTP and Telnet were widely used. SSH was designed to replace FTP (port 21) and Telnet (port 23). Port 22 was free.
+So it was chosen to be used in SSH. At that time Internet was small, and port numbers were allocated by IANA, managed by Internet pioneers Jon Postel and Joyce K. Reynolds.
+Tatu wrote an email to IANA with request to use port 22, and got port 22 assigned to SSH in the response email!
+Wow! Great! More read here: &lt;a href=&#34;https://www.ssh.com/ssh/port&#34;&gt;https://www.ssh.com/ssh/port&lt;/a&gt;.&lt;/p&gt;
+</description>
     </item>
     
   </channel>
