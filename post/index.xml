@@ -6,8 +6,187 @@
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 Jun 2018 00:50:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 Jun 2018 02:16:40 +0000</lastBuildDate>
     <atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Leetcode 746. Min cost climbing stairs</title>
+      <link>http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/</link>
+      <pubDate>Sat, 09 Jun 2018 02:16:40 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/</guid>
+      <description>&lt;p&gt;Let&amp;rsquo;s condsider another easy dynamic problem: minimal cost of climbing stairs.
+This is &lt;a href=&#34;https://leetcode.com/problems/min-cost-climbing-stairs/description/&#34;&gt;Leetcode 746. Min Cost Climbing Stairs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;On a staircase, the &lt;code&gt;i-th&lt;/code&gt; step has some non-negative cost &lt;code&gt;cost[i]&lt;/code&gt; assigned (&lt;code&gt;0&lt;/code&gt; indexed).&lt;/p&gt;
+
+&lt;p&gt;Once you pay the cost, you can either climb one or two steps. You need to find minimum cost to reach the top of the floor, and you can either start from the step with index &lt;code&gt;0&lt;/code&gt;, or the step with index &lt;code&gt;1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: cost = [10, 15, 20]
+Output: 15
+Explanation: Cheapest is start on cost[1], pay that cost and go to the top.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
+Output: 6
+Explanation: Cheapest is start on cost[0], and only step on 1s, skipping cost[3].
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;note&#34;&gt;Note&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cost&lt;/code&gt; will have a length in the range &lt;code&gt;[2, 1000]&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;every &lt;code&gt;cost[i]&lt;/code&gt; will be an integer in the range &lt;code&gt;[0, 999]&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;analysis&#34;&gt;Analysis&lt;/h2&gt;
+
+&lt;p&gt;Once we can climb one or two steps, for &lt;code&gt;n-th&lt;/code&gt; stair the minimal cost will be minimal of two values:
+cost for &lt;code&gt;n-1&lt;/code&gt; step and cost for &lt;code&gt;n-2&lt;/code&gt; stair. Or, recursively, this can be expressed as:&lt;br /&gt;
+&lt;code&gt;minCost(n) = min(minCost(n-1),minCost(n-2))&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;recursive-solution&#34;&gt;Recursive solution&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+  public int minCostClimbingStairs(int[] cost) {
+    if (cost == null || cost.length == 0) return 0;
+    else if (cost.length == 1) return cost[0];
+    int LEN = cost.length;
+    return Math.min(minCost(cost, LEN-1), minCost(cost, LEN-2));
+  }
+
+  // Calculate minimal cost to reach stair with index i (i is 0-based index)
+  static int minCost(int[] cost, int i) {
+    switch (i) {
+      case 0: return cost[0];
+      case 1: return cost[1];
+      default: return cost[i] + Math.min(minCost(cost, i-1), minCost(cost, i-2));
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;What is good for this solution, as with almost all recursive solutions, that it is concise and expressive. But for pretty long array it will take tons of time to complete. For Leetcode, this solution gets &lt;code&gt;TLE&lt;/code&gt; - &lt;code&gt;Time Limit Exception&lt;/code&gt;. So, let&amp;rsquo;s consider another solution.&lt;/p&gt;
+
+&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
+
+&lt;p&gt;Here is solution with &lt;code&gt;O(n)&lt;/code&gt; time complexity and &lt;code&gt;O(1)&lt;/code&gt; space complexity:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+  public int minCostClimbingStairs(int[] cost) {
+    if (cost == null || cost.length == 0) return 0;
+    else if (cost.length == 1) return cost[0];
+    int LEN = cost.length;
+    int prevPrevStairMinCost = cost[0], prevStairMinCost = cost[1];
+    int minCost = 0;
+    for (int i=2; i&amp;lt;LEN; i++) {
+      minCost = cost[i] + Math.min(prevStairMinCost, prevPrevStairMinCost);
+      prevPrevStairMinCost = prevStairMinCost;
+      prevStairMinCost = minCost;
+    }
+    return Math.min(prevStairMinCost, prevPrevStairMinCost);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;p&gt;See also &lt;a href=&#34;http://iryndin.net/post/leetcode_70_climbing_stairs/&#34;&gt;Leetcode 70. Climbing stairs&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 70. Climbing stairs</title>
+      <link>http://iryndin.net/post/leetcode_70_climbing_stairs/</link>
+      <pubDate>Sat, 09 Jun 2018 01:49:55 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/leetcode_70_climbing_stairs/</guid>
+      <description>&lt;p&gt;Let&amp;rsquo;s condsider easy dynamic problem: climbing stairs.
+This is &lt;a href=&#34;https://leetcode.com/problems/climbing-stairs/description/&#34;&gt;Leetcode 70. Climbing stairs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;You are climbing a stair case. It takes n steps to reach to the top.&lt;br /&gt;
+Each time you can either climb 1 or 2 steps.&lt;br /&gt;
+In how many distinct ways can you climb to the top?&lt;br /&gt;
+Note: Given n will be a positive integer.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: 2  
+Output: 2  
+Explanation: There are two ways to climb to the top.  
+1. 1 step + 1 step  
+2. 2 steps  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;analysis&#34;&gt;Analysis&lt;/h2&gt;
+
+&lt;p&gt;Number of distinct ways for each stair is a sum of number of distinct ways for previous stair and
+number of distinct ways for previous-previous stair, recursively it can be expressed as following:&lt;br /&gt;
+&lt;code&gt;ways(n)=ways(n-1) + ways(n-2)&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;recursive-solution&#34;&gt;Recursive solution&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+  public int climbStairs(int n) {
+    switch(n) {
+      case 0: return 0;
+      case 1: return 1;
+      case 2: return 2;
+      default: return climbStairs(n-1) + climbStairs(n-2);
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This recursive solution will do many repeating computations, but this is most clear and concise way
+to express solution. Now let&amp;rsquo;s consider more economical approach.&lt;/p&gt;
+
+&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
+
+&lt;p&gt;This is better solution, with time complexity &lt;code&gt;O(n)&lt;/code&gt; and space complexity &lt;code&gt;O(1)&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+  public int climbStairs(int n) {
+    if (n &amp;lt;= 2) return n;
+    int prevPrevStair = 1, prevStair = 2;
+    int curStair=0;
+    for (int i=2; i&amp;lt;n; i++) {
+      curStair = prevStair + prevPrevStair;
+      prevPrevStair = prevStair;
+      prevStair = curStair;
+    }
+    return curStair;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;h2 id=&#34;links-1&#34;&gt;Links&lt;/h2&gt;
+
+&lt;p&gt;See also &lt;a href=&#34;http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/&#34;&gt;Leetcode 746. Minimal cost climbing stairs&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>How to run HUGO under Docker</title>
@@ -1571,154 +1750,6 @@ public class MyAwtApplication {
 &lt;h2 id=&#34;useful-links&#34;&gt;Useful links&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://stackoverflow.com/questions/23553755/run-spring-boot-headless&#34;&gt;Run Spring Boot Headless&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>AWS permissions to S3 folder</title>
-      <link>http://iryndin.net/post/aws-permissions-to-s3-folder/</link>
-      <pubDate>Wed, 26 Apr 2017 23:46:17 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/aws-permissions-to-s3-folder/</guid>
-      <description>
-
-&lt;p&gt;Let&amp;rsquo;s imagine that we have a project, which actually use AWS S3 as file storage. The project consists of 2 parts: one part puts files into S3, and the other part only reads them from S3.
-Moreover, files are stored not in the bucket root, but in some folder which is placed in the bucket root.&lt;/p&gt;
-
-&lt;p&gt;According to best AWS practices, we need 2 security and access control policies. One policy is for that part of software which puts files into S3 folder. This will be READ/WRITE policy,
-and another policy, used by read-only part of the project, will have only READ permissions on the folder.&lt;/p&gt;
-
-&lt;p&gt;So, let&amp;rsquo;s create these 2 policies (which will be later assigned to 2 different users) and explain their details. Let&amp;rsquo;s start with the first, READ/WRITE policy.&lt;/p&gt;
-
-&lt;h2 id=&#34;read-write-policy&#34;&gt;Read/write policy&lt;/h2&gt;
-
-&lt;p&gt;Let us have following folder structure in the bucket named &lt;code&gt;bucket1&lt;/code&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;zf/cloud/2017&lt;/li&gt;
-&lt;li&gt;zf/coffee/2017&lt;/li&gt;
-&lt;li&gt;folder1/sdsd/11&lt;/li&gt;
-&lt;li&gt;folder1/sdsd/22&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;And we want to give read/write access only to &lt;code&gt;zf&lt;/code&gt; folder and its subfolders. Let&amp;rsquo;s see what should we do for this. We will have a policy that will contain a set of statements.
-Here are these statements with brief explanation.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Sid&amp;quot;: &amp;quot;AllowToSeeBucketListInTheConsole&amp;quot;,
-  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListAllMyBuckets&amp;quot;],
-  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::*&amp;quot;]
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;These permissios are granted to allow user to navigate within the AWS account using AWS console.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Sid&amp;quot;: &amp;quot;AllowRootAndHomeListingOfBucket&amp;quot;,
-  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;],
-  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-  &amp;quot;Condition&amp;quot;:{&amp;quot;StringEquals&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;&amp;quot;],&amp;quot;s3:delimiter&amp;quot;:[&amp;quot;/&amp;quot;]}}
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This statement grants user permission to see a list of folders within &lt;code&gt;bucket1&lt;/code&gt; bucket. This is also required for navigation.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Sid&amp;quot;: &amp;quot;AllowListingOfZfFolder&amp;quot;,
-  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;, &amp;quot;s3:PutObject&amp;quot;],
-  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-  &amp;quot;Condition&amp;quot;:{&amp;quot;StringLike&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;zf/*&amp;quot;]}}
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And finally, this statement grants user permission to get a list of objects inside &lt;code&gt;zf&lt;/code&gt; folder, as well as put objects there. So, final policy will look like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
-  &amp;quot;Statement&amp;quot;: [
-     {
-       &amp;quot;Sid&amp;quot;: &amp;quot;AllowToSeeBucketListInTheConsole&amp;quot;,
-       &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListAllMyBuckets&amp;quot;],
-       &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-       &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::*&amp;quot;]
-     },
-     {
-       &amp;quot;Sid&amp;quot;: &amp;quot;AllowRootAndHomeListingOfBucket&amp;quot;,
-       &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;],
-       &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-       &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-       &amp;quot;Condition&amp;quot;:{&amp;quot;StringEquals&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;&amp;quot;],&amp;quot;s3:delimiter&amp;quot;:[&amp;quot;/&amp;quot;]}}
-     },
-     {
-       &amp;quot;Sid&amp;quot;: &amp;quot;AllowReadWriteOfZfFolder&amp;quot;,
-       &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;, &amp;quot;s3:PutObject&amp;quot;],
-       &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-       &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-       &amp;quot;Condition&amp;quot;:{&amp;quot;StringLike&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;zf/*&amp;quot;]}}
-     }
-  ]
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here are some commands that show how this works:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# this will give Access Denied because of --recursive flag (remember, we are not allowed to go in folder1!)
-aws --recursive --profile user.updater s3 ls s3://bucket1
-
-# this will work fine
-aws --profile user.updater s3 ls s3://bucket1
-
-# this will give Access Denied, because we should add final slash here
-aws --profile user.updater s3 ls s3://bucket1/zf
-
-# this will work fine
-aws --profile user.updater s3 ls s3://bucket1/zf1
-
-# this will work fine
-aws --recursive --profile user.updater s3 ls s3://bucket1/zf/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;read-only-policy&#34;&gt;Read-only policy&lt;/h2&gt;
-
-&lt;p&gt;Now, when we have read/write policy above, it is much easier to construct read-only policy from it. Actually, read-only policy is like the read/write policy above,
-but without &lt;code&gt;s3:PutObject&lt;/code&gt; permission. Insted, we need to add &lt;code&gt;s3:GetObject&lt;/code&gt; permission, so that the last statement will look like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Sid&amp;quot;: &amp;quot;AllowReadOfZfFolder&amp;quot;,
-  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;, &amp;quot;s3:GetObject&amp;quot;],
-  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-  &amp;quot;Condition&amp;quot;:{&amp;quot;StringLike&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;zf/*&amp;quot;]}}
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;All previous statements will be the same as in read/write policy.&lt;/p&gt;
-
-&lt;h2 id=&#34;useful-links&#34;&gt;Useful links&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://aws.amazon.com/blogs/security/writing-iam-policies-grant-access-to-user-specific-folders-in-an-amazon-s3-bucket/&#34;&gt;Writing IAM Policies: Grant Access to User-Specific Folders in an Amazon S3 Bucket&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html#using-with-s3-actions-related-to-objects&#34;&gt;Specifying Permissions in a Policy&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.cloudberrylab.com/blog/how-to-give-user-access-to-an-s3-folder-with-cloudberry-explorer/&#34;&gt;How to Give User Access to an Amazon S3 Folder With CloudBerry Explorer&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>How SSH get port 22</title>
-      <link>http://iryndin.net/post/how-ssh-get-port-22/</link>
-      <pubDate>Sun, 23 Apr 2017 18:56:58 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/how-ssh-get-port-22/</guid>
-      <description>&lt;p&gt;A nice story from SSH creator (Tatu Ylonen) about how &lt;a href=&#34;https://www.ssh.com/ssh/port&#34;&gt;SSH got its port 22&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Briefly, initial SSH version was created in Spring 1995, time when FTP and Telnet were widely used. SSH was designed to replace FTP (port 21) and Telnet (port 23). Port 22 was free.
-So it was chosen to be used in SSH. At that time Internet was small, and port numbers were allocated by IANA, managed by Internet pioneers Jon Postel and Joyce K. Reynolds.
-Tatu wrote an email to IANA with request to use port 22, and got port 22 assigned to SSH in the response email!
-Wow! Great! More read here: &lt;a href=&#34;https://www.ssh.com/ssh/port&#34;&gt;https://www.ssh.com/ssh/port&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
