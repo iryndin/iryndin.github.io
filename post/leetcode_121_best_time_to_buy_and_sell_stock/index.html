@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <title>
-    Leetcode 746. Min cost climbing stairs // Just my blog
+    Leetcode 121. Best time to buy and sell stock // Just my blog
   </title>
 
   <link href="http://gmpg.org/xfn/11" rel="profile">
@@ -16,11 +16,11 @@
 <meta name="author" content="">
 <meta name="generator" content="Hugo 0.19" />
 
-  <meta property="og:title" content="Leetcode 746. Min cost climbing stairs" />
+  <meta property="og:title" content="Leetcode 121. Best time to buy and sell stock" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:url" content="http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/" />
+<meta property="og:url" content="http://iryndin.net/post/leetcode_121_best_time_to_buy_and_sell_stock/" />
 
 
   
@@ -115,12 +115,9 @@
 <ul>
 <li><a href="#example-1">Example 1</a></li>
 <li><a href="#example-2">Example 2</a></li>
-<li><a href="#note">Note</a></li>
 </ul></li>
-<li><a href="#analysis">Analysis</a></li>
-<li><a href="#recursive-solution">Recursive solution</a></li>
-<li><a href="#better-way">Better way</a></li>
-<li><a href="#links">Links</a></li>
+<li><a href="#brute-force-solution">Brute force solution</a></li>
+<li><a href="#more-smart-solution">More smart solution</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -129,7 +126,7 @@
 	    
   		<section class="post">
             <h1 class="post-title">
-              <a href="/post/leetcode_746_min_cost_climbing_stairs/">Leetcode 746. Min cost climbing stairs</a>
+              <a href="/post/leetcode_121_best_time_to_buy_and_sell_stock/">Leetcode 121. Best time to buy and sell stock</a>
             </h1>
             <h3 class="post-subtitle">
             	
@@ -150,91 +147,93 @@
 
 			
 
-            <p>Let&rsquo;s condsider another easy dynamic problem: minimal cost of climbing stairs.
-This is <a href="https://leetcode.com/problems/min-cost-climbing-stairs/description/">Leetcode 746. Min Cost Climbing Stairs</a>.</p>
+            <p>Let&rsquo;s condsider easy dynamic problem: best time to buy and sell stock.
+This is <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/">Leetcode 121. Best Time to Buy and Sell Stock</a>.</p>
 
 <p></p>
 
 <h2 id="description">Description</h2>
 
-<p>On a staircase, the <code>i-th</code> step has some non-negative cost <code>cost[i]</code> assigned (<code>0</code> indexed).</p>
+<p>Say you have an array for which the <code>i-th</code> element is the price of a given stock on day i.</p>
 
-<p>Once you pay the cost, you can either climb one or two steps. You need to find minimum cost to reach the top of the floor, and you can either start from the step with index <code>0</code>, or the step with index <code>1</code>.</p>
+<p>If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
+
+<p>Note that you cannot sell a stock before you buy one.</p>
 
 <h3 id="example-1">Example 1</h3>
 
-<pre><code>Input: cost = [10, 15, 20]
-Output: 15
-Explanation: Cheapest is start on cost[1], pay that cost and go to the top.
+<pre><code>Input: [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+             Not 7-1 = 6, as selling price needs to be larger than buying price.
 </code></pre>
 
 <h3 id="example-2">Example 2</h3>
 
-<pre><code>Input: cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
-Output: 6
-Explanation: Cheapest is start on cost[0], and only step on 1s, skipping cost[3].
+<pre><code>Input: [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
 </code></pre>
 
-<h3 id="note">Note</h3>
+<h2 id="brute-force-solution">Brute force solution</h2>
 
-<ul>
-<li><code>cost</code> will have a length in the range <code>[2, 1000]</code>.</li>
-<li>every <code>cost[i]</code> will be an integer in the range <code>[0, 999]</code>.</li>
-</ul>
-
-<h2 id="analysis">Analysis</h2>
-
-<p>Once we can climb one or two steps, for <code>n-th</code> stair the minimal cost will be minimal of two values:
-cost for <code>n-1</code> step and cost for <code>n-2</code> stair. Or, recursively, this can be expressed as:<br />
-<code>minCost(n) = min(minCost(n-1),minCost(n-2))</code>.</p>
-
-<h2 id="recursive-solution">Recursive solution</h2>
+<p>Without a lot of thinking we can come up with brute force solution.
+We buy stock on some particular day, and then for the next days we check profit if we sell this stock. Thus we will find the maximum profit. Time complexity is <code>O(n^2)</code>, while space complexity is <code>O(1)</code>.</p>
 
 <pre><code class="language-java">class Solution {
-  public int minCostClimbingStairs(int[] cost) {
-    if (cost == null || cost.length == 0) return 0;
-    else if (cost.length == 1) return cost[0];
-    int LEN = cost.length;
-    return Math.min(minCost(cost, LEN-1), minCost(cost, LEN-2));
+  public int maxProfit(int[] prices) {
+    int result = 0;
+    for (int i=0;i&lt;prices.length-1;i++) {
+      int maxProfit = maxProfit(prices, i);
+      if (maxProfit &gt; result) {
+        result = maxProfit;
+      }
+    }
+    return result;
   }
 
-  // Calculate minimal cost to reach stair with index i (i is 0-based index)
-  static int minCost(int[] cost, int i) {
-    switch (i) {
-      case 0: return cost[0];
-      case 1: return cost[1];
-      default: return cost[i] + Math.min(minCost(cost, i-1), minCost(cost, i-2));
+  // Calculate max profit is stock is bought on day idx
+  // and sold on one of the next days
+  static int maxProfit(int[] prices, int idx) {
+    int diff = 0;
+    for (int j=idx+1; j&lt;prices.length; j++) {
+      diff = Math.max(diff, prices[j]-prices[idx]);
     }
+    return diff;
   }
 }
 </code></pre>
 
-<p>What is good for this solution, as with almost all recursive solutions, that it is concise and expressive. But for pretty long array it will take tons of time to complete. For Leetcode, this solution gets <code>TLE</code> - <code>Time Limit Exception</code>. So, let&rsquo;s consider another solution.</p>
+<h2 id="more-smart-solution">More smart solution</h2>
 
-<h2 id="better-way">Better way</h2>
+<p>However, we can come up with more smart solution, that has time complexity only <code>O(n)</code>,
+i.e. only one array pass is required.</p>
 
-<p>Here is solution with <code>O(n)</code> time complexity and <code>O(1)</code> space complexity:</p>
+<p>Here is the idea. We got max profit when we buy on lowest price, and  sell on highest price.
+So let&rsquo;s track minimum price and max profit. Let&rsquo;s traverse through price array,
+and check profit and min price with every new array element. If we found new min price and
+new max profit, then update our variables. Space complexity for this approach is <code>O(1)</code>.</p>
 
 <pre><code class="language-java">class Solution {
-  public int minCostClimbingStairs(int[] cost) {
-    if (cost == null || cost.length == 0) return 0;
-    else if (cost.length == 1) return cost[0];
-    int LEN = cost.length;
-    int prevPrevStairMinCost = cost[0], prevStairMinCost = cost[1];
-    int minCost = 0;
-    for (int i=2; i&lt;LEN; i++) {
-      minCost = cost[i] + Math.min(prevStairMinCost, prevPrevStairMinCost);
-      prevPrevStairMinCost = prevStairMinCost;
-      prevStairMinCost = minCost;
+  public int maxProfit(int[] prices) {
+    if (prices == null || prices.length &lt; 2) {
+      return 0;
     }
-    return Math.min(prevStairMinCost, prevPrevStairMinCost);
+    int minPrice = Integer.MAX_VALUE-1;
+    int maxProfit = 0;
+    for (int i=0;i&lt;prices.length;i++) {
+      int todayProfit = prices[i] - minPrice;
+      if (prices[i] &lt; minPrice) 
+        minPrice = prices[i];
+      }
+      if (todayProfit &gt; maxProfit) {
+        maxProfit = todayProfit;
+      }
+    }
+    return maxProfit;
   }
 }
 </code></pre>
-
-<h2 id="links">Links</h2>
-
-<p>See also <a href="http://iryndin.net/post/leetcode_70_climbing_stairs/">Leetcode 70. Climbing stairs</a></p>
 	
 			
 
@@ -255,16 +254,11 @@ cost for <code>n-1</code> step and cost for <code>n-2</code> stair. Or, recursiv
 				<div class="paging">
 					<span class="paging-label">More Reading</span>
 					
-					<div class="paging-newer">
-						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
-						<a class="paging-link" href="/post/leetcode_121_best_time_to_buy_and_sell_stock/">Leetcode 121. Best time to buy and sell stock</a>
-		            </div>
-		            
 
 					
 					<div class="paging-older">
 						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
-			            <a class="paging-link" href="/post/leetcode_70_climbing_stairs/">Leetcode 70. Climbing stairs</a>
+			            <a class="paging-link" href="/post/leetcode_746_min_cost_climbing_stairs/">Leetcode 746. Min cost climbing stairs</a>
 		            </div>
 		            
 	            </div>
