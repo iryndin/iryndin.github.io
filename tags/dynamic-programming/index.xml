@@ -9,6 +9,322 @@
     <atom:link href="http://iryndin.net/tags/dynamic-programming/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Dynamic programming problems</title>
+      <link>http://iryndin.net/post/dynamic_programming_tasks/</link>
+      <pubDate>Wed, 13 Jun 2018 17:48:15 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/dynamic_programming_tasks/</guid>
+      <description>&lt;p&gt;Here is a list of all dynamic programming tasks from this blog.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Title&lt;/th&gt;
+&lt;th&gt;Source&lt;/th&gt;
+&lt;th&gt;Difficulty&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_70_climbing_stairs/&#34;&gt;Climbing stairs&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/climbing-stairs/description/&#34;&gt;Leetcode (70)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/&#34;&gt;Min cost climbing stairs&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/min-cost-climbing-stairs/description/&#34;&gt;Leetcode (746)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_121_best_time_to_buy_and_sell_stock/&#34;&gt;Best time to buy and sell stock&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/&#34;&gt;Leetcode (121)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_53_maximum_subarray/&#34;&gt;Maximum subarray&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/maximum-subarray/description/&#34;&gt;Leetcode (53)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_198_house_robber/&#34;&gt;House robber&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/house-robber/description/&#34;&gt;Leetcode (198)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_303_immutable_range_sum_query/&#34;&gt;Immutable range sum query&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/range-sum-query-immutable/description/&#34;&gt;Leetcode (303)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;This list will be updated once new tasks will be coming&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 303. Immutable range sum query</title>
+      <link>http://iryndin.net/post/leetcode_303_immutable_range_sum_query/</link>
+      <pubDate>Wed, 13 Jun 2018 17:19:11 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/leetcode_303_immutable_range_sum_query/</guid>
+      <description>&lt;p&gt;Calculate sum of array elements for any given indexes, keeping source array immutable at the same time
+&lt;a href=&#34;https://leetcode.com/problems/range-sum-query-immutable/description/&#34;&gt;Range Sum Query - Immutable&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.&lt;/p&gt;
+
+&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Given nums = [-2, 0, 3, -5, 2, -1]
+
+sumRange(0, 2) -&amp;gt; 1
+sumRange(2, 5) -&amp;gt; -1
+sumRange(0, 5) -&amp;gt; -3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;note&#34;&gt;Note&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You may assume that the array does not change.&lt;/li&gt;
+&lt;li&gt;There are many calls to sumRange function.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;caching-solution&#34;&gt;Caching solution&lt;/h2&gt;
+
+&lt;p&gt;Cache sum of array elements for each combination of indexes into &lt;code&gt;HashMap&lt;/code&gt;.
+Space complexity is &lt;code&gt;O(n^2)&lt;/code&gt;, time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class NumArray {
+
+  Map&amp;lt;String, Integer&amp;gt; cache = new HashMap&amp;lt;&amp;gt;();
+
+  public NumArray(int[] nums) {
+    for (int i = 0; i &amp;lt; nums.length; i++) {
+      int sum = 0;
+      for (int j = i; j &amp;lt; nums.length; j++) {
+        sum += nums[j];
+        cache.put(i+&amp;quot;,&amp;quot;+j, sum);
+      }
+    }
+  }
+
+  public int sumRange(int i, int j) {
+    return cache.get(i+&amp;quot;,&amp;quot;+j);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;we-can-do-better&#34;&gt;We can do better&lt;/h2&gt;
+
+&lt;p&gt;Sum of array elements between indexes &lt;code&gt;i&lt;/code&gt; and &lt;code&gt;j&lt;/code&gt; can be represented as following:&lt;br /&gt;
+&lt;code&gt;sum(i,j)=sum(0,j) - sum(0,i-1)&lt;/code&gt;. We see that it is represented via zero index based sums.
+So we can calculate these sums once, and then use it for our calculations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class NumArray {
+
+  int[] zeroBasedSum;
+
+  public NumArray(int[] nums) {
+  	zeroBasedSum = new int[nums.length];
+  	int sum = 0;
+    for (int i = 0; i &amp;lt; nums.length; i++) {
+      sum += nums[i];
+      zeroBasedSum[i] = sum;
+    }
+  }
+
+  public int sumRange(int i, int j) {
+    return zeroBasedSum[j] - (i-1 &amp;lt; 0 ? 0 : zeroBasedSum[i-1]);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Obviously, space complexity is &lt;code&gt;O(n)&lt;/code&gt;, as well as time complexity.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 198. House robber</title>
+      <link>http://iryndin.net/post/leetcode_198_house_robber/</link>
+      <pubDate>Mon, 11 Jun 2018 19:37:06 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/leetcode_198_house_robber/</guid>
+      <description>&lt;p&gt;Another easy task is about smart &lt;a href=&#34;https://leetcode.com/problems/house-robber/description/&#34;&gt;house robbery approach&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and &lt;strong&gt;it will automatically contact the police if two adjacent houses were broken into on the same night&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight &lt;strong&gt;without alerting the police&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: [1,2,3,1]
+Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+             Total amount you can rob = 1 + 3 = 4.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: [2,7,9,3,1]
+Output: 12
+Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+             Total amount you can rob = 2 + 9 + 1 = 12.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;dumb-solution&#34;&gt;Dumb solution&lt;/h2&gt;
+
+&lt;p&gt;Initially, I came up with a pretty straitforward (and dumb) solution for the task.
+Just stupid checks of all variants of robbery, here is the code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+  public int rob(int[] nums) {
+    if (nums == null || nums.length == 0) {
+      return 0;
+    } else if (nums.length == 1) {
+      return nums[0];
+    } else if (nums.length == 2) {
+      return Math.max(nums[0], nums[1]);
+    } else if (nums.length == 3) {
+      return Math.max(nums[0]+nums[2], nums[1]);
+    }
+    int[] a = new int[nums.length];
+    a[0] = nums[0];
+    a[1] = nums[1];
+    a[2] = nums[0] + nums[2];
+    int maxRob = Math.max(Math.max(a[0],a[1]), a[2]);
+    for (int i=3; i&amp;lt;nums.length; i++) {
+      a[i] = Math.max(nums[i]+a[i-2], nums[i]+a[i-3]);
+      if (a[i] &amp;gt; maxRob) {
+        maxRob = a[i];
+      }
+    }
+    return maxRob;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
+
+&lt;p&gt;But more smart solution can be as easy as following (and it has &lt;code&gt;O(1)&lt;/code&gt; space complexity,
+as well as &lt;code&gt;O(n)&lt;/code&gt; time complexity):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+  public int rob(int[] nums) {
+    int a = 0, b = 0;
+    for (int num : nums){
+      int tmp = Math.max(num+a, b);
+      a = b;
+      b = tmp;
+    }
+    return Math.max(a, b);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s explain what goes on here. Variable &lt;code&gt;a&lt;/code&gt; stores prev previous value, &lt;code&gt;b&lt;/code&gt; contains previous value. And &lt;code&gt;b&lt;/code&gt; is updated only if new value is bigger than its previous value. This is the key to this solution.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 53. Maximum subarray</title>
+      <link>http://iryndin.net/post/leetcode_53_maximum_subarray/</link>
+      <pubDate>Mon, 11 Jun 2018 19:16:46 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/leetcode_53_maximum_subarray/</guid>
+      <description>&lt;p&gt;From a given array find the maximum contiguous subarray with the largest sum,
+&lt;a href=&#34;https://leetcode.com/problems/maximum-subarray/description/&#34;&gt;Leetcode 53&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.&lt;/p&gt;
+
+&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: [-2,1,-3,4,-1,2,1,-5,4],
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;follow-up&#34;&gt;Follow up&lt;/h3&gt;
+
+&lt;p&gt;If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.&lt;/p&gt;
+
+&lt;h2 id=&#34;brute-force-solution&#34;&gt;Brute force solution&lt;/h2&gt;
+
+&lt;p&gt;For each index combination let&amp;rsquo;s calculate sum and then find the largest one.
+Space complexity is &lt;code&gt;O(1)&lt;/code&gt; and time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
+  public int maxSubArray(int[] nums) {
+    if (nums == null || nums.length == 0) {
+      return 0;
+    } else if (nums.length == 1) {
+      return nums[0];
+    }
+
+    int maxSum = Integer.MIN_VALUE;
+    for (int i=0; i&amp;lt;nums.length; i++) {
+      int sum = 0;
+      for (int j=i; j&amp;lt;nums.length; j++) {
+        sum += table[i][j];
+        if (sum &amp;gt; maxSum) {
+          maxSum = sum;
+        }
+      }
+    }
+    return maxSum;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;a-better-way&#34;&gt;A better way&lt;/h2&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s think about better approach. Let&amp;rsquo;s take into account following points:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;we are looking for largest sum, so any negative value will deteriorate final result&lt;/li&gt;
+&lt;li&gt;Let&amp;rsquo;s go from the start of the array and sum up all elements. If at some point we have negative sum, then
+we can set total sum to current array element. Why? Because any new value will be better than negative sum. Negative element will only deteriorate final sum, so it will be better, zero element is greater than any negative value, the same for positive element.&lt;/li&gt;
+&lt;li&gt;If sum is not negative, then we simply add up next array element.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So, code will be following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
+  public int maxSubArray(int[] nums) {
+    int max = Integer.MIN_VALUE, sum = 0;
+    for (int i = 0; i &amp;lt; nums.length; i++) {
+      if (sum &amp;lt; 0) {
+        sum = nums[i];
+      } else {
+        sum += nums[i];
+      }
+      if (sum &amp;gt; max) {
+        max = sum;
+      }
+    }
+    return max;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
       <title>Leetcode 121. Best time to buy and sell stock</title>
       <link>http://iryndin.net/post/leetcode_121_best_time_to_buy_and_sell_stock/</link>
       <pubDate>Sat, 09 Jun 2018 12:19:43 +0000</pubDate>

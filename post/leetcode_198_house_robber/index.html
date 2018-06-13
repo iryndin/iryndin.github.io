@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <title>
-    Leetcode 121. Best time to buy and sell stock // Just my blog
+    Leetcode 198. House robber // Just my blog
   </title>
 
   <link href="http://gmpg.org/xfn/11" rel="profile">
@@ -16,11 +16,11 @@
 <meta name="author" content="">
 <meta name="generator" content="Hugo 0.19" />
 
-  <meta property="og:title" content="Leetcode 121. Best time to buy and sell stock" />
+  <meta property="og:title" content="Leetcode 198. House robber" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:url" content="http://iryndin.net/post/leetcode_121_best_time_to_buy_and_sell_stock/" />
+<meta property="og:url" content="http://iryndin.net/post/leetcode_198_house_robber/" />
 
 
   
@@ -116,8 +116,8 @@
 <li><a href="#example-1">Example 1</a></li>
 <li><a href="#example-2">Example 2</a></li>
 </ul></li>
-<li><a href="#brute-force-solution">Brute force solution</a></li>
-<li><a href="#more-smart-solution">More smart solution</a></li>
+<li><a href="#dumb-solution">Dumb solution</a></li>
+<li><a href="#better-way">Better way</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -126,14 +126,14 @@
 	    
   		<section class="post">
             <h1 class="post-title">
-              <a href="/post/leetcode_121_best_time_to_buy_and_sell_stock/">Leetcode 121. Best time to buy and sell stock</a>
+              <a href="/post/leetcode_198_house_robber/">Leetcode 198. House robber</a>
             </h1>
             <h3 class="post-subtitle">
             	
             </h3>
             
             	<span class="post-date">
-                	<span class="post-date-day"><sup>9</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jun</span> <span class="post-date-year">2018</span>
+                	<span class="post-date-day"><sup>11</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jun</span> <span class="post-date-year">2018</span>
             	</span>
             	
             
@@ -147,93 +147,83 @@
 
 			
 
-            <p>Let&rsquo;s condsider easy dynamic problem: best time to buy and sell stock.
-This is <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/">Leetcode 121. Best Time to Buy and Sell Stock</a>.</p>
+            <p>Another easy task is about smart <a href="https://leetcode.com/problems/house-robber/description/">house robbery approach</a>.</p>
 
 <p></p>
 
 <h2 id="description">Description</h2>
 
-<p>Say you have an array for which the <code>i-th</code> element is the price of a given stock on day i.</p>
+<p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and <strong>it will automatically contact the police if two adjacent houses were broken into on the same night</strong>.</p>
 
-<p>If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
-
-<p>Note that you cannot sell a stock before you buy one.</p>
+<p>Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight <strong>without alerting the police</strong>.</p>
 
 <h3 id="example-1">Example 1</h3>
 
-<pre><code>Input: [7,1,5,3,6,4]
-Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
-             Not 7-1 = 6, as selling price needs to be larger than buying price.
+<pre><code>Input: [1,2,3,1]
+Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+             Total amount you can rob = 1 + 3 = 4.
 </code></pre>
 
 <h3 id="example-2">Example 2</h3>
 
-<pre><code>Input: [7,6,4,3,1]
-Output: 0
-Explanation: In this case, no transaction is done, i.e. max profit = 0.
+<pre><code>Input: [2,7,9,3,1]
+Output: 12
+Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+             Total amount you can rob = 2 + 9 + 1 = 12.
 </code></pre>
 
-<h2 id="brute-force-solution">Brute force solution</h2>
+<h2 id="dumb-solution">Dumb solution</h2>
 
-<p>Without a lot of thinking we can come up with brute force solution.
-We buy stock on some particular day, and then for the next days we check profit if we sell this stock. Thus we will find the maximum profit. Time complexity is <code>O(n^2)</code>, while space complexity is <code>O(1)</code>.</p>
-
-<pre><code class="language-java">class Solution {
-  public int maxProfit(int[] prices) {
-    int result = 0;
-    for (int i=0;i&lt;prices.length-1;i++) {
-      int maxProfit = maxProfit(prices, i);
-      if (maxProfit &gt; result) {
-        result = maxProfit;
-      }
-    }
-    return result;
-  }
-
-  // Calculate max profit is stock is bought on day idx
-  // and sold on one of the next days
-  static int maxProfit(int[] prices, int idx) {
-    int diff = 0;
-    for (int j=idx+1; j&lt;prices.length; j++) {
-      diff = Math.max(diff, prices[j]-prices[idx]);
-    }
-    return diff;
-  }
-}
-</code></pre>
-
-<h2 id="more-smart-solution">More smart solution</h2>
-
-<p>However, we can come up with more smart solution, that has time complexity only <code>O(n)</code>,
-i.e. only one array pass is required.</p>
-
-<p>Here is the idea. We got max profit when we buy on lowest price, and  sell on highest price.
-So let&rsquo;s track minimum price and max profit. Let&rsquo;s traverse through price array,
-and check profit and min price with every new array element. If we found new min price and
-new max profit, then update our variables. Space complexity for this approach is <code>O(1)</code>.</p>
+<p>Initially, I came up with a pretty straitforward (and dumb) solution for the task.
+Just stupid checks of all variants of robbery, here is the code:</p>
 
 <pre><code class="language-java">class Solution {
-  public int maxProfit(int[] prices) {
-    if (prices == null || prices.length &lt; 2) {
+  public int rob(int[] nums) {
+    if (nums == null || nums.length == 0) {
       return 0;
+    } else if (nums.length == 1) {
+      return nums[0];
+    } else if (nums.length == 2) {
+      return Math.max(nums[0], nums[1]);
+    } else if (nums.length == 3) {
+      return Math.max(nums[0]+nums[2], nums[1]);
     }
-    int minPrice = Integer.MAX_VALUE-1;
-    int maxProfit = 0;
-    for (int i=0;i&lt;prices.length;i++) {
-      int todayProfit = prices[i] - minPrice;
-      if (prices[i] &lt; minPrice) 
-        minPrice = prices[i];
-      }
-      if (todayProfit &gt; maxProfit) {
-        maxProfit = todayProfit;
+    int[] a = new int[nums.length];
+    a[0] = nums[0];
+    a[1] = nums[1];
+    a[2] = nums[0] + nums[2];
+    int maxRob = Math.max(Math.max(a[0],a[1]), a[2]);
+    for (int i=3; i&lt;nums.length; i++) {
+      a[i] = Math.max(nums[i]+a[i-2], nums[i]+a[i-3]);
+      if (a[i] &gt; maxRob) {
+        maxRob = a[i];
       }
     }
-    return maxProfit;
+    return maxRob;
   }
 }
 </code></pre>
+
+<h2 id="better-way">Better way</h2>
+
+<p>But more smart solution can be as easy as following (and it has <code>O(1)</code> space complexity,
+as well as <code>O(n)</code> time complexity):</p>
+
+<pre><code class="language-java">class Solution {
+  public int rob(int[] nums) {
+    int a = 0, b = 0;
+    for (int num : nums){
+      int tmp = Math.max(num+a, b);
+      a = b;
+      b = tmp;
+    }
+    return Math.max(a, b);
+  }
+}
+</code></pre>
+
+<p>Let&rsquo;s explain what goes on here. Variable <code>a</code> stores prev previous value, <code>b</code> contains previous value. And <code>b</code> is updated only if new value is bigger than its previous value. This is the key to this solution.</p>
 	
 			
 
@@ -256,14 +246,14 @@ new max profit, then update our variables. Space complexity for this approach is
 					
 					<div class="paging-newer">
 						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
-						<a class="paging-link" href="/post/leetcode_53_maximum_subarray/">Leetcode 53. Maximum subarray</a>
+						<a class="paging-link" href="/post/leetcode_303_immutable_range_sum_query/">Leetcode 303. Immutable range sum query</a>
 		            </div>
 		            
 
 					
 					<div class="paging-older">
 						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
-			            <a class="paging-link" href="/post/leetcode_746_min_cost_climbing_stairs/">Leetcode 746. Min cost climbing stairs</a>
+			            <a class="paging-link" href="/post/leetcode_53_maximum_subarray/">Leetcode 53. Maximum subarray</a>
 		            </div>
 		            
 	            </div>

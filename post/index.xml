@@ -6,8 +6,324 @@
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 Jun 2018 12:19:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 Jun 2018 17:48:15 +0000</lastBuildDate>
     <atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Dynamic programming problems</title>
+      <link>http://iryndin.net/post/dynamic_programming_tasks/</link>
+      <pubDate>Wed, 13 Jun 2018 17:48:15 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/dynamic_programming_tasks/</guid>
+      <description>&lt;p&gt;Here is a list of all dynamic programming tasks from this blog.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Title&lt;/th&gt;
+&lt;th&gt;Source&lt;/th&gt;
+&lt;th&gt;Difficulty&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_70_climbing_stairs/&#34;&gt;Climbing stairs&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/climbing-stairs/description/&#34;&gt;Leetcode (70)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/&#34;&gt;Min cost climbing stairs&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/min-cost-climbing-stairs/description/&#34;&gt;Leetcode (746)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_121_best_time_to_buy_and_sell_stock/&#34;&gt;Best time to buy and sell stock&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/&#34;&gt;Leetcode (121)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_53_maximum_subarray/&#34;&gt;Maximum subarray&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/maximum-subarray/description/&#34;&gt;Leetcode (53)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_198_house_robber/&#34;&gt;House robber&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/house-robber/description/&#34;&gt;Leetcode (198)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_303_immutable_range_sum_query/&#34;&gt;Immutable range sum query&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/range-sum-query-immutable/description/&#34;&gt;Leetcode (303)&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Easy&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;This list will be updated once new tasks will be coming&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 303. Immutable range sum query</title>
+      <link>http://iryndin.net/post/leetcode_303_immutable_range_sum_query/</link>
+      <pubDate>Wed, 13 Jun 2018 17:19:11 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/leetcode_303_immutable_range_sum_query/</guid>
+      <description>&lt;p&gt;Calculate sum of array elements for any given indexes, keeping source array immutable at the same time
+&lt;a href=&#34;https://leetcode.com/problems/range-sum-query-immutable/description/&#34;&gt;Range Sum Query - Immutable&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.&lt;/p&gt;
+
+&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Given nums = [-2, 0, 3, -5, 2, -1]
+
+sumRange(0, 2) -&amp;gt; 1
+sumRange(2, 5) -&amp;gt; -1
+sumRange(0, 5) -&amp;gt; -3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;note&#34;&gt;Note&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You may assume that the array does not change.&lt;/li&gt;
+&lt;li&gt;There are many calls to sumRange function.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;caching-solution&#34;&gt;Caching solution&lt;/h2&gt;
+
+&lt;p&gt;Cache sum of array elements for each combination of indexes into &lt;code&gt;HashMap&lt;/code&gt;.
+Space complexity is &lt;code&gt;O(n^2)&lt;/code&gt;, time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class NumArray {
+
+  Map&amp;lt;String, Integer&amp;gt; cache = new HashMap&amp;lt;&amp;gt;();
+
+  public NumArray(int[] nums) {
+    for (int i = 0; i &amp;lt; nums.length; i++) {
+      int sum = 0;
+      for (int j = i; j &amp;lt; nums.length; j++) {
+        sum += nums[j];
+        cache.put(i+&amp;quot;,&amp;quot;+j, sum);
+      }
+    }
+  }
+
+  public int sumRange(int i, int j) {
+    return cache.get(i+&amp;quot;,&amp;quot;+j);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;we-can-do-better&#34;&gt;We can do better&lt;/h2&gt;
+
+&lt;p&gt;Sum of array elements between indexes &lt;code&gt;i&lt;/code&gt; and &lt;code&gt;j&lt;/code&gt; can be represented as following:&lt;br /&gt;
+&lt;code&gt;sum(i,j)=sum(0,j) - sum(0,i-1)&lt;/code&gt;. We see that it is represented via zero index based sums.
+So we can calculate these sums once, and then use it for our calculations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class NumArray {
+
+  int[] zeroBasedSum;
+
+  public NumArray(int[] nums) {
+  	zeroBasedSum = new int[nums.length];
+  	int sum = 0;
+    for (int i = 0; i &amp;lt; nums.length; i++) {
+      sum += nums[i];
+      zeroBasedSum[i] = sum;
+    }
+  }
+
+  public int sumRange(int i, int j) {
+    return zeroBasedSum[j] - (i-1 &amp;lt; 0 ? 0 : zeroBasedSum[i-1]);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Obviously, space complexity is &lt;code&gt;O(n)&lt;/code&gt;, as well as time complexity.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 198. House robber</title>
+      <link>http://iryndin.net/post/leetcode_198_house_robber/</link>
+      <pubDate>Mon, 11 Jun 2018 19:37:06 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/leetcode_198_house_robber/</guid>
+      <description>&lt;p&gt;Another easy task is about smart &lt;a href=&#34;https://leetcode.com/problems/house-robber/description/&#34;&gt;house robbery approach&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and &lt;strong&gt;it will automatically contact the police if two adjacent houses were broken into on the same night&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight &lt;strong&gt;without alerting the police&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: [1,2,3,1]
+Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+             Total amount you can rob = 1 + 3 = 4.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: [2,7,9,3,1]
+Output: 12
+Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+             Total amount you can rob = 2 + 9 + 1 = 12.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;dumb-solution&#34;&gt;Dumb solution&lt;/h2&gt;
+
+&lt;p&gt;Initially, I came up with a pretty straitforward (and dumb) solution for the task.
+Just stupid checks of all variants of robbery, here is the code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+  public int rob(int[] nums) {
+    if (nums == null || nums.length == 0) {
+      return 0;
+    } else if (nums.length == 1) {
+      return nums[0];
+    } else if (nums.length == 2) {
+      return Math.max(nums[0], nums[1]);
+    } else if (nums.length == 3) {
+      return Math.max(nums[0]+nums[2], nums[1]);
+    }
+    int[] a = new int[nums.length];
+    a[0] = nums[0];
+    a[1] = nums[1];
+    a[2] = nums[0] + nums[2];
+    int maxRob = Math.max(Math.max(a[0],a[1]), a[2]);
+    for (int i=3; i&amp;lt;nums.length; i++) {
+      a[i] = Math.max(nums[i]+a[i-2], nums[i]+a[i-3]);
+      if (a[i] &amp;gt; maxRob) {
+        maxRob = a[i];
+      }
+    }
+    return maxRob;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
+
+&lt;p&gt;But more smart solution can be as easy as following (and it has &lt;code&gt;O(1)&lt;/code&gt; space complexity,
+as well as &lt;code&gt;O(n)&lt;/code&gt; time complexity):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+  public int rob(int[] nums) {
+    int a = 0, b = 0;
+    for (int num : nums){
+      int tmp = Math.max(num+a, b);
+      a = b;
+      b = tmp;
+    }
+    return Math.max(a, b);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s explain what goes on here. Variable &lt;code&gt;a&lt;/code&gt; stores prev previous value, &lt;code&gt;b&lt;/code&gt; contains previous value. And &lt;code&gt;b&lt;/code&gt; is updated only if new value is bigger than its previous value. This is the key to this solution.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 53. Maximum subarray</title>
+      <link>http://iryndin.net/post/leetcode_53_maximum_subarray/</link>
+      <pubDate>Mon, 11 Jun 2018 19:16:46 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/leetcode_53_maximum_subarray/</guid>
+      <description>&lt;p&gt;From a given array find the maximum contiguous subarray with the largest sum,
+&lt;a href=&#34;https://leetcode.com/problems/maximum-subarray/description/&#34;&gt;Leetcode 53&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.&lt;/p&gt;
+
+&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Input: [-2,1,-3,4,-1,2,1,-5,4],
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;follow-up&#34;&gt;Follow up&lt;/h3&gt;
+
+&lt;p&gt;If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.&lt;/p&gt;
+
+&lt;h2 id=&#34;brute-force-solution&#34;&gt;Brute force solution&lt;/h2&gt;
+
+&lt;p&gt;For each index combination let&amp;rsquo;s calculate sum and then find the largest one.
+Space complexity is &lt;code&gt;O(1)&lt;/code&gt; and time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
+  public int maxSubArray(int[] nums) {
+    if (nums == null || nums.length == 0) {
+      return 0;
+    } else if (nums.length == 1) {
+      return nums[0];
+    }
+
+    int maxSum = Integer.MIN_VALUE;
+    for (int i=0; i&amp;lt;nums.length; i++) {
+      int sum = 0;
+      for (int j=i; j&amp;lt;nums.length; j++) {
+        sum += table[i][j];
+        if (sum &amp;gt; maxSum) {
+          maxSum = sum;
+        }
+      }
+    }
+    return maxSum;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;a-better-way&#34;&gt;A better way&lt;/h2&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s think about better approach. Let&amp;rsquo;s take into account following points:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;we are looking for largest sum, so any negative value will deteriorate final result&lt;/li&gt;
+&lt;li&gt;Let&amp;rsquo;s go from the start of the array and sum up all elements. If at some point we have negative sum, then
+we can set total sum to current array element. Why? Because any new value will be better than negative sum. Negative element will only deteriorate final sum, so it will be better, zero element is greater than any negative value, the same for positive element.&lt;/li&gt;
+&lt;li&gt;If sum is not negative, then we simply add up next array element.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So, code will be following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
+  public int maxSubArray(int[] nums) {
+    int max = Integer.MIN_VALUE, sum = 0;
+    for (int i = 0; i &amp;lt; nums.length; i++) {
+      if (sum &amp;lt; 0) {
+        sum = nums[i];
+      } else {
+        sum += nums[i];
+      }
+      if (sum &amp;gt; max) {
+        max = sum;
+      }
+    }
+    return max;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
     
     <item>
       <title>Leetcode 121. Best time to buy and sell stock</title>
@@ -1331,464 +1647,6 @@ public class DestroyPrototypeBeansPostProcessor implements BeanPostProcessor, Be
 &lt;a href=&#34;https://github.com/spring-projects/spring-framework/blob/v4.3.13.RELEASE/spring-context/src/main/java/org/springframework/scheduling/annotation/ScheduledAnnotationBeanPostProcessor.java&#34;&gt;ScheduledAnnotationBeanPostProcessor&lt;/a&gt;.
 This class handles desctruction actions for sheduled tasks. Exactly the case where additional actions should be taken.
 Also this class implements &lt;code&gt;DestructionAwareBeanPostProcessor&lt;/code&gt; methods, so it is always useful to see how these methods can be implemented.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Spring Bean PostProcessors</title>
-      <link>http://iryndin.net/post/spring_beanpostprocessors/</link>
-      <pubDate>Mon, 27 Nov 2017 15:45:43 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/spring_beanpostprocessors/</guid>
-      <description>&lt;p&gt;Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt; is a nice feature that gives you much power into hands.
-You can do a lot of fun things with &lt;code&gt;BeanPostProcessor&lt;/code&gt;s, and this post demonstrates some of them with a series of short examples.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s speak about Bean PostProcessors in Spring Framework.&lt;/p&gt;
-
-&lt;p&gt;The &lt;a href=&#34;https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html&#34;&gt;BeanPostProcessor&lt;/a&gt;
-interface defines callback methods that you can implement to provide your own (or override the container’s default) instantiation logic,
-dependency-resolution logic, and so forth. In Spring Framework Reference you can read about Bean PostProcessors in more details here:
-&lt;a href=&#34;https://docs.spring.io/spring/docs/4.3.9.RELEASE/spring-framework-reference/html/beans.html#beans-factory-extension-bpp&#34;&gt;7.8.1 Customizing beans using a BeanPostProcessor&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Shortly, you can use &lt;code&gt;BeanPostProcessor&lt;/code&gt; for various initialization actions, as well as destroying actions, do some smart init/destroy actions &lt;em&gt;en masse&lt;/em&gt; etc.
-Here let me give some examples on using BeanPostProcessors.&lt;/p&gt;
-
-&lt;h2 id=&#34;example-1-inject-some-random-variable-on-integer-fields-in-beans&#34;&gt;Example 1. Inject some random variable on integer fields in beans&lt;/h2&gt;
-
-&lt;p&gt;Here let&amp;rsquo;s create &lt;code&gt;BeanPostProcessor&lt;/code&gt; that injects random integer variable for bean fields marked with special annotation: &lt;code&gt;InjectRandomInt&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Here is this annotation code:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface InjectRandomInt {
-    int min();
-    int max();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And here is &lt;code&gt;BeanPostProcessor&lt;/code&gt; code, which is really self-descriptive:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/**
- * Bean PostProcessor that injects random int value for fields marked with annotation &amp;lt;link&amp;gt;@InjectRandomInt&amp;lt;/link&amp;gt;
- */
-public class InjectRandomIntBeanPostProcessor implements BeanPostProcessor {
-
-    static final Class[] allowedTypes = new Class[]{Integer.class, Long.class, int.class, long.class};
-
-    private Random random = new Random();
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        Field[] fields = bean.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            InjectRandomInt annotation = field.getAnnotation(InjectRandomInt.class);
-            if (annotation != null) {
-                if (!isAllowedType(field)) {
-                    throw new RuntimeException(&amp;quot;Don&#39;t put @InjectRandomInt above &amp;quot; + field.getType());
-                }
-                if (Modifier.isFinal(field.getModifiers())) {
-                    throw new RuntimeException(&amp;quot;Can&#39;t inject to final fields&amp;quot;);
-                }
-                int randomInt = generateRadomIntValue(annotation);
-                try {
-                    field.setAccessible(true);
-                    field.set(bean, randomInt);
-                    System.out.println(format(&amp;quot;Init bean &#39;%s.%s&#39; with value %d&amp;quot;, beanName, field.getName(), randomInt));
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return bean;
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    private int generateRadomIntValue(InjectRandomInt annotation) {
-        int min = annotation.min();
-        int max = annotation.max();
-        int randomInt = min + random.nextInt(max - min);
-        return randomInt;
-    }
-
-    private boolean isAllowedType(Field field) {
-        for (Class c : allowedTypes) {
-            if (field.getType().equals(c)) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Please see full code of the project here: &lt;a href=&#34;https://github.com/iryndin/misc/tree/master/blogprjs/01-beanpostprocessor-injectrandomvar&#34;&gt;https://github.com/iryndin/misc/tree/master/blogprjs/01-beanpostprocessor-injectrandomvar&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;This example is inspired by this article: &lt;a href=&#34;https://www.dataart.ru/news/malen-kie-sekrety-spring/&#34;&gt;Small Spring secrets&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;example-2-inject-logger-with-annotation&#34;&gt;Example 2. Inject logger with annotation&lt;/h2&gt;
-
-&lt;p&gt;This is another example of using &lt;code&gt;BeanPostProcessor&lt;/code&gt; - here we inject logger for each bean that is marked with proper annotation.
-This example is inspired by this article: &lt;a href=&#34;https://memorynotfound.com/spring-inject-logger-annotation-example/&#34;&gt;Spring Inject Logger by Annotation Example&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Here is &lt;code&gt;InjectLog&lt;/code&gt; annotation:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-    public @interface InjectLog {
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;and its processor:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/**
- * Bean PostProcessor that injects properly created logger into Spring bean
- */
-@Component
-public class InjectLogPostProcessor implements BeanPostProcessor {
-
-    private Logger log = LoggerFactory.getLogger(InjectLogPostProcessor.class);
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        ReflectionUtils.doWithFields(bean.getClass(), field -&amp;gt; {
-            if (field.getAnnotation(InjectLog.class) != null) {
-                ReflectionUtils.makeAccessible(field);
-                Logger logger = LoggerFactory.getLogger(bean.getClass());
-                field.set(bean, logger);
-                log.info(&amp;quot;Injected logger into bean &#39;{}&#39;&amp;quot;, beanName);
-            }
-        });
-        return bean;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here is example of bean with this annotation:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Component
-public class SimpleBean {
-
-    @InjectLog
-    private Logger log;
-
-    public void doSmth() {
-        log.info(&amp;quot;doSmth is called&amp;quot;);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can see that this is pretty much similar to the first example.&lt;/p&gt;
-
-&lt;p&gt;You can see the code of the project here: &lt;a href=&#34;https://github.com/iryndin/misc/tree/master/blogprjs/02-beanpostprocessor-injectlogger&#34;&gt;https://github.com/iryndin/misc/tree/master/blogprjs/02-beanpostprocessor-injectlogger&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;Here are some good examples of usage of &lt;code&gt;BeanPostProcessor&lt;/code&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.dataart.ru/news/malen-kie-sekrety-spring/&#34;&gt;Small Spring secrets&lt;/a&gt; (in Russian)&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://memorynotfound.com/spring-inject-logger-annotation-example/&#34;&gt;Spring Inject Logger by Annotation Example&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.baeldung.com/spring-annotation-bean-pre-processor&#34;&gt;A Spring Custom Annotation for a Better DAO&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Copy folder from AWS S3</title>
-      <link>http://iryndin.net/post/copy_folder_from_aws_s3/</link>
-      <pubDate>Sat, 18 Nov 2017 12:19:37 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/copy_folder_from_aws_s3/</guid>
-      <description>&lt;p&gt;How could we copy a folder from AWS S3 to local machine using AWS CLI?&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;use-cp-command&#34;&gt;Use cp command&lt;/h2&gt;
-
-&lt;p&gt;We can use &lt;code&gt;cp&lt;/code&gt; command to copy folder or file from S3 to local machine. If we add parameter &lt;code&gt;--recursive&lt;/code&gt; then
-we will get folder with all its files and folder inside. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;aws s3 cp s3://bucketname/foldername localdirname --recursive
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will copy folder &lt;code&gt;foldername&lt;/code&gt; with all its content inside from S3 to local folder named &lt;code&gt;localdirname&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;use-sync-command&#34;&gt;Use sync command&lt;/h2&gt;
-
-&lt;p&gt;We have also &lt;code&gt;sync&lt;/code&gt; command that will, by default, copy a whole directory. But it will only copy new and modified files.
-Unchanged files remain untouched. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;aws s3 sync s3://bucketname/foldername localdirname
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will synchronize S3 folder &lt;code&gt;foldername&lt;/code&gt; with local folder &lt;code&gt;localdirname&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;useful-links&#34;&gt;Useful links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.aws.amazon.com/cli/latest/reference/s3/sync.html&#34;&gt;AWS sync command&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.aws.amazon.com/cli/latest/reference/s3/cp.html&#34;&gt;AWS cp command&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/27932345/downloading-folders-from-aws-s3-cp-or-sync&#34;&gt;StackOverflow - Downloading folders from aws s3, cp or sync?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Java objects memory size</title>
-      <link>http://iryndin.net/post/java_objects_memory_size/</link>
-      <pubDate>Fri, 27 Oct 2017 16:40:07 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/java_objects_memory_size/</guid>
-      <description>&lt;p&gt;Here we try to analyze how much memory will consume Java objects. All numbers are given for 64-bit machines.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;All numbers here are given for 64-bit JVMs.&lt;/p&gt;
-
-&lt;h2 id=&#34;primitive-types&#34;&gt;Primitive types&lt;/h2&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Type&lt;/th&gt;
-&lt;th&gt;Size, bytes&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;byte&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;char&lt;/td&gt;
-&lt;td&gt;2&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;short&lt;/td&gt;
-&lt;td&gt;2&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;int&lt;/td&gt;
-&lt;td&gt;4&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;long&lt;/td&gt;
-&lt;td&gt;8&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;float&lt;/td&gt;
-&lt;td&gt;4&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;double&lt;/td&gt;
-&lt;td&gt;8&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;boolean is 1 bit.&lt;/p&gt;
-
-&lt;h2 id=&#34;size-of-objects&#34;&gt;Size of objects&lt;/h2&gt;
-
-&lt;p&gt;Generally, size of any Java object in memory is a sum of following:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;object header&lt;/li&gt;
-&lt;li&gt;memory for primitive fields&lt;/li&gt;
-&lt;li&gt;memory for reference fields&lt;/li&gt;
-&lt;li&gt;padding, usually multiple by 8 byte :w&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;object-header&#34;&gt;Object header&lt;/h3&gt;
-
-&lt;p&gt;On 64-bit JVM object header has size 16 bytes and following form:&lt;/p&gt;
-
-&lt;script src=&#34;//gist.github.com/iryndin/563ae369764d52224d6e3881226a21e3.js?file=ObjectHeader64.txt&#34;&gt;&lt;/script&gt;
-
-&lt;h3 id=&#34;memory-for-primitive-types&#34;&gt;Memory for primitive types&lt;/h3&gt;
-
-&lt;p&gt;Memory for primitive types is allocated according to their respective sizes (see first section of this doc)&lt;/p&gt;
-
-&lt;h3 id=&#34;memory-for-reference-fields&#34;&gt;Memory for reference fields&lt;/h3&gt;
-
-&lt;p&gt;Each reference costs 8 bytes&lt;/p&gt;
-
-&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
-
-&lt;p&gt;Consider following class:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class Person {
-  String name;
-  int age;
-  boolean male;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Let&amp;rsquo;s calculate memory necessary for it:&lt;/p&gt;
-
-&lt;p&gt;16 bytes (object header) + 8 bytes (reference to String variable &lt;em&gt;name&lt;/em&gt;) + 4 bytes (int) + 1 byte (boolean) + 3 bytes (for padding) = 32 bytes&lt;/p&gt;
-
-&lt;h2 id=&#34;size-of-arrays&#34;&gt;Size of arrays&lt;/h2&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s talk about arrays. In Java each array is a object, and hence each array has a 16-bytes object header. Then array has integer &lt;em&gt;length&lt;/em&gt;
-field, and this adds another 4 bytes. 3rd pard is array itself, I mean array cells, and memory required for it is calculated as number of these cells multiplied
-by size of each cell. If it is array of primitive types, this means that each cell size will be in accordance with Section 1 of this doc, if it is
-array of objects this means that each cell size will be 8 bytes.&lt;/p&gt;
-
-&lt;p&gt;But referene to an array goes as a reference to an object and takes 8 bytes.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-1-arrays-of-primitives&#34;&gt;Example 1. Arrays of primitives&lt;/h3&gt;
-
-&lt;p&gt;Let&amp;rsquo;s consider following array: &lt;strong&gt;int[100]&lt;/strong&gt;. 16 bytes (object header) + 4 bytes (length) + 400 bytes (100 ints) + 4 (padding) = 424 bytes.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-2-arrays-of-booleans&#34;&gt;Example 2. Arrays of booleans.&lt;/h3&gt;
-
-&lt;p&gt;Let&amp;rsquo;s consider following array: &lt;strong&gt;boolean[10]&lt;/strong&gt;. 16 bytes (object header) + 4 bytes (length) + 16 bytes (100 ints) + 4 (padding) = 40 bytes.&lt;/p&gt;
-
-&lt;p&gt;You see that it is quite not effective to use array of booleans, and for boolean only 1 bit is informational, and another 7 are wasted.
-Hence, if you need to use array of booleans please consider usage of &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/BitSet.html&#34;&gt;BitSet&lt;/a&gt; for this.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-3-array-of-objects&#34;&gt;Example 3. Array of objects.&lt;/h3&gt;
-
-&lt;p&gt;Let&amp;rsquo;s consider following array: &lt;strong&gt;String[10]&lt;/strong&gt;. 16 bytes (object header) + 4 bytes (length) + 80 bytes (10 references to String objects) + 4 (padding) = 104 bytes.&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;Useful links:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.javamex.com/tutorials/memory/&#34;&gt;Memory usage in Java&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/9368764/calculate-size-of-object-in-java&#34;&gt;StackOverflow - Calculate size of Object in Java&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/DimitrisAndreou/memory-measurer&#34;&gt;GitHub - Java Memory Measurer&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.javaworld.com/article/2077496/testing-debugging/java-tip-130--do-you-know-your-data-size-.html&#34;&gt;Javaworld - Java Tip 130: Do you know your data size?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.javaworld.com/article/2077408/core-java/sizeof-for-java.html&#34;&gt;Javaworld - Sizeof for Java&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://habrahabr.ru/post/134102/&#34;&gt;Habr - Size of java objects&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://wiki.openjdk.java.net/display/HotSpot/CompressedOops&#34;&gt;OpenJDK - CompressedOops&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Serialize list of dates into JSON with Jackson</title>
-      <link>http://iryndin.net/post/json-serialize-list-of-dates-with-jackson/</link>
-      <pubDate>Mon, 02 Oct 2017 10:50:35 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/json-serialize-list-of-dates-with-jackson/</guid>
-      <description>&lt;p&gt;There are a lot of examples about how to serialize &lt;code&gt;Date&lt;/code&gt; objects into JSON.
-But I was not able to find examples that explain how to serialize a collection of dates: &lt;code&gt;Collection&amp;lt;Date&amp;gt;&lt;/code&gt;.
-I had to dive into code and find out it myself. In this post I share my findings with you.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s imagine that we need to return JSON form of the following Java object:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import java.util.Date;
-
-public class A {
-    private String name;
-    private List&amp;lt;Date&amp;gt; dates;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List&amp;lt;Date&amp;gt; getDates() {
-        return dates;
-    }
-
-    public void setDates(List&amp;lt;Date&amp;gt; dates) {
-        this.dates = dates;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If we return this class &amp;lsquo;as is&amp;rsquo;, without any helping directives to JSON serializer, we could get it in the following form:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;name&amp;quot;: &amp;quot;aaa&amp;quot;,
-  &amp;quot;dates&amp;quot;: [1506556800000,1506643200000,1506729600000,1506816000000]
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Rather than that we would like to have it in the following form (format dates as &amp;lsquo;yyyy-MM-dd&amp;rsquo; rather than take is as epoch timestamp):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;name&amp;quot;: &amp;quot;aaa&amp;quot;,
-  &amp;quot;dates&amp;quot;: [&amp;quot;2017-09-27&amp;quot;,&amp;quot;2017-09-28&amp;quot;,&amp;quot;2017-09-29&amp;quot;,&amp;quot;2017-09-30&amp;quot;]
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;solution&#34;&gt;Solution&lt;/h2&gt;
-
-&lt;p&gt;To achieve this formatted response, we need to use
-&lt;a href=&#34;https://github.com/FasterXML/jackson-databind/blob/master/src/main/java/com/fasterxml/jackson/databind/ser/std/CollectionSerializer.java&#34;&gt;com.fasterxml.jackson.databind.ser.std.CollectionSerializer&lt;/a&gt; serializer:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ser.std.CollectionSerializer;
-import com.fasterxml.jackson.databind.type.SimpleType;
-
-import java.util.Date;
-
-public class JsonListOfDatesSerializer extends CollectionSerializer {
-
-    public JsonListOfDatesSerializer() {
-        super(SimpleType.constructUnsafe(Date.class), true, null, (JsonSerializer)new JsonDateSerializer());
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This serializer defines how to serilialize a list of dates, applying &lt;em&gt;JsonDateSerializer&lt;/em&gt; to each date.
-&lt;em&gt;JsonDateSerializer&lt;/em&gt; has following definition:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-
-import java.text.SimpleDateFormat;
-import java.io.IOException;
-import java.util.Date;
-
-public class JsonDateSerializer extends JsonSerializer&amp;lt;Date&amp;gt; {
-
-    @Override
-    public void serialize(Date value, JsonGenerator jgen,
-                          SerializerProvider provider) throws IOException {
-        String formattedDate = new SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;).format(value);
-        jgen.writeString(formattedDate);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;another-serializers-suitable-for-collections&#34;&gt;Another serializers suitable for Collections&lt;/h2&gt;
-
-&lt;p&gt;Jackson also has another serializaers that can be extended to conveniently serialize collections of objects:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;com.fasterxml.jackson.databind.ser.std.IterableSerializer&lt;/li&gt;
-&lt;li&gt;com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer&lt;/li&gt;
-&lt;li&gt;com.fasterxml.jackson.databind.ser.std.MapSerializer&lt;/li&gt;
-&lt;/ul&gt;</description>
     </item>
     
   </channel>

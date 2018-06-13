@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <title>
-    Leetcode 121. Best time to buy and sell stock // Just my blog
+    Leetcode 53. Maximum subarray // Just my blog
   </title>
 
   <link href="http://gmpg.org/xfn/11" rel="profile">
@@ -16,11 +16,11 @@
 <meta name="author" content="">
 <meta name="generator" content="Hugo 0.19" />
 
-  <meta property="og:title" content="Leetcode 121. Best time to buy and sell stock" />
+  <meta property="og:title" content="Leetcode 53. Maximum subarray" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:url" content="http://iryndin.net/post/leetcode_121_best_time_to_buy_and_sell_stock/" />
+<meta property="og:url" content="http://iryndin.net/post/leetcode_53_maximum_subarray/" />
 
 
   
@@ -113,11 +113,11 @@
 <ul>
 <li><a href="#description">Description</a>
 <ul>
-<li><a href="#example-1">Example 1</a></li>
-<li><a href="#example-2">Example 2</a></li>
+<li><a href="#example">Example</a></li>
+<li><a href="#follow-up">Follow up</a></li>
 </ul></li>
 <li><a href="#brute-force-solution">Brute force solution</a></li>
-<li><a href="#more-smart-solution">More smart solution</a></li>
+<li><a href="#a-better-way">A better way</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -126,14 +126,14 @@
 	    
   		<section class="post">
             <h1 class="post-title">
-              <a href="/post/leetcode_121_best_time_to_buy_and_sell_stock/">Leetcode 121. Best time to buy and sell stock</a>
+              <a href="/post/leetcode_53_maximum_subarray/">Leetcode 53. Maximum subarray</a>
             </h1>
             <h3 class="post-subtitle">
             	
             </h3>
             
             	<span class="post-date">
-                	<span class="post-date-day"><sup>9</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jun</span> <span class="post-date-year">2018</span>
+                	<span class="post-date-day"><sup>11</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jun</span> <span class="post-date-year">2018</span>
             	</span>
             	
             
@@ -147,90 +147,81 @@
 
 			
 
-            <p>Let&rsquo;s condsider easy dynamic problem: best time to buy and sell stock.
-This is <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/">Leetcode 121. Best Time to Buy and Sell Stock</a>.</p>
+            <p>From a given array find the maximum contiguous subarray with the largest sum,
+<a href="https://leetcode.com/problems/maximum-subarray/description/">Leetcode 53</a>.</p>
 
 <p></p>
 
 <h2 id="description">Description</h2>
 
-<p>Say you have an array for which the <code>i-th</code> element is the price of a given stock on day i.</p>
+<p>Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.</p>
 
-<p>If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
+<h3 id="example">Example</h3>
 
-<p>Note that you cannot sell a stock before you buy one.</p>
-
-<h3 id="example-1">Example 1</h3>
-
-<pre><code>Input: [7,1,5,3,6,4]
-Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
-             Not 7-1 = 6, as selling price needs to be larger than buying price.
+<pre><code>Input: [-2,1,-3,4,-1,2,1,-5,4],
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6.
 </code></pre>
 
-<h3 id="example-2">Example 2</h3>
+<h3 id="follow-up">Follow up</h3>
 
-<pre><code>Input: [7,6,4,3,1]
-Output: 0
-Explanation: In this case, no transaction is done, i.e. max profit = 0.
-</code></pre>
+<p>If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.</p>
 
 <h2 id="brute-force-solution">Brute force solution</h2>
 
-<p>Without a lot of thinking we can come up with brute force solution.
-We buy stock on some particular day, and then for the next days we check profit if we sell this stock. Thus we will find the maximum profit. Time complexity is <code>O(n^2)</code>, while space complexity is <code>O(1)</code>.</p>
+<p>For each index combination let&rsquo;s calculate sum and then find the largest one.
+Space complexity is <code>O(1)</code> and time complexity is <code>O(n^2)</code>.</p>
 
-<pre><code class="language-java">class Solution {
-  public int maxProfit(int[] prices) {
-    int result = 0;
-    for (int i=0;i&lt;prices.length-1;i++) {
-      int maxProfit = maxProfit(prices, i);
-      if (maxProfit &gt; result) {
-        result = maxProfit;
+<pre><code class="language-java">public class Solution {
+  public int maxSubArray(int[] nums) {
+    if (nums == null || nums.length == 0) {
+      return 0;
+    } else if (nums.length == 1) {
+      return nums[0];
+    }
+
+    int maxSum = Integer.MIN_VALUE;
+    for (int i=0; i&lt;nums.length; i++) {
+      int sum = 0;
+      for (int j=i; j&lt;nums.length; j++) {
+        sum += table[i][j];
+        if (sum &gt; maxSum) {
+          maxSum = sum;
+        }
       }
     }
-    return result;
-  }
-
-  // Calculate max profit is stock is bought on day idx
-  // and sold on one of the next days
-  static int maxProfit(int[] prices, int idx) {
-    int diff = 0;
-    for (int j=idx+1; j&lt;prices.length; j++) {
-      diff = Math.max(diff, prices[j]-prices[idx]);
-    }
-    return diff;
+    return maxSum;
   }
 }
 </code></pre>
 
-<h2 id="more-smart-solution">More smart solution</h2>
+<h2 id="a-better-way">A better way</h2>
 
-<p>However, we can come up with more smart solution, that has time complexity only <code>O(n)</code>,
-i.e. only one array pass is required.</p>
+<p>Now let&rsquo;s think about better approach. Let&rsquo;s take into account following points:</p>
 
-<p>Here is the idea. We got max profit when we buy on lowest price, and  sell on highest price.
-So let&rsquo;s track minimum price and max profit. Let&rsquo;s traverse through price array,
-and check profit and min price with every new array element. If we found new min price and
-new max profit, then update our variables. Space complexity for this approach is <code>O(1)</code>.</p>
+<ul>
+<li>we are looking for largest sum, so any negative value will deteriorate final result</li>
+<li>Let&rsquo;s go from the start of the array and sum up all elements. If at some point we have negative sum, then
+we can set total sum to current array element. Why? Because any new value will be better than negative sum. Negative element will only deteriorate final sum, so it will be better, zero element is greater than any negative value, the same for positive element.</li>
+<li>If sum is not negative, then we simply add up next array element.</li>
+</ul>
 
-<pre><code class="language-java">class Solution {
-  public int maxProfit(int[] prices) {
-    if (prices == null || prices.length &lt; 2) {
-      return 0;
-    }
-    int minPrice = Integer.MAX_VALUE-1;
-    int maxProfit = 0;
-    for (int i=0;i&lt;prices.length;i++) {
-      int todayProfit = prices[i] - minPrice;
-      if (prices[i] &lt; minPrice) 
-        minPrice = prices[i];
+<p>So, code will be following:</p>
+
+<pre><code class="language-java">public class Solution {
+  public int maxSubArray(int[] nums) {
+    int max = Integer.MIN_VALUE, sum = 0;
+    for (int i = 0; i &lt; nums.length; i++) {
+      if (sum &lt; 0) {
+        sum = nums[i];
+      } else {
+        sum += nums[i];
       }
-      if (todayProfit &gt; maxProfit) {
-        maxProfit = todayProfit;
+      if (sum &gt; max) {
+        max = sum;
       }
     }
-    return maxProfit;
+    return max;
   }
 }
 </code></pre>
@@ -256,14 +247,14 @@ new max profit, then update our variables. Space complexity for this approach is
 					
 					<div class="paging-newer">
 						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
-						<a class="paging-link" href="/post/leetcode_53_maximum_subarray/">Leetcode 53. Maximum subarray</a>
+						<a class="paging-link" href="/post/leetcode_198_house_robber/">Leetcode 198. House robber</a>
 		            </div>
 		            
 
 					
 					<div class="paging-older">
 						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
-			            <a class="paging-link" href="/post/leetcode_746_min_cost_climbing_stairs/">Leetcode 746. Min cost climbing stairs</a>
+			            <a class="paging-link" href="/post/leetcode_121_best_time_to_buy_and_sell_stock/">Leetcode 121. Best time to buy and sell stock</a>
 		            </div>
 		            
 	            </div>
