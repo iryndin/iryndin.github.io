@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Binary search tree // Just my blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.19" />
+
+  <meta property="og:title" content="Binary search tree" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="http://iryndin.net/post/binary_search_tree/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="http://iryndin.net/css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Just my blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', "UA-55566999-1", 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    
+    
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://iryndin.net">Home</a></li>
+        
+      </ul>
+    </nav>
+
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#node-class">Node class</a></li>
+<li><a href="#search">Search</a>
+<ul>
+<li><a href="#recursive-search">Recursive search</a></li>
+<li><a href="#iterative-search">Iterative search</a></li>
+</ul></li>
+<li><a href="#insert-new-key">Insert new key</a>
+<ul>
+<li><a href="#recursive-insert">Recursive insert</a></li>
+<li><a href="#iterative-insert">Iterative insert</a></li>
+</ul></li>
+<li><a href="#delete-key">Delete key</a>
+<ul>
+<li><a href="#delete-using-in-order-successors-approach">Delete using in-order successors approach</a></li>
+<li><a href="#delete-using-in-order-predecessor-approach">Delete using in-order predecessor approach</a></li>
+<li><a href="#notes-on-using-either-in-order-successor-or-predecessor">Notes on using either in-order successor or predecessor</a></li>
+</ul></li>
+<li><a href="#tree-traversals">Tree traversals</a>
+<ul>
+<li><a href="#in-order-traversal">In-order traversal</a></li>
+<li><a href="#pre-order-traversal">Pre-order traversal</a></li>
+<li><a href="#post-order-traversal">Post-order traversal</a></li>
+</ul></li>
+<li><a href="#verify-that-binary-search-tree-is-correct">Verify that Binary Search Tree is correct</a></li>
+<li><a href="#find-max-and-min-elements-in-bst">Find max and min elements in BST</a></li>
+<li><a href="#links">Links</a></li>
+</ul></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/post/binary_search_tree/">Binary search tree</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>17</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jun</span> <span class="post-date-year">2018</span>
+            	</span>
+            	
+            
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            <p>Binary search tree (BST) is a data structure that allows fast element lookup, addition or removal of items.</p>
+
+<p></p>
+
+<p>It is a binary tree that has following properties:</p>
+
+<ul>
+<li>the left subtree of a node contains only nodes with keys lesser than the node’s key</li>
+<li>the right subtree of a node contains only nodes with keys greater than the node’s key</li>
+<li>the left and right subtree each must also be a binary search tree. There must be no duplicate nodes.</li>
+</ul>
+
+<p><img src="/img/binary_search_tree.png" style="width:100%" /></p>
+
+<h2 id="node-class">Node class</h2>
+
+<p>Let BST node be described with following class:</p>
+
+<pre><code class="language-java">public class Node {
+  public int key;
+  public int val;
+  public Node left;
+  public Node right;
+
+  public Node(int key, int val) {
+    this.key = key;
+    this.val = val;
+    this.left = this.right = null;
+  }
+}
+</code></pre>
+
+<h2 id="search">Search</h2>
+
+<p>Searching for a key in a BST can be done either recursively or iteratively.
+Complexity is, of course, <code>O(log(n))</code> on average.
+But for worst case (when BST degrades to linked list) comlexity can degrade to <code>O(n)</code>.</p>
+
+<h3 id="recursive-search">Recursive search</h3>
+
+<pre><code class="language-java">Node search(Node root, int key) {
+  if (root == null || root.key == key) {
+  	return root;
+  }
+  if (key &lt; root.key) return search(root.left, key);
+  else return search(root.right, key);
+}
+</code></pre>
+
+<h3 id="iterative-search">Iterative search</h3>
+
+<pre><code class="language-java">Node search(Node root, int key) {
+  Node current = root;
+  while (current != null) {
+    if (current.key == key) return current;
+    if (key &lt; current.key) current = current.left;
+    else current = current.right;
+  }
+  return current;
+}
+</code></pre>
+
+<h2 id="insert-new-key">Insert new key</h2>
+
+<p>Inserting new key is similar to search. We always start from root, and then traverse down to leaf nodes.
+So, that new values are always inserted as leaf nodes.
+This means that BST structure depends on the order in which new keys are inserted.</p>
+
+<h3 id="recursive-insert">Recursive insert</h3>
+
+<pre><code class="language-java">Node insert(Node root, int key, int val) {
+  if (root == null) {
+    // when tree is empty, create new root
+    return new Node(key, val);
+  } else if (key == root.key) {
+    root.val = val;
+  } else if (key &lt; root.key) {
+    root.left = insert(root.left, key, val);
+  } else {
+    root.right = insert(root.right, key, val);
+  }
+  return root;
+}
+</code></pre>
+
+<h3 id="iterative-insert">Iterative insert</h3>
+
+<p>When implementing iterative insert we should also track the parent of the current node.
+We need this parent to link one of its children (left or right) to a newly created leaf node.</p>
+
+<pre><code class="language-java">Node insert(Node root, int key, int val) {
+  Node parent = null;
+  Node current = root;
+  while (true) {
+    if (current == null) {
+      current = new Node(key, val);
+      if (parent != null) {
+        if (key &lt; parent.key) parent.left = current;
+        else parent.right = current;
+      }
+      break;
+  	}
+    if (key == current.key) {
+      current.val = val;
+      break;
+    }
+    parent = current;
+    if (key &lt; current.key) {
+      current = current.left;
+    } else {
+      current = current.right;
+    }
+  }
+  return current;
+}
+
+</code></pre>
+
+<h2 id="delete-key">Delete key</h2>
+
+<p>When removing node from BST, it is mandatory to maintain in-order sequence of nodes.
+Let&rsquo;s consider following cases when deleting a node:</p>
+
+<ul>
+<li>it is leaf node, i.e. it does not have children. In this case simply remove the node</li>
+<li>node has only one child. In this case simply remove this node, and put a child in its place.</li>
+<li>node has left and right children</li>
+</ul>
+
+<p>So far let&rsquo;s write code that process deletion of a given key from BST for first two cases
+(i.e. when node either does not have children or has only one child):</p>
+
+<pre><code class="language-java">// remove key and return new root of the BST
+Node delete(Node root, int key) {
+  if (root == null) {
+    return null;
+  }
+  if (key &lt; root.key) {
+    root.left = delete(root.left, key);
+  } else if (key &gt; root.key) {
+    root.right = delete(root.right, key);
+  } else {
+    // here root.key == key
+    if (root.right == null) {
+      return root.left;
+    } else if (root.left == null) {
+      return root.right;
+    } else {
+      // Complex case: node has 2 children
+      // Discuss it further. 
+      deleteNodeWith2Children(root, key);
+    }
+  }
+  return root;
+}
+</code></pre>
+
+<h3 id="delete-using-in-order-successors-approach">Delete using in-order successors approach</h3>
+
+<p>Let&rsquo;s consider case when node has 2 non-null children: <code>left</code> and <code>right</code>.
+We find in-order successor (node with the next smallest key) of the current node,
+and put its value in-place of the current node. Then we simply delete this successor node.
+So, the code is as following:</p>
+
+<pre><code class="language-java">void deleteNodeWith2Children(Node root, int key) {
+  assert root.key == key;
+  assert root.left != null;
+  assert root.right != null;
+
+  Node successor = findSuccessor(root.right);
+  root.key = successor.key;
+  root.val = successor.val;
+  root.right = delete(root.right, successor.key);
+}
+
+// Find most minimal node, 
+// so go left as far as possible
+Node findSuccessor(Node root) {
+  Node cur = root;
+  while (cur.left != null) {
+    cur = cur.left; 
+  }
+  return cur;
+}
+</code></pre>
+
+<h3 id="delete-using-in-order-predecessor-approach">Delete using in-order predecessor approach</h3>
+
+<p>Here approach is the same as with in-order successor.
+We find in-order predecessor of current node, and put its key and value in place of current node.
+Then we simply delete the predecessor node.</p>
+
+<pre><code class="language-java">void deleteNodeWith2Children(Node root, int key) {
+  assert root.key == key;
+  assert root.left != null;
+  assert root.right != null;
+
+  Node predecessor = findPredecessor(root.left);
+  root.key = predecessor.key;
+  root.val = predecessor.val;
+  root.left = delete(root.left, predecessor.key);
+}
+
+// Find node with max key,
+// so go right as far as possible
+Node findPredecessor(Node root) {
+  Node cur = root;
+  while (cur.right != null) {
+    cur = cur.right; 
+  }
+  return cur;
+}
+</code></pre>
+
+<h3 id="notes-on-using-either-in-order-successor-or-predecessor">Notes on using either in-order successor or predecessor</h3>
+
+<p>Consistently using the in-order successor or the in-order predecessor for every instance of the two-child case can lead to an unbalanced tree, so some implementations select one or the other at different times.</p>
+
+<h2 id="tree-traversals">Tree traversals</h2>
+
+<p>Next depth-first-search traversals exist:</p>
+
+<ul>
+<li>in-order traversal (Left, Root, Right)</li>
+<li>pre-order traversal (Root, Left, Right)</li>
+<li>post-order traversal (Left, Right, Root)</li>
+</ul>
+
+<h3 id="in-order-traversal">In-order traversal</h3>
+
+<p>In-order traversal: we visit nodes in the following order: Left -&gt; Root -&gt; Right.</p>
+
+<pre><code class="language-java">void traverseInOrder(Node root) {
+  if (root != null) {
+    traverseInOrder(root.left);
+    System.out.println(root.key);
+    traverseInOrder(root.right);
+  }
+}
+</code></pre>
+
+<h3 id="pre-order-traversal">Pre-order traversal</h3>
+
+<pre><code class="language-java">void traversePreOrder(Node root) {
+  if (root != null) {
+    System.out.println(root.key);
+    traverseInOrder(root.left);    
+    traverseInOrder(root.right);
+  }
+}
+</code></pre>
+
+<h3 id="post-order-traversal">Post-order traversal</h3>
+
+<pre><code class="language-java">void traversePreOrder(Node root) {
+  if (root != null) {    
+    traverseInOrder(root.left);    
+    traverseInOrder(root.right);
+    System.out.println(root.key);
+  }
+}
+</code></pre>
+
+<h2 id="verify-that-binary-search-tree-is-correct">Verify that Binary Search Tree is correct</h2>
+
+<p>Here is a small task: verify that given BST is correct.  Lower given an example with incorrect BST:</p>
+
+<pre><code>     20
+    /  \
+  10    30
+       /  \
+      5    40
+</code></pre>
+
+<p>Node with key <code>5</code> should be greater than <code>20</code>, hence it is not a valid BST.</p>
+
+<p>So we should track not only value of parent, but minimum and maximum values as well.
+We should check that node key is between max and min value.<br />
+If we go down left branch, we should update <code>maxKey</code>,
+because left branch in BST should contain nodes with smaller keys.<br />
+If we go right branch, we should update <code>minKey</code>, because right branch contains</p>
+
+<pre><code class="language-java">boolean isCorrect(Node root) {
+  if (root == null) return true;
+  return isCorrect(root, Integer.MIN_VALUE, INTEGER.MAX_VALUE);
+}
+
+boolean isCorrect(Node root, int minKey, int maxKey) {
+  if (root == null) return true;
+  if (root.key &lt;= minKey || root.key &gt;= maxKey) return false;
+  return 
+    isCorrect(root.left, minKey, root.key) &amp;&amp;
+    isCorrect(root.right, root.key, maxKey);
+}
+</code></pre>
+
+<h2 id="find-max-and-min-elements-in-bst">Find max and min elements in BST</h2>
+
+<p>Minimal element in the BST is the leftmost element:</p>
+
+<pre><code class="language-java">Node findMin(Node root) {
+  if (root == null) return null;
+  Node cur = root;
+  while (cur.left != null) {
+  	cur = cur.left;
+  }
+  return cur;
+}
+</code></pre>
+
+<p>The largest lement in the BST in rightmost element.</p>
+
+<pre><code class="language-java">Node findMax(Node root) {
+  if (root == null) return null;
+  Node cur = root;
+  while (cur.right != null) {
+  	cur = cur.right;
+  }
+  return cur;
+}
+</code></pre>
+
+<h2 id="links">Links</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Binary_search_tree">Wikipedia article on Binary Search Tree</a></li>
+<li><a href="https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/">GeeksForGeeks - Binary Search Tree | Set 1 (Search and Insertion)</a></li>
+<li><a href="https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/">GeeksForGeeks - Tree Traversals (Inorder, Preorder and Postorder)</a></li>
+<li><a href="https://www.geeksforgeeks.org/binary-search-tree-data-structure/">GeeksForGeeks - All articles on BST</a></li>
+<li><a href="https://www.geeksforgeeks.org/category/binary-search-tree/">GeeksForGeeks - All articles tagged with BST tag</a></li>
+<li><a href="https://leetcode.com/tag/binary-search-tree/">Leetcode - Problems for BST</a></li>
+<li><a href="https://leetcode.com/tag/tree/">Leetcode - Problems for Tree</a></li>
+</ul>
+	
+			
+
+			
+				<div class="tags-list">
+					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+					
+	                <a class="post-tag post-tag-data-structures" href="http://iryndin.net/tags/data-structures">data structures</a>,
+	                
+	                <a class="post-tag post-tag-binary-search-tree" href="http://iryndin.net/tags/binary-search-tree">binary search tree</a>,
+	                
+				</div>
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/post/dynamic_programming_tasks/">Dynamic programming problems</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2018. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>
