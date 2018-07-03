@@ -6,8 +6,143 @@
     <description>Recent content on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 Jun 2018 02:55:26 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 Jun 2018 03:20:39 +0000</lastBuildDate>
     <atom:link href="http://iryndin.net/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Trie or Prefix Tree</title>
+      <link>http://iryndin.net/post/trie/</link>
+      <pubDate>Thu, 28 Jun 2018 03:20:39 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/trie/</guid>
+      <description>&lt;p&gt;Let&amp;rsquo;s consider another popular data structure: Trie or Prefix tree.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Trie (or prefix tree) is an ordered tree data structure, mainly used for operations with strings (but now always). If we consider strings, then for trie following points are true:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Nodes can have multiple children&lt;/li&gt;
+&lt;li&gt;Key is not stored in the node, rather it is defined by node position in the tree&lt;/li&gt;
+&lt;li&gt;Each node stores single character&lt;/li&gt;
+&lt;li&gt;Prefix is defined as a sequence of characters by traversing trie from root down to particular node. Hence, all children of a node have the common prefix.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Codewise, node of a trie can be defines as this (please note that there is no &lt;code&gt;key&lt;/code&gt; in the node!):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class TrieNode&amp;lt;T&amp;gt; {
+  T value;
+  Map&amp;lt;Character, TrieNode&amp;gt; children;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Or another common representation is to have array (with size equal to alphabet length) where non-null array members are children of this node.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class TrieNode {
+  T value;
+  TrieNode[] children = new TrieNode[26];
+
+  /**
+   * Get child for character {@code c}
+   **/
+  public TrieNode getChild(char c) {
+    int idx = (int)&#39;a&#39; - (int)c;
+    return children[idx];
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Example of storing dictionary (&lt;code&gt;sam, sand, sir, sick, sunday&lt;/code&gt;) in trie:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://iryndin.net/img/trie.png&#34; style=&#34;width:50%&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;usage-of-trie&#34;&gt;Usage of trie&lt;/h2&gt;
+
+&lt;p&gt;Trie can be used for following tasks:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;dictionary representation&lt;/li&gt;
+&lt;li&gt;autocomplete feature in text editors&lt;/li&gt;
+&lt;li&gt;searching for common prefix&lt;/li&gt;
+&lt;li&gt;it is used in some algorithms: Aho-Corasick, Lempel-Ziv-Welch compression algorithm&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;operations-on-the-trie&#34;&gt;Operations on the trie&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s deal with first implementation of &lt;code&gt;TrieNode&lt;/code&gt;,
+i.e. where chidren are put into map: &lt;code&gt;Map&amp;lt;Character, TrieNode&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;look-for-a-key&#34;&gt;Look for a key&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;&amp;lt;T&amp;gt; T find(String key, TrieNode&amp;lt;T&amp;gt; root) {
+  TrieNode&amp;lt;T&amp;gt; cur = root;
+  for (char c : key.toCharArray()) {
+    TrieNode&amp;lt;T&amp;gt; n = cur.children == null ? null : cur.children.get(c);
+    if (n != null) {
+      cur = n;
+    } else {
+      return null;
+    }
+  }
+  return cur.value;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;insert-key&#34;&gt;Insert key&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;// Return previous value associated with key, 
+// or null if no previous value was associated
+&amp;lt;T&amp;gt; T insert(String key, T newValue, TrieNode&amp;lt;T&amp;gt; root) {
+  TrieNode&amp;lt;T&amp;gt; cur = root;
+  for (int i=0; i&amp;lt;key.length(); i++) {
+    char c = key.charAt(i);
+    TrieNode&amp;lt;T&amp;gt; n = cur.children == null ? null : cur.children.get(c);
+    if (n != null) {
+      cur = n;
+    } else {
+      if (cur.children == null) {
+        cur.children = new HashMap&amp;lt;&amp;gt;();
+      }
+      TrieNode&amp;lt;T&amp;gt; newNode = new TrieNode&amp;lt;&amp;gt;();
+      cur.children.put(c, newNode);
+      cur = newNode;
+    }
+  }
+  T oldValue = cur.value;
+  cur.value = value;
+  return oldValue;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;remove-key&#34;&gt;Remove key&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;&amp;lt;T&amp;gt; T delete(String key, TrieNode&amp;lt;T&amp;gt; root) {
+  TrieNode&amp;lt;T&amp;gt; cur = root;
+  for (char c : key.toCharArray()) {
+    TrieNode&amp;lt;T&amp;gt; n = cur.children == null ? null : cur.children.get(c);
+    if (n != null) {
+      cur = n;
+    } else {
+      return null;
+    }
+  }  
+  T oldValue = cur.value;
+  cur.value = null;
+  return oldValue;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://leetcode.com/tag/trie/&#34;&gt;Leetcode - Problems for tries&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.geeksforgeeks.org/tag/trie/&#34;&gt;GeekForGeeks - Trie articles&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://practice.geeksforgeeks.org/topics/Trie&#34;&gt;GeekForGeeks - Trie practice&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/basecs/trying-to-understand-tries-3ec6bede0014&#34;&gt;Basecs - Trying to understand tries&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.hackerearth.com/practice/data-structures/advanced-data-structures/trie-keyword-tree/tutorial/&#34;&gt;Hackerearth - Trie&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.baeldung.com/trie-java&#34;&gt;Baeldung - The Trie Data Structure in Java&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Binary search tree</title>
@@ -1595,272 +1730,6 @@ However, like the Repeatable Read level, applications using this level must be p
 &lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
 
 &lt;p&gt;More details can be taken here: &lt;a href=&#34;https://www.postgresql.org/docs/9.2/static/transaction-iso.html&#34;&gt;PostgreSQL Documentation. Chapter 13. Concurrency Control. 13.2. Transaction Isolation&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Transaction isolation levels</title>
-      <link>http://iryndin.net/post/transaction_isolation_levels/</link>
-      <pubDate>Tue, 28 Nov 2017 07:14:59 +0300</pubDate>
-      
-      <guid>http://iryndin.net/post/transaction_isolation_levels/</guid>
-      <description>&lt;p&gt;Transaction isolation levels in relational databases. A reminder post.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;ansi-sql-standard-isolation-levels&#34;&gt;ANSI/SQL standard isolation levels&lt;/h2&gt;
-
-&lt;p&gt;We have 4 standard-defined transaction isolation levels:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Read uncommited.&lt;/strong&gt; Dirty reads - YES, Non-Repeatable reads - YES, Phantom reads - YES.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Read commited.&lt;/strong&gt; Dirty reads - NO, Non-Repeatable reads - YES, Phantom reads - YES.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Repeatable read.&lt;/strong&gt; Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - YES.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Serializable.&lt;/strong&gt; Dirty reads - NO, Non-Repeatable reads - NO, Phantom reads - NO.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Here &lt;code&gt;YES&lt;/code&gt; means &lt;code&gt;may occur&lt;/code&gt;, while &lt;code&gt;NO&lt;/code&gt; means &lt;code&gt;should not occur at all&lt;/code&gt;. So &lt;code&gt;NO&lt;/code&gt; here is more strong expression than &lt;code&gt;YES&lt;/code&gt;.
-Different DBMS may make this &lt;code&gt;YES&lt;/code&gt; more restrictive. E.g. PostgreSQL does not allow &lt;code&gt;Phantom Reads&lt;/code&gt; on its &lt;code&gt;Repeatable read&lt;/code&gt; level.
-See details here: &lt;a href=&#34;http://iryndin.net/post/postgresql_transaction_isolation_levels/&#34;&gt;PostgreSQL transaction isolation levels&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;read-phenomena&#34;&gt;Read phenomena&lt;/h2&gt;
-
-&lt;p&gt;The ANSI/ISO standard SQL 92 refers to three different read phenomena when Transaction 1 reads data
-that Transaction 2 might have changed:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Dirty reads&lt;/li&gt;
-&lt;li&gt;Non-Repeatable reads&lt;/li&gt;
-&lt;li&gt;Phantom reads&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Let&amp;rsquo;s consider them. Let&amp;rsquo;s operate with following database table &lt;strong&gt;users&lt;/strong&gt; that has following data.&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;id&lt;/th&gt;
-&lt;th&gt;name&lt;/th&gt;
-&lt;th&gt;age&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;John&lt;/td&gt;
-&lt;td&gt;20&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;2&lt;/td&gt;
-&lt;td&gt;Eva&lt;/td&gt;
-&lt;td&gt;30&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h2 id=&#34;dirty-reads&#34;&gt;Dirty reads&lt;/h2&gt;
-
-&lt;p&gt;A &lt;em&gt;dirty read&lt;/em&gt; (aka uncommitted dependency) occurs when a transaction is allowed to read data from a row
-that has been modified by another running transaction and not yet committed.&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Transaction 1&lt;/th&gt;
-&lt;th&gt;Transaction 2&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;/* Query 1. Will read 20*/&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;select age from users where id=1&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;/* Query 2. No commit here. */&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;update users set age=50 where id=1&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;/* Query 1. Will read 50 */&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;select age from users where id=1&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;/* Lock-based dirty read. */&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;rollback&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;We can see here that &lt;em&gt;dirty read&lt;/em&gt; will read age value of &lt;code&gt;50&lt;/code&gt; in the 2nd query, even if &lt;em&gt;Transaction 2&lt;/em&gt; will be rolled back afterwards.&lt;/p&gt;
-
-&lt;h2 id=&#34;non-repeatable-reads&#34;&gt;Non-Repeatable reads&lt;/h2&gt;
-
-&lt;p&gt;A &lt;em&gt;non-repeatable read&lt;/em&gt; occurs, when during the course of a transaction,
-a row is retrieved twice and the values within the row differ between reads.&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Transaction 1&lt;/th&gt;
-&lt;th&gt;Transaction 2&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;/* Query 1. */&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;select * from users where id=1&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;/* Query 2. */&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;update users set age = 50 where id = 1;&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;commit;&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;/* Query 1. */&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;select * from users where id=1;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;commit;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;During &lt;em&gt;Transaction 1&lt;/em&gt; &lt;em&gt;Transaction 2&lt;/em&gt; is started and committed, and it changes rows that should be returned as a result
-of &lt;em&gt;Transaction 1&lt;/em&gt;. But &lt;em&gt;Transaction 1&lt;/em&gt; has already seen the different value before &lt;em&gt;Transaction 2&lt;/em&gt; starts.
-So what value should it return?&lt;/p&gt;
-
-&lt;p&gt;If transaction isolation level is set to either to &lt;code&gt;Repeatable read&lt;/code&gt; or &lt;code&gt;Serializable&lt;/code&gt; (levels at which Non-Repeatable reads
-do not occur) - then &lt;em&gt;Transaction 1&lt;/em&gt; should return old values (where age is 20).&lt;/p&gt;
-
-&lt;p&gt;If transaction isolation level is set to either to &lt;code&gt;Read uncommited&lt;/code&gt; or &lt;code&gt;Read commited&lt;/code&gt; (levels at which Non-Repeatable reads
-may occur) - then &lt;em&gt;Transaction 1&lt;/em&gt; may return new values (which incorporate changes made by &lt;em&gt;Transaction 2&lt;/em&gt;, i.e. where age is 20).&lt;/p&gt;
-
-&lt;h2 id=&#34;phantom-reads&#34;&gt;Phantom reads&lt;/h2&gt;
-
-&lt;p&gt;A &lt;em&gt;phantom read&lt;/em&gt; occurs when, in the course of a transaction, two identical queries are executed,
-and the collection of rows returned by the second query is different from the first.&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Transaction 1&lt;/th&gt;
-&lt;th&gt;Transaction 2&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;/* Query 1. */&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;select * from users&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;where age between 10 and 30;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;/* Query 2. */&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;insert into users(id,name,age)&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;values (3, &#39;Bob&#39;, 27); commit;&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;/* Query 1. */&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;select * from users&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;where age between 10 and 30;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;At the highest isolation level (&lt;code&gt;Serializable&lt;/code&gt;) &lt;em&gt;Transaction 1&lt;/em&gt; will return the same set of rows
-(i.e. it will return 2 rows). While at lower transaction isolation levels (&lt;code&gt;Uncommited read&lt;/code&gt;, &lt;code&gt;Commited read&lt;/code&gt;, &lt;code&gt;Non-repeatable read&lt;/code&gt;)
-it will return set of rows including those rows added with &lt;em&gt;Transaction 2&lt;/em&gt;, i.e. it will return 3 rows.&lt;/p&gt;
-
-&lt;h2 id=&#34;jdbc&#34;&gt;JDBC&lt;/h2&gt;
-
-&lt;p&gt;JDBC driver can have following transaction isolation levels:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_NONE&lt;/code&gt; - a constant indicating that transactions are not supported&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_READ_UNCOMMITTED&lt;/code&gt; - read uncommited level&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_READ_COMMITTED&lt;/code&gt; - read commited level&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_REPEATABLE_READ&lt;/code&gt; - repeztable read level&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Connection.TRANSACTION_SERIALIZABLE&lt;/code&gt; - serializable level&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;See more details here: &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html&#34;&gt;java.sql.Connection&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>
