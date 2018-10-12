@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Prefix Tree on Just my blog</title>
-    <link>http://iryndin.net/tags/prefix-tree/index.xml</link>
+    <link>http://iryndin.net/tags/prefix-tree/</link>
     <description>Recent content in Prefix Tree on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://iryndin.net/tags/prefix-tree/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 28 Jun 2018 03:20:39 +0000</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/tags/prefix-tree/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Trie or Prefix Tree</title>
@@ -16,131 +19,7 @@
       <guid>http://iryndin.net/post/trie/</guid>
       <description>&lt;p&gt;Let&amp;rsquo;s consider another popular data structure: Trie or Prefix tree.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Trie (or prefix tree) is an ordered tree data structure, mainly used for operations with strings (but now always). If we consider strings, then for trie following points are true:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Nodes can have multiple children&lt;/li&gt;
-&lt;li&gt;Key is not stored in the node, rather it is defined by node position in the tree&lt;/li&gt;
-&lt;li&gt;Each node stores single character&lt;/li&gt;
-&lt;li&gt;Prefix is defined as a sequence of characters by traversing trie from root down to particular node. Hence, all children of a node have the common prefix.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Codewise, node of a trie can be defines as this (please note that there is no &lt;code&gt;key&lt;/code&gt; in the node!):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class TrieNode&amp;lt;T&amp;gt; {
-  T value;
-  Map&amp;lt;Character, TrieNode&amp;gt; children;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Or another common representation is to have array (with size equal to alphabet length) where non-null array members are children of this node.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class TrieNode {
-  T value;
-  TrieNode[] children = new TrieNode[26];
-
-  /**
-   * Get child for character {@code c}
-   **/
-  public TrieNode getChild(char c) {
-    int idx = (int)&#39;a&#39; - (int)c;
-    return children[idx];
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Example of storing dictionary (&lt;code&gt;sam, sand, sir, sick, sunday&lt;/code&gt;) in trie:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://iryndin.net/img/trie.png&#34; style=&#34;width:50%&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;usage-of-trie&#34;&gt;Usage of trie&lt;/h2&gt;
-
-&lt;p&gt;Trie can be used for following tasks:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;dictionary representation&lt;/li&gt;
-&lt;li&gt;autocomplete feature in text editors&lt;/li&gt;
-&lt;li&gt;searching for common prefix&lt;/li&gt;
-&lt;li&gt;it is used in some algorithms: Aho-Corasick, Lempel-Ziv-Welch compression algorithm&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;operations-on-the-trie&#34;&gt;Operations on the trie&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s deal with first implementation of &lt;code&gt;TrieNode&lt;/code&gt;,
-i.e. where chidren are put into map: &lt;code&gt;Map&amp;lt;Character, TrieNode&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;look-for-a-key&#34;&gt;Look for a key&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;&amp;lt;T&amp;gt; T find(String key, TrieNode&amp;lt;T&amp;gt; root) {
-  TrieNode&amp;lt;T&amp;gt; cur = root;
-  for (char c : key.toCharArray()) {
-    TrieNode&amp;lt;T&amp;gt; n = cur.children == null ? null : cur.children.get(c);
-    if (n != null) {
-      cur = n;
-    } else {
-      return null;
-    }
-  }
-  return cur.value;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;insert-key&#34;&gt;Insert key&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;// Return previous value associated with key, 
-// or null if no previous value was associated
-&amp;lt;T&amp;gt; T insert(String key, T newValue, TrieNode&amp;lt;T&amp;gt; root) {
-  TrieNode&amp;lt;T&amp;gt; cur = root;
-  for (int i=0; i&amp;lt;key.length(); i++) {
-    char c = key.charAt(i);
-    TrieNode&amp;lt;T&amp;gt; n = cur.children == null ? null : cur.children.get(c);
-    if (n != null) {
-      cur = n;
-    } else {
-      if (cur.children == null) {
-        cur.children = new HashMap&amp;lt;&amp;gt;();
-      }
-      TrieNode&amp;lt;T&amp;gt; newNode = new TrieNode&amp;lt;&amp;gt;();
-      cur.children.put(c, newNode);
-      cur = newNode;
-    }
-  }
-  T oldValue = cur.value;
-  cur.value = value;
-  return oldValue;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;remove-key&#34;&gt;Remove key&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;&amp;lt;T&amp;gt; T delete(String key, TrieNode&amp;lt;T&amp;gt; root) {
-  TrieNode&amp;lt;T&amp;gt; cur = root;
-  for (char c : key.toCharArray()) {
-    TrieNode&amp;lt;T&amp;gt; n = cur.children == null ? null : cur.children.get(c);
-    if (n != null) {
-      cur = n;
-    } else {
-      return null;
-    }
-  }  
-  T oldValue = cur.value;
-  cur.value = null;
-  return oldValue;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/tag/trie/&#34;&gt;Leetcode - Problems for tries&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.geeksforgeeks.org/tag/trie/&#34;&gt;GeekForGeeks - Trie articles&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://practice.geeksforgeeks.org/topics/Trie&#34;&gt;GeekForGeeks - Trie practice&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://medium.com/basecs/trying-to-understand-tries-3ec6bede0014&#34;&gt;Basecs - Trying to understand tries&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.hackerearth.com/practice/data-structures/advanced-data-structures/trie-keyword-tree/tutorial/&#34;&gt;Hackerearth - Trie&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.baeldung.com/trie-java&#34;&gt;Baeldung - The Trie Data Structure in Java&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mysql on Just my blog</title>
+    <link>http://iryndin.net/tags/mysql/</link>
+    <description>Recent content in Mysql on Just my blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 11 Oct 2018 03:20:39 +0000</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Simple MySQL backup to Amazon S3 using Docker</title>
+      <link>http://iryndin.net/post/simple_mysql_backup_to_amazon_s3_using_docker/</link>
+      <pubDate>Thu, 11 Oct 2018 03:20:39 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/simple_mysql_backup_to_amazon_s3_using_docker/</guid>
+      <description>&lt;p&gt;This is just a short notice about a convenient was of making daily MySQL backups to Amazon S3. Docker is used here to spin up MySQL and AWS CLI tool.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

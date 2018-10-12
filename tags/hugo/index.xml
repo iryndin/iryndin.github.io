@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hugo on Just my blog</title>
-    <link>http://iryndin.net/tags/hugo/index.xml</link>
+    <link>http://iryndin.net/tags/hugo/</link>
     <description>Recent content in Hugo on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://iryndin.net/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Jun 2018 00:50:44 +0000</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>How to run HUGO under Docker</title>
@@ -19,71 +22,7 @@ without installing it to a local machine. Here I will show you how to run Hugo
 under Docker, create new posts for the blog, generate static content - i.e. all basic operations
 that allow to add new and edit existing posts to the blog.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;what-docker-image-for-hugo-to-take&#34;&gt;What docker image for Hugo to take&lt;/h2&gt;
-
-&lt;p&gt;A lot of Hugo images are available on &lt;a href=&#34;https://hub.docker.com/search/?isAutomated=0&amp;amp;isOfficial=0&amp;amp;page=1&amp;amp;pullCount=0&amp;amp;q=hugo&amp;amp;starCount=1&#34;&gt;Docker Hub&lt;/a&gt;, let&amp;rsquo;s just take the most starred one: &lt;a href=&#34;https://hub.docker.com/r/jojomi/hugo/&#34;&gt;jojomi/hugo&lt;/a&gt;.
-One nice thing for this image is that it is updated on time and all versions of Hugo are available, starting from &lt;code&gt;0.15&lt;/code&gt;. I will show you how to run Hugo &lt;code&gt;0.19&lt;/code&gt;, but you can easily apply this knowledge to run Hugo of more late versions.&lt;/p&gt;
-
-&lt;h2 id=&#34;how-to-run-hugo-from-docker&#34;&gt;How to run hugo from docker&lt;/h2&gt;
-
-&lt;p&gt;First, let&amp;rsquo;s have two folders:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;src&lt;/code&gt; - for sources of our site&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;output&lt;/code&gt; - for generated output&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Then, let&amp;rsquo;s do following:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;create some simple site (let it be blog) structure&lt;/li&gt;
-&lt;li&gt;download theme&lt;/li&gt;
-&lt;li&gt;run site on &lt;code&gt;localhost&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;then generate html from out content&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;create-simple-site-structure&#34;&gt;Create simple site structure&lt;/h2&gt;
-
-&lt;p&gt;Inside our &lt;code&gt;src&lt;/code&gt; folder we have following content:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;config.toml&lt;/code&gt; - file with config&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;content&lt;/code&gt; - folder with blog content&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;static&lt;/code&gt; - folder with static assets (images/css/scripts/etc)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;themes&lt;/code&gt; - folder which contain one or more theme we want to employ for our website&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To see example of initial folder, see it on github: &lt;a href=&#34;https://github.com/iryndin/hugoblog&#34;&gt;https://github.com/iryndin/hugoblog&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Folder &lt;code&gt;themes&lt;/code&gt; should contain Hugo theme which we are going to use. For this example, let it be &lt;code&gt;hugo-redlounge&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Now, let&amp;rsquo;s run Hugo docker image to run a webserver on localhost, so that we would be able to look at our website in browser:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm --name &amp;quot;hugo1&amp;quot; -p 1313:1313 -v $(pwd)/src:/src -v $(pwd)/output:/output -e HUGO_THEME=&amp;quot;hugo-redlounge&amp;quot; -e HUGO_WATCH=&amp;quot;true&amp;quot; jojomi/hugo:0.19
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now we will be able to see our website in browser at &lt;code&gt;http://localhost:1313&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;creating-new-post&#34;&gt;Creating new post&lt;/h2&gt;
-
-&lt;p&gt;To create new post, run following command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker exec -it hugo1 hugo new post/example3.md
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;New file for this post will be created, and you can immediately start editing it.&lt;/p&gt;
-
-&lt;h2 id=&#34;generate-static-content&#34;&gt;Generate static content&lt;/h2&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s generate static content for our site. To generate static content in &lt;code&gt;output2&lt;/code&gt; folder you need to run command similar to what we used to run webserver on localhost, but without &lt;code&gt;HUGO_WATCH&lt;/code&gt; variable and without necessity to map ports. Also, you should run it under another name, if you do not want to shutdown
-container named &lt;code&gt;hugo1&lt;/code&gt; (that used in this example to run local webserver).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm --name &amp;quot;hugo2&amp;quot; -v $(pwd)/src:/src -v $(pwd)/output2:/output -e HUGO_THEME=&amp;quot;hugo-redlounge&amp;quot; jojomi/hugo:0.19
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And you will have your static site in &lt;code&gt;output2&lt;/code&gt; folder.&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -2,11 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Aws on Just my blog</title>
-    <link>http://iryndin.net/tags/aws/index.xml</link>
+    <link>http://iryndin.net/tags/aws/</link>
     <description>Recent content in Aws on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://iryndin.net/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Oct 2018 03:20:39 +0000</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Simple MySQL backup to Amazon S3 using Docker</title>
+      <link>http://iryndin.net/post/simple_mysql_backup_to_amazon_s3_using_docker/</link>
+      <pubDate>Thu, 11 Oct 2018 03:20:39 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/simple_mysql_backup_to_amazon_s3_using_docker/</guid>
+      <description>&lt;p&gt;This is just a short notice about a convenient was of making daily MySQL backups to Amazon S3. Docker is used here to spin up MySQL and AWS CLI tool.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Copy folder from AWS S3</title>
@@ -16,35 +30,7 @@
       <guid>http://iryndin.net/post/copy_folder_from_aws_s3/</guid>
       <description>&lt;p&gt;How could we copy a folder from AWS S3 to local machine using AWS CLI?&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;use-cp-command&#34;&gt;Use cp command&lt;/h2&gt;
-
-&lt;p&gt;We can use &lt;code&gt;cp&lt;/code&gt; command to copy folder or file from S3 to local machine. If we add parameter &lt;code&gt;--recursive&lt;/code&gt; then
-we will get folder with all its files and folder inside. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;aws s3 cp s3://bucketname/foldername localdirname --recursive
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will copy folder &lt;code&gt;foldername&lt;/code&gt; with all its content inside from S3 to local folder named &lt;code&gt;localdirname&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;use-sync-command&#34;&gt;Use sync command&lt;/h2&gt;
-
-&lt;p&gt;We have also &lt;code&gt;sync&lt;/code&gt; command that will, by default, copy a whole directory. But it will only copy new and modified files.
-Unchanged files remain untouched. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;aws s3 sync s3://bucketname/foldername localdirname
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will synchronize S3 folder &lt;code&gt;foldername&lt;/code&gt; with local folder &lt;code&gt;localdirname&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;useful-links&#34;&gt;Useful links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.aws.amazon.com/cli/latest/reference/s3/sync.html&#34;&gt;AWS sync command&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.aws.amazon.com/cli/latest/reference/s3/cp.html&#34;&gt;AWS cp command&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/27932345/downloading-folders-from-aws-s3-cp-or-sync&#34;&gt;StackOverflow - Downloading folders from aws s3, cp or sync?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -53,131 +39,8 @@ Unchanged files remain untouched. Example:&lt;/p&gt;
       <pubDate>Wed, 26 Apr 2017 23:46:17 +0300</pubDate>
       
       <guid>http://iryndin.net/post/aws-permissions-to-s3-folder/</guid>
-      <description>
-
-&lt;p&gt;Let&amp;rsquo;s imagine that we have a project, which actually use AWS S3 as file storage. The project consists of 2 parts: one part puts files into S3, and the other part only reads them from S3.
-Moreover, files are stored not in the bucket root, but in some folder which is placed in the bucket root.&lt;/p&gt;
-
-&lt;p&gt;According to best AWS practices, we need 2 security and access control policies. One policy is for that part of software which puts files into S3 folder. This will be READ/WRITE policy,
-and another policy, used by read-only part of the project, will have only READ permissions on the folder.&lt;/p&gt;
-
-&lt;p&gt;So, let&amp;rsquo;s create these 2 policies (which will be later assigned to 2 different users) and explain their details. Let&amp;rsquo;s start with the first, READ/WRITE policy.&lt;/p&gt;
-
-&lt;h2 id=&#34;read-write-policy&#34;&gt;Read/write policy&lt;/h2&gt;
-
-&lt;p&gt;Let us have following folder structure in the bucket named &lt;code&gt;bucket1&lt;/code&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;zf/cloud/2017&lt;/li&gt;
-&lt;li&gt;zf/coffee/2017&lt;/li&gt;
-&lt;li&gt;folder1/sdsd/11&lt;/li&gt;
-&lt;li&gt;folder1/sdsd/22&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;And we want to give read/write access only to &lt;code&gt;zf&lt;/code&gt; folder and its subfolders. Let&amp;rsquo;s see what should we do for this. We will have a policy that will contain a set of statements.
-Here are these statements with brief explanation.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Sid&amp;quot;: &amp;quot;AllowToSeeBucketListInTheConsole&amp;quot;,
-  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListAllMyBuckets&amp;quot;],
-  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::*&amp;quot;]
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;These permissios are granted to allow user to navigate within the AWS account using AWS console.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Sid&amp;quot;: &amp;quot;AllowRootAndHomeListingOfBucket&amp;quot;,
-  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;],
-  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-  &amp;quot;Condition&amp;quot;:{&amp;quot;StringEquals&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;&amp;quot;],&amp;quot;s3:delimiter&amp;quot;:[&amp;quot;/&amp;quot;]}}
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This statement grants user permission to see a list of folders within &lt;code&gt;bucket1&lt;/code&gt; bucket. This is also required for navigation.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Sid&amp;quot;: &amp;quot;AllowListingOfZfFolder&amp;quot;,
-  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;, &amp;quot;s3:PutObject&amp;quot;],
-  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-  &amp;quot;Condition&amp;quot;:{&amp;quot;StringLike&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;zf/*&amp;quot;]}}
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And finally, this statement grants user permission to get a list of objects inside &lt;code&gt;zf&lt;/code&gt; folder, as well as put objects there. So, final policy will look like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
-  &amp;quot;Statement&amp;quot;: [
-     {
-       &amp;quot;Sid&amp;quot;: &amp;quot;AllowToSeeBucketListInTheConsole&amp;quot;,
-       &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListAllMyBuckets&amp;quot;],
-       &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-       &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::*&amp;quot;]
-     },
-     {
-       &amp;quot;Sid&amp;quot;: &amp;quot;AllowRootAndHomeListingOfBucket&amp;quot;,
-       &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;],
-       &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-       &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-       &amp;quot;Condition&amp;quot;:{&amp;quot;StringEquals&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;&amp;quot;],&amp;quot;s3:delimiter&amp;quot;:[&amp;quot;/&amp;quot;]}}
-     },
-     {
-       &amp;quot;Sid&amp;quot;: &amp;quot;AllowReadWriteOfZfFolder&amp;quot;,
-       &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;, &amp;quot;s3:PutObject&amp;quot;],
-       &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-       &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-       &amp;quot;Condition&amp;quot;:{&amp;quot;StringLike&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;zf/*&amp;quot;]}}
-     }
-  ]
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here are some commands that show how this works:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# this will give Access Denied because of --recursive flag (remember, we are not allowed to go in folder1!)
-aws --recursive --profile user.updater s3 ls s3://bucket1
-
-# this will work fine
-aws --profile user.updater s3 ls s3://bucket1
-
-# this will give Access Denied, because we should add final slash here
-aws --profile user.updater s3 ls s3://bucket1/zf
-
-# this will work fine
-aws --profile user.updater s3 ls s3://bucket1/zf1
-
-# this will work fine
-aws --recursive --profile user.updater s3 ls s3://bucket1/zf/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;read-only-policy&#34;&gt;Read-only policy&lt;/h2&gt;
-
-&lt;p&gt;Now, when we have read/write policy above, it is much easier to construct read-only policy from it. Actually, read-only policy is like the read/write policy above,
-but without &lt;code&gt;s3:PutObject&lt;/code&gt; permission. Insted, we need to add &lt;code&gt;s3:GetObject&lt;/code&gt; permission, so that the last statement will look like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;Sid&amp;quot;: &amp;quot;AllowReadOfZfFolder&amp;quot;,
-  &amp;quot;Action&amp;quot;: [&amp;quot;s3:GetBucketLocation&amp;quot;, &amp;quot;s3:ListBucket&amp;quot;, &amp;quot;s3:GetObject&amp;quot;],
-  &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
-  &amp;quot;Resource&amp;quot;: [&amp;quot;arn:aws:s3:::bucket1&amp;quot;],
-  &amp;quot;Condition&amp;quot;:{&amp;quot;StringLike&amp;quot;:{&amp;quot;s3:prefix&amp;quot;:[&amp;quot;zf/*&amp;quot;]}}
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;All previous statements will be the same as in read/write policy.&lt;/p&gt;
-
-&lt;h2 id=&#34;useful-links&#34;&gt;Useful links&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://aws.amazon.com/blogs/security/writing-iam-policies-grant-access-to-user-specific-folders-in-an-amazon-s3-bucket/&#34;&gt;Writing IAM Policies: Grant Access to User-Specific Folders in an Amazon S3 Bucket&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html#using-with-s3-actions-related-to-objects&#34;&gt;Specifying Permissions in a Policy&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.cloudberrylab.com/blog/how-to-give-user-access-to-an-s3-folder-with-cloudberry-explorer/&#34;&gt;How to Give User Access to an Amazon S3 Folder With CloudBerry Explorer&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>Let&amp;rsquo;s imagine that we have a project, which actually use AWS S3 as file storage. The project consists of 2 parts: one part puts files into S3, and the other part only reads them from S3. Moreover, files are stored not in the bucket root, but in some folder which is placed in the bucket root.
+According to best AWS practices, we need 2 security and access control policies. One policy is for that part of software which puts files into S3 folder.</description>
     </item>
     
   </channel>

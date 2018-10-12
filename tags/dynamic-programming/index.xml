@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dynamic Programming on Just my blog</title>
-    <link>http://iryndin.net/tags/dynamic-programming/index.xml</link>
+    <link>http://iryndin.net/tags/dynamic-programming/</link>
     <description>Recent content in Dynamic Programming on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://iryndin.net/tags/dynamic-programming/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Jun 2018 17:48:15 +0000</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/tags/dynamic-programming/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Dynamic programming problems</title>
@@ -16,57 +19,7 @@
       <guid>http://iryndin.net/post/dynamic_programming_tasks/</guid>
       <description>&lt;p&gt;Here is a list of all dynamic programming tasks from this blog.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Title&lt;/th&gt;
-&lt;th&gt;Source&lt;/th&gt;
-&lt;th&gt;Difficulty&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_70_climbing_stairs/&#34;&gt;Climbing stairs&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/climbing-stairs/description/&#34;&gt;Leetcode (70)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/&#34;&gt;Min cost climbing stairs&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/min-cost-climbing-stairs/description/&#34;&gt;Leetcode (746)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_121_best_time_to_buy_and_sell_stock/&#34;&gt;Best time to buy and sell stock&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/&#34;&gt;Leetcode (121)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_53_maximum_subarray/&#34;&gt;Maximum subarray&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/maximum-subarray/description/&#34;&gt;Leetcode (53)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_198_house_robber/&#34;&gt;House robber&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/house-robber/description/&#34;&gt;Leetcode (198)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_303_immutable_range_sum_query/&#34;&gt;Immutable range sum query&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/range-sum-query-immutable/description/&#34;&gt;Leetcode (303)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;This list will be updated once new tasks will be coming&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -78,79 +31,7 @@
       <description>&lt;p&gt;Calculate sum of array elements for any given indexes, keeping source array immutable at the same time
 &lt;a href=&#34;https://leetcode.com/problems/range-sum-query-immutable/description/&#34;&gt;Range Sum Query - Immutable&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.&lt;/p&gt;
-
-&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Given nums = [-2, 0, 3, -5, 2, -1]
-
-sumRange(0, 2) -&amp;gt; 1
-sumRange(2, 5) -&amp;gt; -1
-sumRange(0, 5) -&amp;gt; -3
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;note&#34;&gt;Note&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;You may assume that the array does not change.&lt;/li&gt;
-&lt;li&gt;There are many calls to sumRange function.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;caching-solution&#34;&gt;Caching solution&lt;/h2&gt;
-
-&lt;p&gt;Cache sum of array elements for each combination of indexes into &lt;code&gt;HashMap&lt;/code&gt;.
-Space complexity is &lt;code&gt;O(n^2)&lt;/code&gt;, time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class NumArray {
-
-  Map&amp;lt;String, Integer&amp;gt; cache = new HashMap&amp;lt;&amp;gt;();
-
-  public NumArray(int[] nums) {
-    for (int i = 0; i &amp;lt; nums.length; i++) {
-      int sum = 0;
-      for (int j = i; j &amp;lt; nums.length; j++) {
-        sum += nums[j];
-        cache.put(i+&amp;quot;,&amp;quot;+j, sum);
-      }
-    }
-  }
-
-  public int sumRange(int i, int j) {
-    return cache.get(i+&amp;quot;,&amp;quot;+j);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;we-can-do-better&#34;&gt;We can do better&lt;/h2&gt;
-
-&lt;p&gt;Sum of array elements between indexes &lt;code&gt;i&lt;/code&gt; and &lt;code&gt;j&lt;/code&gt; can be represented as following:&lt;br /&gt;
-&lt;code&gt;sum(i,j)=sum(0,j) - sum(0,i-1)&lt;/code&gt;. We see that it is represented via zero index based sums.
-So we can calculate these sums once, and then use it for our calculations.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class NumArray {
-
-  int[] zeroBasedSum;
-
-  public NumArray(int[] nums) {
-  	zeroBasedSum = new int[nums.length];
-  	int sum = 0;
-    for (int i = 0; i &amp;lt; nums.length; i++) {
-      sum += nums[i];
-      zeroBasedSum[i] = sum;
-    }
-  }
-
-  public int sumRange(int i, int j) {
-    return zeroBasedSum[j] - (i-1 &amp;lt; 0 ? 0 : zeroBasedSum[i-1]);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Obviously, space complexity is &lt;code&gt;O(n)&lt;/code&gt;, as well as time complexity.&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -161,81 +42,7 @@ So we can calculate these sums once, and then use it for our calculations.&lt;/p
       <guid>http://iryndin.net/post/leetcode_198_house_robber/</guid>
       <description>&lt;p&gt;Another easy task is about smart &lt;a href=&#34;https://leetcode.com/problems/house-robber/description/&#34;&gt;house robbery approach&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and &lt;strong&gt;it will automatically contact the police if two adjacent houses were broken into on the same night&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight &lt;strong&gt;without alerting the police&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [1,2,3,1]
-Output: 4
-Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
-             Total amount you can rob = 1 + 3 = 4.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [2,7,9,3,1]
-Output: 12
-Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
-             Total amount you can rob = 2 + 9 + 1 = 12.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;dumb-solution&#34;&gt;Dumb solution&lt;/h2&gt;
-
-&lt;p&gt;Initially, I came up with a pretty straitforward (and dumb) solution for the task.
-Just stupid checks of all variants of robbery, here is the code:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int rob(int[] nums) {
-    if (nums == null || nums.length == 0) {
-      return 0;
-    } else if (nums.length == 1) {
-      return nums[0];
-    } else if (nums.length == 2) {
-      return Math.max(nums[0], nums[1]);
-    } else if (nums.length == 3) {
-      return Math.max(nums[0]+nums[2], nums[1]);
-    }
-    int[] a = new int[nums.length];
-    a[0] = nums[0];
-    a[1] = nums[1];
-    a[2] = nums[0] + nums[2];
-    int maxRob = Math.max(Math.max(a[0],a[1]), a[2]);
-    for (int i=3; i&amp;lt;nums.length; i++) {
-      a[i] = Math.max(nums[i]+a[i-2], nums[i]+a[i-3]);
-      if (a[i] &amp;gt; maxRob) {
-        maxRob = a[i];
-      }
-    }
-    return maxRob;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
-
-&lt;p&gt;But more smart solution can be as easy as following (and it has &lt;code&gt;O(1)&lt;/code&gt; space complexity,
-as well as &lt;code&gt;O(n)&lt;/code&gt; time complexity):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int rob(int[] nums) {
-    int a = 0, b = 0;
-    for (int num : nums){
-      int tmp = Math.max(num+a, b);
-      a = b;
-      b = tmp;
-    }
-    return Math.max(a, b);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Let&amp;rsquo;s explain what goes on here. Variable &lt;code&gt;a&lt;/code&gt; stores prev previous value, &lt;code&gt;b&lt;/code&gt; contains previous value. And &lt;code&gt;b&lt;/code&gt; is updated only if new value is bigger than its previous value. This is the key to this solution.&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -247,81 +54,7 @@ as well as &lt;code&gt;O(n)&lt;/code&gt; time complexity):&lt;/p&gt;
       <description>&lt;p&gt;From a given array find the maximum contiguous subarray with the largest sum,
 &lt;a href=&#34;https://leetcode.com/problems/maximum-subarray/description/&#34;&gt;Leetcode 53&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.&lt;/p&gt;
-
-&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [-2,1,-3,4,-1,2,1,-5,4],
-Output: 6
-Explanation: [4,-1,2,1] has the largest sum = 6.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;follow-up&#34;&gt;Follow up&lt;/h3&gt;
-
-&lt;p&gt;If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.&lt;/p&gt;
-
-&lt;h2 id=&#34;brute-force-solution&#34;&gt;Brute force solution&lt;/h2&gt;
-
-&lt;p&gt;For each index combination let&amp;rsquo;s calculate sum and then find the largest one.
-Space complexity is &lt;code&gt;O(1)&lt;/code&gt; and time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
-  public int maxSubArray(int[] nums) {
-    if (nums == null || nums.length == 0) {
-      return 0;
-    } else if (nums.length == 1) {
-      return nums[0];
-    }
-
-    int maxSum = Integer.MIN_VALUE;
-    for (int i=0; i&amp;lt;nums.length; i++) {
-      int sum = 0;
-      for (int j=i; j&amp;lt;nums.length; j++) {
-        sum += table[i][j];
-        if (sum &amp;gt; maxSum) {
-          maxSum = sum;
-        }
-      }
-    }
-    return maxSum;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;a-better-way&#34;&gt;A better way&lt;/h2&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s think about better approach. Let&amp;rsquo;s take into account following points:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;we are looking for largest sum, so any negative value will deteriorate final result&lt;/li&gt;
-&lt;li&gt;Let&amp;rsquo;s go from the start of the array and sum up all elements. If at some point we have negative sum, then
-we can set total sum to current array element. Why? Because any new value will be better than negative sum. Negative element will only deteriorate final sum, so it will be better, zero element is greater than any negative value, the same for positive element.&lt;/li&gt;
-&lt;li&gt;If sum is not negative, then we simply add up next array element.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;So, code will be following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
-  public int maxSubArray(int[] nums) {
-    int max = Integer.MIN_VALUE, sum = 0;
-    for (int i = 0; i &amp;lt; nums.length; i++) {
-      if (sum &amp;lt; 0) {
-        sum = nums[i];
-      } else {
-        sum += nums[i];
-      }
-      if (sum &amp;gt; max) {
-        max = sum;
-      }
-    }
-    return max;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -333,90 +66,7 @@ we can set total sum to current array element. Why? Because any new value will b
       <description>&lt;p&gt;Let&amp;rsquo;s condsider easy dynamic problem: best time to buy and sell stock.
 This is &lt;a href=&#34;https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/&#34;&gt;Leetcode 121. Best Time to Buy and Sell Stock&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;Say you have an array for which the &lt;code&gt;i-th&lt;/code&gt; element is the price of a given stock on day i.&lt;/p&gt;
-
-&lt;p&gt;If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.&lt;/p&gt;
-
-&lt;p&gt;Note that you cannot sell a stock before you buy one.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [7,1,5,3,6,4]
-Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
-             Not 7-1 = 6, as selling price needs to be larger than buying price.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [7,6,4,3,1]
-Output: 0
-Explanation: In this case, no transaction is done, i.e. max profit = 0.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;brute-force-solution&#34;&gt;Brute force solution&lt;/h2&gt;
-
-&lt;p&gt;Without a lot of thinking we can come up with brute force solution.
-We buy stock on some particular day, and then for the next days we check profit if we sell this stock. Thus we will find the maximum profit. Time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;, while space complexity is &lt;code&gt;O(1)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int maxProfit(int[] prices) {
-    int result = 0;
-    for (int i=0;i&amp;lt;prices.length-1;i++) {
-      int maxProfit = maxProfit(prices, i);
-      if (maxProfit &amp;gt; result) {
-        result = maxProfit;
-      }
-    }
-    return result;
-  }
-
-  // Calculate max profit is stock is bought on day idx
-  // and sold on one of the next days
-  static int maxProfit(int[] prices, int idx) {
-    int diff = 0;
-    for (int j=idx+1; j&amp;lt;prices.length; j++) {
-      diff = Math.max(diff, prices[j]-prices[idx]);
-    }
-    return diff;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;more-smart-solution&#34;&gt;More smart solution&lt;/h2&gt;
-
-&lt;p&gt;However, we can come up with more smart solution, that has time complexity only &lt;code&gt;O(n)&lt;/code&gt;,
-i.e. only one array pass is required.&lt;/p&gt;
-
-&lt;p&gt;Here is the idea. We got max profit when we buy on lowest price, and  sell on highest price.
-So let&amp;rsquo;s track minimum price and max profit. Let&amp;rsquo;s traverse through price array,
-and check profit and min price with every new array element. If we found new min price and
-new max profit, then update our variables. Space complexity for this approach is &lt;code&gt;O(1)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int maxProfit(int[] prices) {
-    if (prices == null || prices.length &amp;lt; 2) {
-      return 0;
-    }
-    int minPrice = Integer.MAX_VALUE-1;
-    int maxProfit = 0;
-    for (int i=0;i&amp;lt;prices.length;i++) {
-      int todayProfit = prices[i] - minPrice;
-      if (prices[i] &amp;lt; minPrice) 
-        minPrice = prices[i];
-      }
-      if (todayProfit &amp;gt; maxProfit) {
-        maxProfit = todayProfit;
-      }
-    }
-    return maxProfit;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -428,88 +78,7 @@ new max profit, then update our variables. Space complexity for this approach is
       <description>&lt;p&gt;Let&amp;rsquo;s condsider another easy dynamic problem: minimal cost of climbing stairs.
 This is &lt;a href=&#34;https://leetcode.com/problems/min-cost-climbing-stairs/description/&#34;&gt;Leetcode 746. Min Cost Climbing Stairs&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;On a staircase, the &lt;code&gt;i-th&lt;/code&gt; step has some non-negative cost &lt;code&gt;cost[i]&lt;/code&gt; assigned (&lt;code&gt;0&lt;/code&gt; indexed).&lt;/p&gt;
-
-&lt;p&gt;Once you pay the cost, you can either climb one or two steps. You need to find minimum cost to reach the top of the floor, and you can either start from the step with index &lt;code&gt;0&lt;/code&gt;, or the step with index &lt;code&gt;1&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: cost = [10, 15, 20]
-Output: 15
-Explanation: Cheapest is start on cost[1], pay that cost and go to the top.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
-Output: 6
-Explanation: Cheapest is start on cost[0], and only step on 1s, skipping cost[3].
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;note&#34;&gt;Note&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;cost&lt;/code&gt; will have a length in the range &lt;code&gt;[2, 1000]&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;every &lt;code&gt;cost[i]&lt;/code&gt; will be an integer in the range &lt;code&gt;[0, 999]&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;analysis&#34;&gt;Analysis&lt;/h2&gt;
-
-&lt;p&gt;Once we can climb one or two steps, for &lt;code&gt;n-th&lt;/code&gt; stair the minimal cost will be minimal of two values:
-cost for &lt;code&gt;n-1&lt;/code&gt; step and cost for &lt;code&gt;n-2&lt;/code&gt; stair. Or, recursively, this can be expressed as:&lt;br /&gt;
-&lt;code&gt;minCost(n) = min(minCost(n-1),minCost(n-2))&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;recursive-solution&#34;&gt;Recursive solution&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int minCostClimbingStairs(int[] cost) {
-    if (cost == null || cost.length == 0) return 0;
-    else if (cost.length == 1) return cost[0];
-    int LEN = cost.length;
-    return Math.min(minCost(cost, LEN-1), minCost(cost, LEN-2));
-  }
-
-  // Calculate minimal cost to reach stair with index i (i is 0-based index)
-  static int minCost(int[] cost, int i) {
-    switch (i) {
-      case 0: return cost[0];
-      case 1: return cost[1];
-      default: return cost[i] + Math.min(minCost(cost, i-1), minCost(cost, i-2));
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;What is good for this solution, as with almost all recursive solutions, that it is concise and expressive. But for pretty long array it will take tons of time to complete. For Leetcode, this solution gets &lt;code&gt;TLE&lt;/code&gt; - &lt;code&gt;Time Limit Exception&lt;/code&gt;. So, let&amp;rsquo;s consider another solution.&lt;/p&gt;
-
-&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
-
-&lt;p&gt;Here is solution with &lt;code&gt;O(n)&lt;/code&gt; time complexity and &lt;code&gt;O(1)&lt;/code&gt; space complexity:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int minCostClimbingStairs(int[] cost) {
-    if (cost == null || cost.length == 0) return 0;
-    else if (cost.length == 1) return cost[0];
-    int LEN = cost.length;
-    int prevPrevStairMinCost = cost[0], prevStairMinCost = cost[1];
-    int minCost = 0;
-    for (int i=2; i&amp;lt;LEN; i++) {
-      minCost = cost[i] + Math.min(prevStairMinCost, prevPrevStairMinCost);
-      prevPrevStairMinCost = prevStairMinCost;
-      prevStairMinCost = minCost;
-    }
-    return Math.min(prevStairMinCost, prevPrevStairMinCost);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;See also &lt;a href=&#34;http://iryndin.net/post/leetcode_70_climbing_stairs/&#34;&gt;Leetcode 70. Climbing stairs&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -521,81 +90,7 @@ cost for &lt;code&gt;n-1&lt;/code&gt; step and cost for &lt;code&gt;n-2&lt;/code
       <description>&lt;p&gt;Let&amp;rsquo;s condsider easy dynamic problem: climbing stairs.
 This is &lt;a href=&#34;https://leetcode.com/problems/climbing-stairs/description/&#34;&gt;Leetcode 70. Climbing stairs&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;You are climbing a stair case. It takes n steps to reach to the top.&lt;br /&gt;
-Each time you can either climb 1 or 2 steps.&lt;br /&gt;
-In how many distinct ways can you climb to the top?&lt;br /&gt;
-Note: Given n will be a positive integer.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: 2  
-Output: 2  
-Explanation: There are two ways to climb to the top.  
-1. 1 step + 1 step  
-2. 2 steps  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: 3
-Output: 3
-Explanation: There are three ways to climb to the top.
-1. 1 step + 1 step + 1 step
-2. 1 step + 2 steps
-3. 2 steps + 1 step
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;analysis&#34;&gt;Analysis&lt;/h2&gt;
-
-&lt;p&gt;Number of distinct ways for each stair is a sum of number of distinct ways for previous stair and
-number of distinct ways for previous-previous stair, recursively it can be expressed as following:&lt;br /&gt;
-&lt;code&gt;ways(n)=ways(n-1) + ways(n-2)&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;recursive-solution&#34;&gt;Recursive solution&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int climbStairs(int n) {
-    switch(n) {
-      case 0: return 0;
-      case 1: return 1;
-      case 2: return 2;
-      default: return climbStairs(n-1) + climbStairs(n-2);
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This recursive solution will do many repeating computations, but this is most clear and concise way
-to express solution. Now let&amp;rsquo;s consider more economical approach.&lt;/p&gt;
-
-&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
-
-&lt;p&gt;This is better solution, with time complexity &lt;code&gt;O(n)&lt;/code&gt; and space complexity &lt;code&gt;O(1)&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int climbStairs(int n) {
-    if (n &amp;lt;= 2) return n;
-    int prevPrevStair = 1, prevStair = 2;
-    int curStair=0;
-    for (int i=2; i&amp;lt;n; i++) {
-      curStair = prevStair + prevPrevStair;
-      prevPrevStair = prevStair;
-      prevStair = curStair;
-    }
-    return curStair;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;h2 id=&#34;links-1&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;See also &lt;a href=&#34;http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/&#34;&gt;Leetcode 746. Minimal cost climbing stairs&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

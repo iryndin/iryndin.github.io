@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Postgresql on Just my blog</title>
-    <link>http://iryndin.net/tags/postgresql/index.xml</link>
+    <link>http://iryndin.net/tags/postgresql/</link>
     <description>Recent content in Postgresql on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://iryndin.net/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Nov 2017 09:59:58 +0300</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>PostgreSQL transaction isolation levels</title>
@@ -16,70 +19,7 @@
       <guid>http://iryndin.net/post/postgresql_transaction_isolation_levels/</guid>
       <description>&lt;p&gt;Details of transaction isolation in PostgreSQL.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;On previous post &lt;a href=&#34;http://iryndin.net/post/transaction_isolation_levels/&#34;&gt;about transaction isolation levels&lt;/a&gt; we considered what is
-transaction isolation level and how this influence the result we get from transaction. But from database to database
-details are diferent, so let&amp;rsquo;s consider transaction isolation details for PostgreSQL.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s again repeat a little bit about transaction islolation level.
-The SQL standard defines four levels of transaction isolation.
-The most strict is &lt;code&gt;Serializable&lt;/code&gt;, which is defined by the standard in a paragraph which says
-that any concurrent execution of a set of &lt;code&gt;Serializable&lt;/code&gt; transactions is guaranteed to produce the same effect
-as running them one at a time in some order.&lt;/p&gt;
-
-&lt;p&gt;The other three levels are defined in terms of phenomena, resulting from interaction between concurrent transactions, which must not occur at each level.&lt;/p&gt;
-
-&lt;p&gt;The phenomena which are prohibited at various levels are:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;dirty read&lt;/strong&gt; - A transaction reads data written by a concurrent uncommitted transaction.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;nonrepeatable read&lt;/strong&gt; - A transaction re-reads data it has previously read and finds that data has been modified by another transaction (that committed since the initial read).&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;phantom read&lt;/strong&gt; - A transaction re-executes a query returning a set of rows that satisfy a search condition and finds that the set of rows satisfying the condition has changed due to another recently-committed transaction.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;only-3-isolation-level-internally&#34;&gt;Only 3 isolation level internally&lt;/h2&gt;
-
-&lt;p&gt;Internally, there are only three distinct isolation levels, which correspond to the levels &lt;code&gt;Read Committed&lt;/code&gt;,
-&lt;code&gt;Repeatable Read&lt;/code&gt;, and &lt;code&gt;Serializable&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;When you select the level &lt;code&gt;Read Uncommitted&lt;/code&gt; you really get &lt;code&gt;Read Committed&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;Phantom reads&lt;/code&gt; are not possible in the PostgreSQL implementation of &lt;code&gt;Repeatable Read&lt;/code&gt;, so the actual isolation level might be stricter than what you select.
-This is permitted by the SQL standard: the four isolation levels only define which phenomena must not happen, they do not define which phenomena must happen.&lt;/p&gt;
-
-&lt;p&gt;The reason that PostgreSQL only provides three isolation levels is that this is the only sensible way to map the standard isolation levels
-to the MVCC architecture.&lt;/p&gt;
-
-&lt;h2 id=&#34;read-commited-default&#34;&gt;Read commited (default)&lt;/h2&gt;
-
-&lt;p&gt;A &lt;code&gt;SELECT&lt;/code&gt; query (without a &lt;code&gt;FOR UPDATE/SHARE&lt;/code&gt; clause) sees only data &lt;strong&gt;committed before the query (not transaction!!) began&lt;/strong&gt;;
-it never sees either uncommitted data or changes committed during query execution by concurrent transactions.
-In effect, a SELECT query sees a snapshot of the database &lt;strong&gt;as of the instant the query (not transaction!!) begins to run&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;However, &lt;code&gt;SELECT&lt;/code&gt; does see the effects of previous updates executed within its own transaction, even though they are not yet committed.
-Also note that two successive &lt;code&gt;SELECT&lt;/code&gt; commands &lt;strong&gt;can see different data&lt;/strong&gt;, even though they are within a single transaction,
-if other transactions commit changes during execution of the first &lt;code&gt;SELECT&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;repeatable-read&#34;&gt;Repeatable read&lt;/h2&gt;
-
-&lt;p&gt;The &lt;code&gt;Repeatable Read&lt;/code&gt; isolation level only sees data &lt;strong&gt;committed before the transaction began&lt;/strong&gt;. This is the difference wit hprevious level -
-&lt;code&gt;Read commited&lt;/code&gt; which sees data &lt;strong&gt;before query began&lt;/strong&gt;.
-Thus, successive &lt;code&gt;SELECT&lt;/code&gt; commands within a single transaction see the same data, i.e.,
-they do not see changes made by other transactions that committed after their own transaction started.&lt;/p&gt;
-
-&lt;p&gt;Applications using this level must be prepared to retry transactions due to serialization failures.
-Note that only updating transactions might need to be retried; read-only transactions will never have serialization conflicts.&lt;/p&gt;
-
-&lt;h2 id=&#34;serializable-isolation-level&#34;&gt;Serializable Isolation Level&lt;/h2&gt;
-
-&lt;p&gt;The &lt;code&gt;Serializable&lt;/code&gt; isolation level provides the strictest transaction isolation.
-This level emulates serial transaction execution, as if transactions had been executed one after another, serially, rather than concurrently.
-However, like the Repeatable Read level, applications using this level must be prepared to retry transactions due to serialization failures.&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;More details can be taken here: &lt;a href=&#34;https://www.postgresql.org/docs/9.2/static/transaction-iso.html&#34;&gt;PostgreSQL Documentation. Chapter 13. Concurrency Control. 13.2. Transaction Isolation&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

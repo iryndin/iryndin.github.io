@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blockchain on Just my blog</title>
-    <link>http://iryndin.net/tags/blockchain/index.xml</link>
+    <link>http://iryndin.net/tags/blockchain/</link>
     <description>Recent content in Blockchain on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://iryndin.net/tags/blockchain/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 Apr 2017 22:50:22 +0300</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/tags/blockchain/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Blockchain and Bitcoin links</title>
@@ -14,20 +17,12 @@
       <pubDate>Mon, 17 Apr 2017 22:50:22 +0300</pubDate>
       
       <guid>http://iryndin.net/post/blockchain-and-bitcoin-links/</guid>
-      <description>&lt;p&gt;This posts contains links to some articles, blog posts and other materials which looks interesting for me, give good explanation/description of the field and simply put are pleasure to read.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://medium.com/@lhartikk/a-blockchain-in-200-lines-of-code-963cc1cc0e54&#34;&gt;A blockchain in 200 lines of code&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://marmelab.com/blog/2016/04/28/blockchain-for-web-developers-the-theory.html&#34;&gt;The blockchain explained to web developers. Part 1: The Theory&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.jenitennison.com/2015/05/21/blockchain.html&#34;&gt;How migh we use blockchains outside cryptocurrencies&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/bitcoinbook/bitcoinbook&#34;&gt;Mastering Bitcoin - open source book on Bitcoin published by OReilly&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/igorbarinov/awesome-bitcoin&#34;&gt;Awesome Bitcoin - GitHub repo with bitcoin-related links collection&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/imbaniac/awesome-blockchain&#34;&gt;Awesome Blockchain - GitHub repo with blockchain-related links collection&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>This posts contains links to some articles, blog posts and other materials which looks interesting for me, give good explanation/description of the field and simply put are pleasure to read.
+A blockchain in 200 lines of code
+The blockchain explained to web developers. Part 1: The Theory
+How migh we use blockchains outside cryptocurrencies
+Mastering Bitcoin - open source book on Bitcoin published by OReilly
+Awesome Bitcoin - GitHub repo with bitcoin-related links collection</description>
     </item>
     
   </channel>

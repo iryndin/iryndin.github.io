@@ -2,12 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Just my blog</title>
-    <link>http://iryndin.net/index.xml</link>
+    <link>http://iryndin.net/</link>
     <description>Recent content on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Jun 2018 03:20:39 +0000</lastBuildDate>
-    <atom:link href="http://iryndin.net/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Oct 2018 03:20:39 +0000</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Simple MySQL backup to Amazon S3 using Docker</title>
+      <link>http://iryndin.net/post/simple_mysql_backup_to_amazon_s3_using_docker/</link>
+      <pubDate>Thu, 11 Oct 2018 03:20:39 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/simple_mysql_backup_to_amazon_s3_using_docker/</guid>
+      <description>&lt;p&gt;This is just a short notice about a convenient was of making daily MySQL backups to Amazon S3. Docker is used here to spin up MySQL and AWS CLI tool.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Trie or Prefix Tree</title>
@@ -17,131 +30,7 @@
       <guid>http://iryndin.net/post/trie/</guid>
       <description>&lt;p&gt;Let&amp;rsquo;s consider another popular data structure: Trie or Prefix tree.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Trie (or prefix tree) is an ordered tree data structure, mainly used for operations with strings (but now always). If we consider strings, then for trie following points are true:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Nodes can have multiple children&lt;/li&gt;
-&lt;li&gt;Key is not stored in the node, rather it is defined by node position in the tree&lt;/li&gt;
-&lt;li&gt;Each node stores single character&lt;/li&gt;
-&lt;li&gt;Prefix is defined as a sequence of characters by traversing trie from root down to particular node. Hence, all children of a node have the common prefix.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Codewise, node of a trie can be defines as this (please note that there is no &lt;code&gt;key&lt;/code&gt; in the node!):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class TrieNode&amp;lt;T&amp;gt; {
-  T value;
-  Map&amp;lt;Character, TrieNode&amp;gt; children;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Or another common representation is to have array (with size equal to alphabet length) where non-null array members are children of this node.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class TrieNode {
-  T value;
-  TrieNode[] children = new TrieNode[26];
-
-  /**
-   * Get child for character {@code c}
-   **/
-  public TrieNode getChild(char c) {
-    int idx = (int)&#39;a&#39; - (int)c;
-    return children[idx];
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Example of storing dictionary (&lt;code&gt;sam, sand, sir, sick, sunday&lt;/code&gt;) in trie:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://iryndin.net/img/trie.png&#34; style=&#34;width:50%&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;usage-of-trie&#34;&gt;Usage of trie&lt;/h2&gt;
-
-&lt;p&gt;Trie can be used for following tasks:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;dictionary representation&lt;/li&gt;
-&lt;li&gt;autocomplete feature in text editors&lt;/li&gt;
-&lt;li&gt;searching for common prefix&lt;/li&gt;
-&lt;li&gt;it is used in some algorithms: Aho-Corasick, Lempel-Ziv-Welch compression algorithm&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;operations-on-the-trie&#34;&gt;Operations on the trie&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s deal with first implementation of &lt;code&gt;TrieNode&lt;/code&gt;,
-i.e. where chidren are put into map: &lt;code&gt;Map&amp;lt;Character, TrieNode&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;look-for-a-key&#34;&gt;Look for a key&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;&amp;lt;T&amp;gt; T find(String key, TrieNode&amp;lt;T&amp;gt; root) {
-  TrieNode&amp;lt;T&amp;gt; cur = root;
-  for (char c : key.toCharArray()) {
-    TrieNode&amp;lt;T&amp;gt; n = cur.children == null ? null : cur.children.get(c);
-    if (n != null) {
-      cur = n;
-    } else {
-      return null;
-    }
-  }
-  return cur.value;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;insert-key&#34;&gt;Insert key&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;// Return previous value associated with key, 
-// or null if no previous value was associated
-&amp;lt;T&amp;gt; T insert(String key, T newValue, TrieNode&amp;lt;T&amp;gt; root) {
-  TrieNode&amp;lt;T&amp;gt; cur = root;
-  for (int i=0; i&amp;lt;key.length(); i++) {
-    char c = key.charAt(i);
-    TrieNode&amp;lt;T&amp;gt; n = cur.children == null ? null : cur.children.get(c);
-    if (n != null) {
-      cur = n;
-    } else {
-      if (cur.children == null) {
-        cur.children = new HashMap&amp;lt;&amp;gt;();
-      }
-      TrieNode&amp;lt;T&amp;gt; newNode = new TrieNode&amp;lt;&amp;gt;();
-      cur.children.put(c, newNode);
-      cur = newNode;
-    }
-  }
-  T oldValue = cur.value;
-  cur.value = value;
-  return oldValue;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;remove-key&#34;&gt;Remove key&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;&amp;lt;T&amp;gt; T delete(String key, TrieNode&amp;lt;T&amp;gt; root) {
-  TrieNode&amp;lt;T&amp;gt; cur = root;
-  for (char c : key.toCharArray()) {
-    TrieNode&amp;lt;T&amp;gt; n = cur.children == null ? null : cur.children.get(c);
-    if (n != null) {
-      cur = n;
-    } else {
-      return null;
-    }
-  }  
-  T oldValue = cur.value;
-  cur.value = null;
-  return oldValue;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/tag/trie/&#34;&gt;Leetcode - Problems for tries&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.geeksforgeeks.org/tag/trie/&#34;&gt;GeekForGeeks - Trie articles&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://practice.geeksforgeeks.org/topics/Trie&#34;&gt;GeekForGeeks - Trie practice&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://medium.com/basecs/trying-to-understand-tries-3ec6bede0014&#34;&gt;Basecs - Trying to understand tries&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.hackerearth.com/practice/data-structures/advanced-data-structures/trie-keyword-tree/tutorial/&#34;&gt;Hackerearth - Trie&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.baeldung.com/trie-java&#34;&gt;Baeldung - The Trie Data Structure in Java&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -152,337 +41,7 @@ i.e. where chidren are put into map: &lt;code&gt;Map&amp;lt;Character, TrieNode&
       <guid>http://iryndin.net/post/binary_search_tree/</guid>
       <description>&lt;p&gt;Binary search tree (BST) is a data structure that allows fast element lookup, addition or removal of items.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;It is a binary tree that has following properties:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;the left subtree of a node contains only nodes with keys lesser than the node’s key&lt;/li&gt;
-&lt;li&gt;the right subtree of a node contains only nodes with keys greater than the node’s key&lt;/li&gt;
-&lt;li&gt;the left and right subtree each must also be a binary search tree. There must be no duplicate nodes.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://iryndin.net/img/binary_search_tree.png&#34; style=&#34;width:100%&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;node-class&#34;&gt;Node class&lt;/h2&gt;
-
-&lt;p&gt;Let BST node be described with following class:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Node {
-  public int key;
-  public int val;
-  public Node left;
-  public Node right;
-
-  public Node(int key, int val) {
-    this.key = key;
-    this.val = val;
-    this.left = this.right = null;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;search&#34;&gt;Search&lt;/h2&gt;
-
-&lt;p&gt;Searching for a key in a BST can be done either recursively or iteratively.
-Complexity is, of course, &lt;code&gt;O(log(n))&lt;/code&gt; on average.
-But for worst case (when BST degrades to linked list) comlexity can degrade to &lt;code&gt;O(n)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;recursive-search&#34;&gt;Recursive search&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Node search(Node root, int key) {
-  if (root == null || root.key == key) {
-  	return root;
-  }
-  if (key &amp;lt; root.key) return search(root.left, key);
-  else return search(root.right, key);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;iterative-search&#34;&gt;Iterative search&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Node search(Node root, int key) {
-  Node current = root;
-  while (current != null) {
-    if (current.key == key) return current;
-    if (key &amp;lt; current.key) current = current.left;
-    else current = current.right;
-  }
-  return current;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;insert-new-key&#34;&gt;Insert new key&lt;/h2&gt;
-
-&lt;p&gt;Inserting new key is similar to search. We always start from root, and then traverse down to leaf nodes.
-So, that new values are always inserted as leaf nodes.
-This means that BST structure depends on the order in which new keys are inserted.&lt;/p&gt;
-
-&lt;h3 id=&#34;recursive-insert&#34;&gt;Recursive insert&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Node insert(Node root, int key, int val) {
-  if (root == null) {
-    // when tree is empty, create new root
-    return new Node(key, val);
-  } else if (key == root.key) {
-    root.val = val;
-  } else if (key &amp;lt; root.key) {
-    root.left = insert(root.left, key, val);
-  } else {
-    root.right = insert(root.right, key, val);
-  }
-  return root;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;iterative-insert&#34;&gt;Iterative insert&lt;/h3&gt;
-
-&lt;p&gt;When implementing iterative insert we should also track the parent of the current node.
-We need this parent to link one of its children (left or right) to a newly created leaf node.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Node insert(Node root, int key, int val) {
-  Node parent = null;
-  Node current = root;
-  while (true) {
-    if (current == null) {
-      current = new Node(key, val);
-      if (parent != null) {
-        if (key &amp;lt; parent.key) parent.left = current;
-        else parent.right = current;
-      }
-      break;
-  	}
-    if (key == current.key) {
-      current.val = val;
-      break;
-    }
-    parent = current;
-    if (key &amp;lt; current.key) {
-      current = current.left;
-    } else {
-      current = current.right;
-    }
-  }
-  return current;
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;delete-key&#34;&gt;Delete key&lt;/h2&gt;
-
-&lt;p&gt;When removing node from BST, it is mandatory to maintain in-order sequence of nodes.
-Let&amp;rsquo;s consider following cases when deleting a node:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;it is leaf node, i.e. it does not have children. In this case simply remove the node&lt;/li&gt;
-&lt;li&gt;node has only one child. In this case simply remove this node, and put a child in its place.&lt;/li&gt;
-&lt;li&gt;node has left and right children&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;So far let&amp;rsquo;s write code that process deletion of a given key from BST for first two cases
-(i.e. when node either does not have children or has only one child):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;// remove key and return new root of the BST
-Node delete(Node root, int key) {
-  if (root == null) {
-    return null;
-  }
-  if (key &amp;lt; root.key) {
-    root.left = delete(root.left, key);
-  } else if (key &amp;gt; root.key) {
-    root.right = delete(root.right, key);
-  } else {
-    // here root.key == key
-    if (root.right == null) {
-      return root.left;
-    } else if (root.left == null) {
-      return root.right;
-    } else {
-      // Complex case: node has 2 children
-      // Discuss it further. 
-      deleteNodeWith2Children(root, key);
-    }
-  }
-  return root;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;delete-using-in-order-successors-approach&#34;&gt;Delete using in-order successors approach&lt;/h3&gt;
-
-&lt;p&gt;Let&amp;rsquo;s consider case when node has 2 non-null children: &lt;code&gt;left&lt;/code&gt; and &lt;code&gt;right&lt;/code&gt;.
-We find in-order successor (node with the next smallest key) of the current node,
-and put its value in-place of the current node. Then we simply delete this successor node.
-So, the code is as following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;void deleteNodeWith2Children(Node root, int key) {
-  assert root.key == key;
-  assert root.left != null;
-  assert root.right != null;
-
-  Node successor = findSuccessor(root.right);
-  root.key = successor.key;
-  root.val = successor.val;
-  root.right = delete(root.right, successor.key);
-}
-
-// Find most minimal node, 
-// so go left as far as possible
-Node findSuccessor(Node root) {
-  Node cur = root;
-  while (cur.left != null) {
-    cur = cur.left; 
-  }
-  return cur;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;delete-using-in-order-predecessor-approach&#34;&gt;Delete using in-order predecessor approach&lt;/h3&gt;
-
-&lt;p&gt;Here approach is the same as with in-order successor.
-We find in-order predecessor of current node, and put its key and value in place of current node.
-Then we simply delete the predecessor node.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;void deleteNodeWith2Children(Node root, int key) {
-  assert root.key == key;
-  assert root.left != null;
-  assert root.right != null;
-
-  Node predecessor = findPredecessor(root.left);
-  root.key = predecessor.key;
-  root.val = predecessor.val;
-  root.left = delete(root.left, predecessor.key);
-}
-
-// Find node with max key,
-// so go right as far as possible
-Node findPredecessor(Node root) {
-  Node cur = root;
-  while (cur.right != null) {
-    cur = cur.right; 
-  }
-  return cur;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;notes-on-using-either-in-order-successor-or-predecessor&#34;&gt;Notes on using either in-order successor or predecessor&lt;/h3&gt;
-
-&lt;p&gt;Consistently using the in-order successor or the in-order predecessor for every instance of the two-child case can lead to an unbalanced tree, so some implementations select one or the other at different times.&lt;/p&gt;
-
-&lt;h2 id=&#34;tree-traversals&#34;&gt;Tree traversals&lt;/h2&gt;
-
-&lt;p&gt;Next depth-first-search traversals exist:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;in-order traversal (Left, Root, Right)&lt;/li&gt;
-&lt;li&gt;pre-order traversal (Root, Left, Right)&lt;/li&gt;
-&lt;li&gt;post-order traversal (Left, Right, Root)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;in-order-traversal&#34;&gt;In-order traversal&lt;/h3&gt;
-
-&lt;p&gt;In-order traversal: we visit nodes in the following order: Left -&amp;gt; Root -&amp;gt; Right.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;void traverseInOrder(Node root) {
-  if (root != null) {
-    traverseInOrder(root.left);
-    System.out.println(root.key);
-    traverseInOrder(root.right);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;pre-order-traversal&#34;&gt;Pre-order traversal&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;void traversePreOrder(Node root) {
-  if (root != null) {
-    System.out.println(root.key);
-    traverseInOrder(root.left);    
-    traverseInOrder(root.right);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;post-order-traversal&#34;&gt;Post-order traversal&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;void traversePreOrder(Node root) {
-  if (root != null) {    
-    traverseInOrder(root.left);    
-    traverseInOrder(root.right);
-    System.out.println(root.key);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;verify-that-binary-search-tree-is-correct&#34;&gt;Verify that Binary Search Tree is correct&lt;/h2&gt;
-
-&lt;p&gt;Here is a small task: verify that given BST is correct.  Lower given an example with incorrect BST:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;     20
-    /  \
-  10    30
-       /  \
-      5    40
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Node with key &lt;code&gt;5&lt;/code&gt; should be greater than &lt;code&gt;20&lt;/code&gt;, hence it is not a valid BST.&lt;/p&gt;
-
-&lt;p&gt;So we should track not only value of parent, but minimum and maximum values as well.
-We should check that node key is between max and min value.&lt;br /&gt;
-If we go down left branch, we should update &lt;code&gt;maxKey&lt;/code&gt;,
-because left branch in BST should contain nodes with smaller keys.&lt;br /&gt;
-If we go right branch, we should update &lt;code&gt;minKey&lt;/code&gt;, because right branch contains&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;boolean isCorrect(Node root) {
-  if (root == null) return true;
-  return isCorrect(root, Integer.MIN_VALUE, INTEGER.MAX_VALUE);
-}
-
-boolean isCorrect(Node root, int minKey, int maxKey) {
-  if (root == null) return true;
-  if (root.key &amp;lt;= minKey || root.key &amp;gt;= maxKey) return false;
-  return 
-    isCorrect(root.left, minKey, root.key) &amp;amp;&amp;amp;
-    isCorrect(root.right, root.key, maxKey);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;find-max-and-min-elements-in-bst&#34;&gt;Find max and min elements in BST&lt;/h2&gt;
-
-&lt;p&gt;Minimal element in the BST is the leftmost element:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Node findMin(Node root) {
-  if (root == null) return null;
-  Node cur = root;
-  while (cur.left != null) {
-  	cur = cur.left;
-  }
-  return cur;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The largest lement in the BST in rightmost element.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Node findMax(Node root) {
-  if (root == null) return null;
-  Node cur = root;
-  while (cur.right != null) {
-  	cur = cur.right;
-  }
-  return cur;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Binary_search_tree&#34;&gt;Wikipedia article on Binary Search Tree&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/&#34;&gt;GeeksForGeeks - Binary Search Tree | Set 1 (Search and Insertion)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/&#34;&gt;GeeksForGeeks - Tree Traversals (Inorder, Preorder and Postorder)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.geeksforgeeks.org/binary-search-tree-data-structure/&#34;&gt;GeeksForGeeks - All articles on BST&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.geeksforgeeks.org/category/binary-search-tree/&#34;&gt;GeeksForGeeks - All articles tagged with BST tag&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/tag/binary-search-tree/&#34;&gt;Leetcode - Problems for BST&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/tag/tree/&#34;&gt;Leetcode - Problems for Tree&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -493,57 +52,7 @@ boolean isCorrect(Node root, int minKey, int maxKey) {
       <guid>http://iryndin.net/post/dynamic_programming_tasks/</guid>
       <description>&lt;p&gt;Here is a list of all dynamic programming tasks from this blog.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Title&lt;/th&gt;
-&lt;th&gt;Source&lt;/th&gt;
-&lt;th&gt;Difficulty&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_70_climbing_stairs/&#34;&gt;Climbing stairs&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/climbing-stairs/description/&#34;&gt;Leetcode (70)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/&#34;&gt;Min cost climbing stairs&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/min-cost-climbing-stairs/description/&#34;&gt;Leetcode (746)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_121_best_time_to_buy_and_sell_stock/&#34;&gt;Best time to buy and sell stock&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/&#34;&gt;Leetcode (121)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_53_maximum_subarray/&#34;&gt;Maximum subarray&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/maximum-subarray/description/&#34;&gt;Leetcode (53)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_198_house_robber/&#34;&gt;House robber&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/house-robber/description/&#34;&gt;Leetcode (198)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;http://iryndin.net/post/leetcode_303_immutable_range_sum_query/&#34;&gt;Immutable range sum query&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://leetcode.com/problems/range-sum-query-immutable/description/&#34;&gt;Leetcode (303)&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Easy&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;This list will be updated once new tasks will be coming&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -555,79 +64,7 @@ boolean isCorrect(Node root, int minKey, int maxKey) {
       <description>&lt;p&gt;Calculate sum of array elements for any given indexes, keeping source array immutable at the same time
 &lt;a href=&#34;https://leetcode.com/problems/range-sum-query-immutable/description/&#34;&gt;Range Sum Query - Immutable&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.&lt;/p&gt;
-
-&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Given nums = [-2, 0, 3, -5, 2, -1]
-
-sumRange(0, 2) -&amp;gt; 1
-sumRange(2, 5) -&amp;gt; -1
-sumRange(0, 5) -&amp;gt; -3
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;note&#34;&gt;Note&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;You may assume that the array does not change.&lt;/li&gt;
-&lt;li&gt;There are many calls to sumRange function.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;caching-solution&#34;&gt;Caching solution&lt;/h2&gt;
-
-&lt;p&gt;Cache sum of array elements for each combination of indexes into &lt;code&gt;HashMap&lt;/code&gt;.
-Space complexity is &lt;code&gt;O(n^2)&lt;/code&gt;, time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class NumArray {
-
-  Map&amp;lt;String, Integer&amp;gt; cache = new HashMap&amp;lt;&amp;gt;();
-
-  public NumArray(int[] nums) {
-    for (int i = 0; i &amp;lt; nums.length; i++) {
-      int sum = 0;
-      for (int j = i; j &amp;lt; nums.length; j++) {
-        sum += nums[j];
-        cache.put(i+&amp;quot;,&amp;quot;+j, sum);
-      }
-    }
-  }
-
-  public int sumRange(int i, int j) {
-    return cache.get(i+&amp;quot;,&amp;quot;+j);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;we-can-do-better&#34;&gt;We can do better&lt;/h2&gt;
-
-&lt;p&gt;Sum of array elements between indexes &lt;code&gt;i&lt;/code&gt; and &lt;code&gt;j&lt;/code&gt; can be represented as following:&lt;br /&gt;
-&lt;code&gt;sum(i,j)=sum(0,j) - sum(0,i-1)&lt;/code&gt;. We see that it is represented via zero index based sums.
-So we can calculate these sums once, and then use it for our calculations.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class NumArray {
-
-  int[] zeroBasedSum;
-
-  public NumArray(int[] nums) {
-  	zeroBasedSum = new int[nums.length];
-  	int sum = 0;
-    for (int i = 0; i &amp;lt; nums.length; i++) {
-      sum += nums[i];
-      zeroBasedSum[i] = sum;
-    }
-  }
-
-  public int sumRange(int i, int j) {
-    return zeroBasedSum[j] - (i-1 &amp;lt; 0 ? 0 : zeroBasedSum[i-1]);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Obviously, space complexity is &lt;code&gt;O(n)&lt;/code&gt;, as well as time complexity.&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -638,81 +75,7 @@ So we can calculate these sums once, and then use it for our calculations.&lt;/p
       <guid>http://iryndin.net/post/leetcode_198_house_robber/</guid>
       <description>&lt;p&gt;Another easy task is about smart &lt;a href=&#34;https://leetcode.com/problems/house-robber/description/&#34;&gt;house robbery approach&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and &lt;strong&gt;it will automatically contact the police if two adjacent houses were broken into on the same night&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight &lt;strong&gt;without alerting the police&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [1,2,3,1]
-Output: 4
-Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
-             Total amount you can rob = 1 + 3 = 4.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [2,7,9,3,1]
-Output: 12
-Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
-             Total amount you can rob = 2 + 9 + 1 = 12.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;dumb-solution&#34;&gt;Dumb solution&lt;/h2&gt;
-
-&lt;p&gt;Initially, I came up with a pretty straitforward (and dumb) solution for the task.
-Just stupid checks of all variants of robbery, here is the code:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int rob(int[] nums) {
-    if (nums == null || nums.length == 0) {
-      return 0;
-    } else if (nums.length == 1) {
-      return nums[0];
-    } else if (nums.length == 2) {
-      return Math.max(nums[0], nums[1]);
-    } else if (nums.length == 3) {
-      return Math.max(nums[0]+nums[2], nums[1]);
-    }
-    int[] a = new int[nums.length];
-    a[0] = nums[0];
-    a[1] = nums[1];
-    a[2] = nums[0] + nums[2];
-    int maxRob = Math.max(Math.max(a[0],a[1]), a[2]);
-    for (int i=3; i&amp;lt;nums.length; i++) {
-      a[i] = Math.max(nums[i]+a[i-2], nums[i]+a[i-3]);
-      if (a[i] &amp;gt; maxRob) {
-        maxRob = a[i];
-      }
-    }
-    return maxRob;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
-
-&lt;p&gt;But more smart solution can be as easy as following (and it has &lt;code&gt;O(1)&lt;/code&gt; space complexity,
-as well as &lt;code&gt;O(n)&lt;/code&gt; time complexity):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int rob(int[] nums) {
-    int a = 0, b = 0;
-    for (int num : nums){
-      int tmp = Math.max(num+a, b);
-      a = b;
-      b = tmp;
-    }
-    return Math.max(a, b);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Let&amp;rsquo;s explain what goes on here. Variable &lt;code&gt;a&lt;/code&gt; stores prev previous value, &lt;code&gt;b&lt;/code&gt; contains previous value. And &lt;code&gt;b&lt;/code&gt; is updated only if new value is bigger than its previous value. This is the key to this solution.&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -724,81 +87,7 @@ as well as &lt;code&gt;O(n)&lt;/code&gt; time complexity):&lt;/p&gt;
       <description>&lt;p&gt;From a given array find the maximum contiguous subarray with the largest sum,
 &lt;a href=&#34;https://leetcode.com/problems/maximum-subarray/description/&#34;&gt;Leetcode 53&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.&lt;/p&gt;
-
-&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [-2,1,-3,4,-1,2,1,-5,4],
-Output: 6
-Explanation: [4,-1,2,1] has the largest sum = 6.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;follow-up&#34;&gt;Follow up&lt;/h3&gt;
-
-&lt;p&gt;If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.&lt;/p&gt;
-
-&lt;h2 id=&#34;brute-force-solution&#34;&gt;Brute force solution&lt;/h2&gt;
-
-&lt;p&gt;For each index combination let&amp;rsquo;s calculate sum and then find the largest one.
-Space complexity is &lt;code&gt;O(1)&lt;/code&gt; and time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
-  public int maxSubArray(int[] nums) {
-    if (nums == null || nums.length == 0) {
-      return 0;
-    } else if (nums.length == 1) {
-      return nums[0];
-    }
-
-    int maxSum = Integer.MIN_VALUE;
-    for (int i=0; i&amp;lt;nums.length; i++) {
-      int sum = 0;
-      for (int j=i; j&amp;lt;nums.length; j++) {
-        sum += table[i][j];
-        if (sum &amp;gt; maxSum) {
-          maxSum = sum;
-        }
-      }
-    }
-    return maxSum;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;a-better-way&#34;&gt;A better way&lt;/h2&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s think about better approach. Let&amp;rsquo;s take into account following points:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;we are looking for largest sum, so any negative value will deteriorate final result&lt;/li&gt;
-&lt;li&gt;Let&amp;rsquo;s go from the start of the array and sum up all elements. If at some point we have negative sum, then
-we can set total sum to current array element. Why? Because any new value will be better than negative sum. Negative element will only deteriorate final sum, so it will be better, zero element is greater than any negative value, the same for positive element.&lt;/li&gt;
-&lt;li&gt;If sum is not negative, then we simply add up next array element.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;So, code will be following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
-  public int maxSubArray(int[] nums) {
-    int max = Integer.MIN_VALUE, sum = 0;
-    for (int i = 0; i &amp;lt; nums.length; i++) {
-      if (sum &amp;lt; 0) {
-        sum = nums[i];
-      } else {
-        sum += nums[i];
-      }
-      if (sum &amp;gt; max) {
-        max = sum;
-      }
-    }
-    return max;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -810,90 +99,7 @@ we can set total sum to current array element. Why? Because any new value will b
       <description>&lt;p&gt;Let&amp;rsquo;s condsider easy dynamic problem: best time to buy and sell stock.
 This is &lt;a href=&#34;https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/&#34;&gt;Leetcode 121. Best Time to Buy and Sell Stock&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;Say you have an array for which the &lt;code&gt;i-th&lt;/code&gt; element is the price of a given stock on day i.&lt;/p&gt;
-
-&lt;p&gt;If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.&lt;/p&gt;
-
-&lt;p&gt;Note that you cannot sell a stock before you buy one.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [7,1,5,3,6,4]
-Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
-             Not 7-1 = 6, as selling price needs to be larger than buying price.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: [7,6,4,3,1]
-Output: 0
-Explanation: In this case, no transaction is done, i.e. max profit = 0.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;brute-force-solution&#34;&gt;Brute force solution&lt;/h2&gt;
-
-&lt;p&gt;Without a lot of thinking we can come up with brute force solution.
-We buy stock on some particular day, and then for the next days we check profit if we sell this stock. Thus we will find the maximum profit. Time complexity is &lt;code&gt;O(n^2)&lt;/code&gt;, while space complexity is &lt;code&gt;O(1)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int maxProfit(int[] prices) {
-    int result = 0;
-    for (int i=0;i&amp;lt;prices.length-1;i++) {
-      int maxProfit = maxProfit(prices, i);
-      if (maxProfit &amp;gt; result) {
-        result = maxProfit;
-      }
-    }
-    return result;
-  }
-
-  // Calculate max profit is stock is bought on day idx
-  // and sold on one of the next days
-  static int maxProfit(int[] prices, int idx) {
-    int diff = 0;
-    for (int j=idx+1; j&amp;lt;prices.length; j++) {
-      diff = Math.max(diff, prices[j]-prices[idx]);
-    }
-    return diff;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;more-smart-solution&#34;&gt;More smart solution&lt;/h2&gt;
-
-&lt;p&gt;However, we can come up with more smart solution, that has time complexity only &lt;code&gt;O(n)&lt;/code&gt;,
-i.e. only one array pass is required.&lt;/p&gt;
-
-&lt;p&gt;Here is the idea. We got max profit when we buy on lowest price, and  sell on highest price.
-So let&amp;rsquo;s track minimum price and max profit. Let&amp;rsquo;s traverse through price array,
-and check profit and min price with every new array element. If we found new min price and
-new max profit, then update our variables. Space complexity for this approach is &lt;code&gt;O(1)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int maxProfit(int[] prices) {
-    if (prices == null || prices.length &amp;lt; 2) {
-      return 0;
-    }
-    int minPrice = Integer.MAX_VALUE-1;
-    int maxProfit = 0;
-    for (int i=0;i&amp;lt;prices.length;i++) {
-      int todayProfit = prices[i] - minPrice;
-      if (prices[i] &amp;lt; minPrice) 
-        minPrice = prices[i];
-      }
-      if (todayProfit &amp;gt; maxProfit) {
-        maxProfit = todayProfit;
-      }
-    }
-    return maxProfit;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -905,88 +111,7 @@ new max profit, then update our variables. Space complexity for this approach is
       <description>&lt;p&gt;Let&amp;rsquo;s condsider another easy dynamic problem: minimal cost of climbing stairs.
 This is &lt;a href=&#34;https://leetcode.com/problems/min-cost-climbing-stairs/description/&#34;&gt;Leetcode 746. Min Cost Climbing Stairs&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;On a staircase, the &lt;code&gt;i-th&lt;/code&gt; step has some non-negative cost &lt;code&gt;cost[i]&lt;/code&gt; assigned (&lt;code&gt;0&lt;/code&gt; indexed).&lt;/p&gt;
-
-&lt;p&gt;Once you pay the cost, you can either climb one or two steps. You need to find minimum cost to reach the top of the floor, and you can either start from the step with index &lt;code&gt;0&lt;/code&gt;, or the step with index &lt;code&gt;1&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: cost = [10, 15, 20]
-Output: 15
-Explanation: Cheapest is start on cost[1], pay that cost and go to the top.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
-Output: 6
-Explanation: Cheapest is start on cost[0], and only step on 1s, skipping cost[3].
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;note&#34;&gt;Note&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;cost&lt;/code&gt; will have a length in the range &lt;code&gt;[2, 1000]&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;every &lt;code&gt;cost[i]&lt;/code&gt; will be an integer in the range &lt;code&gt;[0, 999]&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;analysis&#34;&gt;Analysis&lt;/h2&gt;
-
-&lt;p&gt;Once we can climb one or two steps, for &lt;code&gt;n-th&lt;/code&gt; stair the minimal cost will be minimal of two values:
-cost for &lt;code&gt;n-1&lt;/code&gt; step and cost for &lt;code&gt;n-2&lt;/code&gt; stair. Or, recursively, this can be expressed as:&lt;br /&gt;
-&lt;code&gt;minCost(n) = min(minCost(n-1),minCost(n-2))&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;recursive-solution&#34;&gt;Recursive solution&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int minCostClimbingStairs(int[] cost) {
-    if (cost == null || cost.length == 0) return 0;
-    else if (cost.length == 1) return cost[0];
-    int LEN = cost.length;
-    return Math.min(minCost(cost, LEN-1), minCost(cost, LEN-2));
-  }
-
-  // Calculate minimal cost to reach stair with index i (i is 0-based index)
-  static int minCost(int[] cost, int i) {
-    switch (i) {
-      case 0: return cost[0];
-      case 1: return cost[1];
-      default: return cost[i] + Math.min(minCost(cost, i-1), minCost(cost, i-2));
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;What is good for this solution, as with almost all recursive solutions, that it is concise and expressive. But for pretty long array it will take tons of time to complete. For Leetcode, this solution gets &lt;code&gt;TLE&lt;/code&gt; - &lt;code&gt;Time Limit Exception&lt;/code&gt;. So, let&amp;rsquo;s consider another solution.&lt;/p&gt;
-
-&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
-
-&lt;p&gt;Here is solution with &lt;code&gt;O(n)&lt;/code&gt; time complexity and &lt;code&gt;O(1)&lt;/code&gt; space complexity:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int minCostClimbingStairs(int[] cost) {
-    if (cost == null || cost.length == 0) return 0;
-    else if (cost.length == 1) return cost[0];
-    int LEN = cost.length;
-    int prevPrevStairMinCost = cost[0], prevStairMinCost = cost[1];
-    int minCost = 0;
-    for (int i=2; i&amp;lt;LEN; i++) {
-      minCost = cost[i] + Math.min(prevStairMinCost, prevPrevStairMinCost);
-      prevPrevStairMinCost = prevStairMinCost;
-      prevStairMinCost = minCost;
-    }
-    return Math.min(prevStairMinCost, prevPrevStairMinCost);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;See also &lt;a href=&#34;http://iryndin.net/post/leetcode_70_climbing_stairs/&#34;&gt;Leetcode 70. Climbing stairs&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -998,81 +123,7 @@ cost for &lt;code&gt;n-1&lt;/code&gt; step and cost for &lt;code&gt;n-2&lt;/code
       <description>&lt;p&gt;Let&amp;rsquo;s condsider easy dynamic problem: climbing stairs.
 This is &lt;a href=&#34;https://leetcode.com/problems/climbing-stairs/description/&#34;&gt;Leetcode 70. Climbing stairs&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
-
-&lt;p&gt;You are climbing a stair case. It takes n steps to reach to the top.&lt;br /&gt;
-Each time you can either climb 1 or 2 steps.&lt;br /&gt;
-In how many distinct ways can you climb to the top?&lt;br /&gt;
-Note: Given n will be a positive integer.&lt;/p&gt;
-
-&lt;h3 id=&#34;example-1&#34;&gt;Example 1&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: 2  
-Output: 2  
-Explanation: There are two ways to climb to the top.  
-1. 1 step + 1 step  
-2. 2 steps  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;example-2&#34;&gt;Example 2&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;Input: 3
-Output: 3
-Explanation: There are three ways to climb to the top.
-1. 1 step + 1 step + 1 step
-2. 1 step + 2 steps
-3. 2 steps + 1 step
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;analysis&#34;&gt;Analysis&lt;/h2&gt;
-
-&lt;p&gt;Number of distinct ways for each stair is a sum of number of distinct ways for previous stair and
-number of distinct ways for previous-previous stair, recursively it can be expressed as following:&lt;br /&gt;
-&lt;code&gt;ways(n)=ways(n-1) + ways(n-2)&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;recursive-solution&#34;&gt;Recursive solution&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int climbStairs(int n) {
-    switch(n) {
-      case 0: return 0;
-      case 1: return 1;
-      case 2: return 2;
-      default: return climbStairs(n-1) + climbStairs(n-2);
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This recursive solution will do many repeating computations, but this is most clear and concise way
-to express solution. Now let&amp;rsquo;s consider more economical approach.&lt;/p&gt;
-
-&lt;h2 id=&#34;better-way&#34;&gt;Better way&lt;/h2&gt;
-
-&lt;p&gt;This is better solution, with time complexity &lt;code&gt;O(n)&lt;/code&gt; and space complexity &lt;code&gt;O(1)&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
-  public int climbStairs(int n) {
-    if (n &amp;lt;= 2) return n;
-    int prevPrevStair = 1, prevStair = 2;
-    int curStair=0;
-    for (int i=2; i&amp;lt;n; i++) {
-      curStair = prevStair + prevPrevStair;
-      prevPrevStair = prevStair;
-      prevStair = curStair;
-    }
-    return curStair;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;h2 id=&#34;links-1&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;See also &lt;a href=&#34;http://iryndin.net/post/leetcode_746_min_cost_climbing_stairs/&#34;&gt;Leetcode 746. Minimal cost climbing stairs&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1086,71 +137,7 @@ without installing it to a local machine. Here I will show you how to run Hugo
 under Docker, create new posts for the blog, generate static content - i.e. all basic operations
 that allow to add new and edit existing posts to the blog.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;what-docker-image-for-hugo-to-take&#34;&gt;What docker image for Hugo to take&lt;/h2&gt;
-
-&lt;p&gt;A lot of Hugo images are available on &lt;a href=&#34;https://hub.docker.com/search/?isAutomated=0&amp;amp;isOfficial=0&amp;amp;page=1&amp;amp;pullCount=0&amp;amp;q=hugo&amp;amp;starCount=1&#34;&gt;Docker Hub&lt;/a&gt;, let&amp;rsquo;s just take the most starred one: &lt;a href=&#34;https://hub.docker.com/r/jojomi/hugo/&#34;&gt;jojomi/hugo&lt;/a&gt;.
-One nice thing for this image is that it is updated on time and all versions of Hugo are available, starting from &lt;code&gt;0.15&lt;/code&gt;. I will show you how to run Hugo &lt;code&gt;0.19&lt;/code&gt;, but you can easily apply this knowledge to run Hugo of more late versions.&lt;/p&gt;
-
-&lt;h2 id=&#34;how-to-run-hugo-from-docker&#34;&gt;How to run hugo from docker&lt;/h2&gt;
-
-&lt;p&gt;First, let&amp;rsquo;s have two folders:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;src&lt;/code&gt; - for sources of our site&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;output&lt;/code&gt; - for generated output&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Then, let&amp;rsquo;s do following:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;create some simple site (let it be blog) structure&lt;/li&gt;
-&lt;li&gt;download theme&lt;/li&gt;
-&lt;li&gt;run site on &lt;code&gt;localhost&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;then generate html from out content&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;create-simple-site-structure&#34;&gt;Create simple site structure&lt;/h2&gt;
-
-&lt;p&gt;Inside our &lt;code&gt;src&lt;/code&gt; folder we have following content:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;config.toml&lt;/code&gt; - file with config&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;content&lt;/code&gt; - folder with blog content&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;static&lt;/code&gt; - folder with static assets (images/css/scripts/etc)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;themes&lt;/code&gt; - folder which contain one or more theme we want to employ for our website&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To see example of initial folder, see it on github: &lt;a href=&#34;https://github.com/iryndin/hugoblog&#34;&gt;https://github.com/iryndin/hugoblog&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Folder &lt;code&gt;themes&lt;/code&gt; should contain Hugo theme which we are going to use. For this example, let it be &lt;code&gt;hugo-redlounge&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Now, let&amp;rsquo;s run Hugo docker image to run a webserver on localhost, so that we would be able to look at our website in browser:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm --name &amp;quot;hugo1&amp;quot; -p 1313:1313 -v $(pwd)/src:/src -v $(pwd)/output:/output -e HUGO_THEME=&amp;quot;hugo-redlounge&amp;quot; -e HUGO_WATCH=&amp;quot;true&amp;quot; jojomi/hugo:0.19
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now we will be able to see our website in browser at &lt;code&gt;http://localhost:1313&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;creating-new-post&#34;&gt;Creating new post&lt;/h2&gt;
-
-&lt;p&gt;To create new post, run following command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker exec -it hugo1 hugo new post/example3.md
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;New file for this post will be created, and you can immediately start editing it.&lt;/p&gt;
-
-&lt;h2 id=&#34;generate-static-content&#34;&gt;Generate static content&lt;/h2&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s generate static content for our site. To generate static content in &lt;code&gt;output2&lt;/code&gt; folder you need to run command similar to what we used to run webserver on localhost, but without &lt;code&gt;HUGO_WATCH&lt;/code&gt; variable and without necessity to map ports. Also, you should run it under another name, if you do not want to shutdown
-container named &lt;code&gt;hugo1&lt;/code&gt; (that used in this example to run local webserver).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm --name &amp;quot;hugo2&amp;quot; -v $(pwd)/src:/src -v $(pwd)/output2:/output -e HUGO_THEME=&amp;quot;hugo-redlounge&amp;quot; jojomi/hugo:0.19
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And you will have your static site in &lt;code&gt;output2&lt;/code&gt; folder.&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1161,66 +148,7 @@ container named &lt;code&gt;hugo1&lt;/code&gt; (that used in this example to run
       <guid>http://iryndin.net/post/useful-ml-articles/</guid>
       <description>&lt;p&gt;I have got a list of useful ML articles from ODS slack (&lt;a href=&#34;https://opendatascience.slack.com/archives/C047H3N8L/p1520445318000067&#34;&gt;message link&lt;/a&gt;).&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Brief context: there was a task to study a person with almost zero programming experience and absolutely absent ML knowledge
-to become able to do ML research. So, how it was achieved? Simple! This person was charged to implement all articles from the list
-using &lt;code&gt;pytorch&lt;/code&gt;. It took almost a month for the person to learn to read, implement and sometimes analyze articles from the list.&lt;/p&gt;
-
-&lt;p&gt;So here is this list:&lt;/p&gt;
-
-&lt;h2 id=&#34;architectures&#34;&gt;Architectures&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;AlexNet: &lt;a href=&#34;https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks&#34;&gt;https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;ZFNet: &lt;a href=&#34;https://arxiv.org/abs/1311.2901&#34;&gt;https://arxiv.org/abs/1311.2901&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;VGG16: &lt;a href=&#34;https://arxiv.org/abs/1505.06798&#34;&gt;https://arxiv.org/abs/1505.06798&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;ResNet: &lt;a href=&#34;https://arxiv.org/abs/1704.06904&#34;&gt;https://arxiv.org/abs/1704.06904&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;GoogLeNet: &lt;a href=&#34;https://arxiv.org/abs/1409.4842&#34;&gt;https://arxiv.org/abs/1409.4842&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Inception: &lt;a href=&#34;https://arxiv.org/abs/1512.00567&#34;&gt;https://arxiv.org/abs/1512.00567&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Xception: &lt;a href=&#34;https://arxiv.org/abs/1610.02357&#34;&gt;https://arxiv.org/abs/1610.02357&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;MobileNet: &lt;a href=&#34;https://arxiv.org/abs/1704.04861&#34;&gt;https://arxiv.org/abs/1704.04861&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;semantic-segmentation&#34;&gt;Semantic Segmentation&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;FCN: &lt;a href=&#34;https://arxiv.org/abs/1411.4038&#34;&gt;https://arxiv.org/abs/1411.4038&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;SegNet: &lt;a href=&#34;https://arxiv.org/abs/1511.00561&#34;&gt;https://arxiv.org/abs/1511.00561&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;UNet: &lt;a href=&#34;https://arxiv.org/abs/1505.04597&#34;&gt;https://arxiv.org/abs/1505.04597&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;PSPNet: &lt;a href=&#34;https://arxiv.org/abs/1612.01105&#34;&gt;https://arxiv.org/abs/1612.01105&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;DeepLab: &lt;a href=&#34;https://arxiv.org/abs/1606.00915&#34;&gt;https://arxiv.org/abs/1606.00915&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;ICNet: &lt;a href=&#34;https://arxiv.org/abs/1704.08545&#34;&gt;https://arxiv.org/abs/1704.08545&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;ENet: &lt;a href=&#34;https://arxiv.org/abs/1606.02147&#34;&gt;https://arxiv.org/abs/1606.02147&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;generative-adversarial-networks&#34;&gt;Generative adversarial networks&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;GAN: &lt;a href=&#34;https://arxiv.org/abs/1406.2661&#34;&gt;https://arxiv.org/abs/1406.2661&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;DCGAN: &lt;a href=&#34;https://arxiv.org/abs/1511.06434&#34;&gt;https://arxiv.org/abs/1511.06434&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;WGAN: &lt;a href=&#34;https://arxiv.org/abs/1701.07875&#34;&gt;https://arxiv.org/abs/1701.07875&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Pix2Pix: &lt;a href=&#34;https://arxiv.org/abs/1611.07004&#34;&gt;https://arxiv.org/abs/1611.07004&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;CycleGAN: &lt;a href=&#34;https://arxiv.org/abs/1703.10593&#34;&gt;https://arxiv.org/abs/1703.10593&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;object-detection&#34;&gt;Object detection&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;RCNN: &lt;a href=&#34;https://arxiv.org/abs/1311.2524&#34;&gt;https://arxiv.org/abs/1311.2524&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Fast-RCNN: &lt;a href=&#34;https://arxiv.org/abs/1504.08083&#34;&gt;https://arxiv.org/abs/1504.08083&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Faster-RCNN: &lt;a href=&#34;https://arxiv.org/abs/1506.01497&#34;&gt;https://arxiv.org/abs/1506.01497&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;SSD: &lt;a href=&#34;https://arxiv.org/abs/1512.02325&#34;&gt;https://arxiv.org/abs/1512.02325&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;YOLO: &lt;a href=&#34;https://arxiv.org/abs/1506.02640&#34;&gt;https://arxiv.org/abs/1506.02640&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;YOLO9000: &lt;a href=&#34;https://arxiv.org/abs/1612.08242&#34;&gt;https://arxiv.org/abs/1612.08242&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Also, here is a couple of another links:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://cs231n.stanford.edu/&#34;&gt;CS231n: Convolutional Neural Networks for Visual Recognition&lt;/a&gt; and &lt;a href=&#34;http://cs231n.github.io/&#34;&gt;it&amp;rsquo;s Github page&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.fast.ai/&#34;&gt;Fast.AI&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1233,325 +161,7 @@ using &lt;code&gt;pytorch&lt;/code&gt;. It took almost a month for the person to
 Let&amp;rsquo;s take a &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/blob/master/data/01-cardio/cardio.csv&#34;&gt;cardio dataset&lt;/a&gt;
 from here: &lt;a href=&#34;https://github.com/iryndin/Machine-Learning/tree/master/data/01-cardio&#34;&gt;https://github.com/iryndin/Machine-Learning/tree/master/data/01-cardio&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;task-0-import-dataset&#34;&gt;Task 0. Import dataset&lt;/h2&gt;
-
-&lt;p&gt;First, import necessary libs and read the data:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;import pandas as pd
-import numpy as np
-
-df = pd.read_csv(&#39;cardio.csv&#39;, sep=&#39;;&#39;, index_col=&#39;id&#39;)
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now we have DataFrame (&lt;code&gt;df&lt;/code&gt;), which is one of main entities Pandas work with.&lt;/p&gt;
-
-&lt;p&gt;This dataset contains following fields:&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Field&lt;/th&gt;
-&lt;th&gt;Description&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;id&lt;/td&gt;
-&lt;td&gt;Patient ID&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;age&lt;/td&gt;
-&lt;td&gt;Age in days&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;gender&lt;/td&gt;
-&lt;td&gt;Male or female&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;age&lt;/td&gt;
-&lt;td&gt;Age in days&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;height&lt;/td&gt;
-&lt;td&gt;Height in cm&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;weight&lt;/td&gt;
-&lt;td&gt;Weight in kg&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;ap_hi&lt;/td&gt;
-&lt;td&gt;Arterial Pressure (high)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;ap_lo&lt;/td&gt;
-&lt;td&gt;Arterial Pressure (low)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;cholesterol&lt;/td&gt;
-&lt;td&gt;?&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;gluc&lt;/td&gt;
-&lt;td&gt;?&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;smoke&lt;/td&gt;
-&lt;td&gt;Smoking or not&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;alco&lt;/td&gt;
-&lt;td&gt;Drinks alco or not&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;active&lt;/td&gt;
-&lt;td&gt;?&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;cardio&lt;/td&gt;
-&lt;td&gt;Has cardio probem or not&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h2 id=&#34;task-1-count-males-and-females&#34;&gt;Task 1. Count males and females&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s count total number of males and females. OK, we have a column &lt;code&gt;gender&lt;/code&gt; which contains values &lt;code&gt;1&lt;/code&gt; and &lt;code&gt;2&lt;/code&gt;.
-But which of them is male, and which is female? It is not clear.&lt;/p&gt;
-
-&lt;p&gt;We can determine this using reasonable assumption that males are in average higher than females. So, we need to filter those rows
-which have &lt;code&gt;gender=1&lt;/code&gt; and calculate mean height for them. Then we should calculate mean height value for rows with &lt;code&gt;gender=2&lt;/code&gt;.
-Then we should check which of values if bigger, and hence assume that those are for males. Let&amp;rsquo;s do this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;] == 1][&#39;height&#39;].mean()
-161.35561168460356
-&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;] == 2][&#39;height&#39;].mean()
-169.94789538210054
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here we see that for rows with &lt;code&gt;gender=2&lt;/code&gt; mean height is greater that for rows with &lt;code&gt;gender=1&lt;/code&gt;.
-So we can conclude that &lt;code&gt;gender=2&lt;/code&gt; is for males, while &lt;code&gt;gender=1&lt;/code&gt; is for females. Let&amp;rsquo;s create separate dataframes
-bot for males and females:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;males = df[df[&#39;gender&#39;] == 2]
-females = df[df[&#39;gender&#39;] == 1]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s answer this task&amp;rsquo;s question about number of males and females:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[&#39;age&#39;].count()
-24470
-&amp;gt;&amp;gt;&amp;gt; females[&#39;age&#39;].count()
-45530
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;So the answer to Task 1 is:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;24470 males&lt;/li&gt;
-&lt;li&gt;45530 females&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;task-2-calculate-who-drinks-alcohol-less-in-average-males-or-females&#34;&gt;Task 2. Calculate who drinks alcohol less (in average): males or females&lt;/h2&gt;
-
-&lt;p&gt;Alcohol usage column is &lt;code&gt;alco&lt;/code&gt; and it contains values &lt;code&gt;1&lt;/code&gt; (in use) and &lt;code&gt;0&lt;/code&gt; (not in use).
-So we simply need to calculate a portion of alco drinkes for males and females and compare these values.&lt;/p&gt;
-
-&lt;p&gt;We can do it in two ways:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;filter by &lt;code&gt;alco&lt;/code&gt; column value and calculate proportion&lt;/li&gt;
-&lt;li&gt;simply sum &lt;code&gt;alco&lt;/code&gt; column values and divide by total number of males/females respectively.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Let&amp;rsquo;s do both. First one:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[males[&#39;alco&#39;]==1][&#39;age&#39;].count()/float(males[&#39;age&#39;].count())
-0.10637515324887617
-&amp;gt;&amp;gt;&amp;gt; females[females[&#39;alco&#39;]==1][&#39;age&#39;].count()/float(females[&#39;age&#39;].count())
-0.025499670546892159
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Second approach:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[&#39;alco&#39;].sum()/float(males[&#39;age&#39;].count())
-0.10637515324887617
-&amp;gt;&amp;gt;&amp;gt; females[&#39;alco&#39;].sum()/float(females[&#39;age&#39;].count())
-0.025499670546892159
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We see that portion of males drinking alco is 10.6%, while for females it is 2.5%.&lt;/p&gt;
-
-&lt;p&gt;So the answer to Task 2 is: females drink alco less.&lt;/p&gt;
-
-&lt;h2 id=&#34;task-3-calculate-how-many-times-greater-percentage-of-smoking-males-is-compared-to-that-of-females&#34;&gt;Task 3. Calculate how many times greater percentage of smoking males is compared to that of females?&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s calculate this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; smoking_males_percentage = 100*males[males[&#39;smoke&#39;]==1][&#39;age&#39;].count()/float(males[&#39;age&#39;].count())
-&amp;gt;&amp;gt;&amp;gt; smoking_females_percentage = 100*females[females[&#39;smoke&#39;]==1][&#39;age&#39;].count()/float(females[&#39;age&#39;].count())
-&amp;gt;&amp;gt;&amp;gt; round(smoking_males_percentage/smoking_females_percentage)
-12.0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Answer to Task 3 is: 12&lt;/p&gt;
-
-&lt;h2 id=&#34;task-4-in-what-units-age-is-measured-here-what-is-difference-in-months-between-median-age-of-smokers-and-non-smokers&#34;&gt;Task 4. In what units age is measured here? What is difference (in months) between median age of smokers and non-smokers?&lt;/h2&gt;
-
-&lt;p&gt;OK, let&amp;rsquo;s look at age stats:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[&#39;age&#39;].describe()
-count    70000.000000
-mean     19468.865814
-std       2467.251667
-min      10798.000000
-25%      17664.000000
-50%      19703.000000
-75%      21327.000000
-max      23713.000000
-Name: age, dtype: float64
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Ok, this is not similar to years, and even to months. May be in days? Let&amp;rsquo;s check:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[&#39;age&#39;].mean()/365
-53.339358395303321
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This is better. So age here is measured in days. Now let&amp;rsquo;s calculate difference (in months) between median age of smokers and non-smokers:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; round((df[df[&#39;smoke&#39;]==0][&#39;age&#39;].median() - df[df[&#39;smoke&#39;]==1][&#39;age&#39;].median())/30)
-20.0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The answer for Task 4 is:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;age here is in days&lt;/li&gt;
-&lt;li&gt;difference (in months) between median age of smokers and non-smokers: 20&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;task-5-create-2-special-datasets-from-initial-one-and-calculate-in-how-many-times-portion-of-sick-people-in-one-dataset-is-greater-than-that-of-another-dataset&#34;&gt;Task 5. Create 2 special datasets from initial one and calculate in how many times portion of sick people in one dataset is greater than that of another dataset?&lt;/h2&gt;
-
-&lt;p&gt;Look at Wikipedia article about &lt;a href=&#34;https://ru.wikipedia.org/wiki/%D0%A1%D0%B5%D1%80%D0%B4%D0%B5%D1%87%D0%BD%D0%BE-%D1%81%D0%BE%D1%81%D1%83%D0%B4%D0%B8%D1%81%D1%82%D1%8B%D0%B9_%D1%80%D0%B8%D1%81%D0%BA&#34;&gt;HeartScore&lt;/a&gt;,
-it gives clarification to following actions.&lt;/p&gt;
-
-&lt;p&gt;Do following:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Create new column - &lt;code&gt;age_years&lt;/code&gt;, round its values to integers. Then for this task take only smoking males aged 60 to 64 (inclusive).&lt;/li&gt;
-&lt;li&gt;In the dataset cholesterol level 1 is equal to 4 mmol/liter, 2 -&amp;gt; 5-7 mmol/liter, 3 maps to 8 mmol/liter.&lt;/li&gt;
-&lt;li&gt;Create 2 datasets out of smoking males 60-64: &lt;code&gt;ap_hi &amp;lt; 120&lt;/code&gt; and &lt;code&gt;cholesterol=1&lt;/code&gt; , another:  &lt;code&gt;160 &amp;lt;= ap_hi &amp;lt; 180&lt;/code&gt; and &lt;code&gt;cholesterol=3&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;For given 2 datasets calculate in how many times portion of cardio-sick people in one dataset is greater than that of another dataset&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Do this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; males[&#39;age_years&#39;] = males.apply(lambda row: int(round(row.age/365.0)), axis=1)
-&amp;gt;&amp;gt;&amp;gt; smoking_males = males[(males[&#39;smoke&#39;]==1) &amp;amp; (males[&#39;age_years&#39;]&amp;gt;=60) &amp;amp; (males[&#39;age_years&#39;]&amp;lt;65)]
-&amp;gt;&amp;gt;&amp;gt; smoking_males_1 = smoking_males[(smoking_males[&#39;cholesterol&#39;]==1) &amp;amp; (smoking_males[&#39;ap_hi&#39;]&amp;lt;120)] 
-&amp;gt;&amp;gt;&amp;gt; smoking_males_2 = smoking_males[(smoking_males[&#39;cholesterol&#39;]==3) &amp;amp; (smoking_males[&#39;ap_hi&#39;]&amp;lt;180) &amp;amp; (smoking_males[&#39;ap_hi&#39;]&amp;gt;=160)] 
-&amp;gt;&amp;gt;&amp;gt; cardio_percentage_1 = 100*smoking_males_1[smoking_males_1[&#39;cardio&#39;]==1][&#39;age&#39;].count()/float(smoking_males_1[&#39;age&#39;].count())
-&amp;gt;&amp;gt;&amp;gt; cardio_percentage_2 = 100*smoking_males_2[smoking_males_2[&#39;cardio&#39;]==1][&#39;age&#39;].count()/float(smoking_males_2[&#39;age&#39;].count())
-&amp;gt;&amp;gt;&amp;gt; round(cardio_percentage_2/cardio_percentage_1)
-3
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Answer to Task 5: 3&lt;/p&gt;
-
-&lt;h2 id=&#34;task-6-assess-some-bmi-statements&#34;&gt;Task 6. Assess some BMI statements&lt;/h2&gt;
-
-&lt;p&gt;BMI (Body Mass index) is calculated as weight in kg divided by square of height in meters. Normal BMI values are between 18.5 and 25.&lt;/p&gt;
-
-&lt;p&gt;Assess following statements (is it true of false):&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Median BMI is greater than its normal values&lt;/li&gt;
-&lt;li&gt;Females BMI is in average less than males BMI&lt;/li&gt;
-&lt;li&gt;Cardio-healthy persons have in average greater BMI than cardio-sick ones&lt;/li&gt;
-&lt;li&gt;For cardio-healthy non-alco males BMI values in average are closer to norm than for cardio-healthy non-alco females&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Solution:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df[&#39;bmi&#39;] = df.apply(lambda row: row.weight/((row.height**2)/10000.0), axis=1)
-&amp;gt;&amp;gt;&amp;gt; df[&#39;bmi&#39;].median()
-26.374068120774975
-&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;]==1][&#39;bmi&#39;].mean()
-27.98758344183285
-&amp;gt;&amp;gt;&amp;gt; df[df[&#39;gender&#39;]==2][&#39;bmi&#39;].mean()
-26.754442357289349
-&amp;gt;&amp;gt;&amp;gt; df[df[&#39;cardio&#39;]==0][&#39;bmi&#39;].mean()
-26.548175206794504
-&amp;gt;&amp;gt;&amp;gt; df[df[&#39;cardio&#39;]==1][&#39;bmi&#39;].mean()
-28.56606062701535
-&amp;gt;&amp;gt;&amp;gt; df[(df[&#39;cardio&#39;]==0) &amp;amp; (df[&#39;alco&#39;]==0) &amp;amp; (df[&#39;gender&#39;]==2)][&#39;bmi&#39;].mean()
-25.872638075460163
-&amp;gt;&amp;gt;&amp;gt; df[(df[&#39;cardio&#39;]==0) &amp;amp; (df[&#39;alco&#39;]==0) &amp;amp; (df[&#39;gender&#39;]==1)][&#39;bmi&#39;].mean()
-26.845406594131507
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Answer to Task 6:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Median BMI is greater than its normal values. TRUE. (Because &lt;code&gt;26.374068120774975 &amp;gt; 25&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;Females BMI is in average less than males BMI. FALSE (Because &lt;code&gt;27.98758344183285 &amp;gt; 26.754442357289349&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;Cardio-healthy persons have in average greater BMI than cardio-sick ones. FALSE. (Because &lt;code&gt;26.548175206794504 &amp;lt; 28.56606062701535&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;For cardio-healthy non-alco males BMI values in average are closer to norm than for cardio-healthy non-alco females. TRUE. (Because &lt;code&gt;25.872638075460163&lt;/code&gt; is closer to &lt;code&gt;25&lt;/code&gt; than &lt;code&gt;26.845406594131507&lt;/code&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;task-7-clean-up-data&#34;&gt;Task 7. Clean up data.&lt;/h2&gt;
-
-&lt;p&gt;Filter data according to the following (throw out rows matching following criteria):&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ap_lo &amp;gt; ap_hi&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;height is less than 2.5 percentile or greater than 97.5 percentile&lt;/li&gt;
-&lt;li&gt;weight is less than 2.5 percentile or greater than 97.5 percentile&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;How many percents of data was thrown out?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; dfclean = df[df[&#39;ap_lo&#39;] &amp;lt;= df[&#39;ap_hi&#39;]]
-&amp;gt;&amp;gt;&amp;gt; h025 = df[&#39;height&#39;].quantile(0.025)
-&amp;gt;&amp;gt;&amp;gt; h975 = df[&#39;height&#39;].quantile(0.975)
-&amp;gt;&amp;gt;&amp;gt; dfclean = dfclean[(dfclean[&#39;height&#39;] &amp;gt;= h025) &amp;amp; (dfclean[&#39;height&#39;] &amp;lt;= h975)]
-&amp;gt;&amp;gt;&amp;gt; w025 = df[&#39;weight&#39;].quantile(0.025)
-&amp;gt;&amp;gt;&amp;gt; w975 = df[&#39;weight&#39;].quantile(0.975)
-&amp;gt;&amp;gt;&amp;gt; dfclean = dfclean[(dfclean[&#39;weight&#39;] &amp;gt;= w025) &amp;amp; (dfclean[&#39;weight&#39;] &amp;lt;= w975)]
-&amp;gt;&amp;gt;&amp;gt; size = df[&#39;age&#39;].count()
-&amp;gt;&amp;gt;&amp;gt; sizeclean = dfclean[&#39;age&#39;].count()
-&amp;gt;&amp;gt;&amp;gt; round(100.0*(1 - sizeclean/float(size)))
-10
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Answer to Task 7: 10&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/Yorko/mlcourse_open&#34;&gt;ML Course Open&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://habrahabr.ru/company/ods/blog/322626/&#34;&gt;ML Course Open. Lecture 1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://nbviewer.jupyter.org/github/Yorko/mlcourse_open/blob/master/jupyter_russian/homeworks/hw1_session3_data_analysis_pandas.ipynb?flush_cache=true&#34;&gt;ML Course Open. Hometask 1.&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.dataquest.io/blog/pandas-cheat-sheet/&#34;&gt;Pandas Cheat Sheet&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1563,30 +173,7 @@ it gives clarification to following actions.&lt;/p&gt;
       <description>&lt;p&gt;Today I found a nice post in LinkedIn: &lt;a href=&#34;https://www.linkedin.com/feed/update/urn:li:activity:6366260134636851200/&#34;&gt;How to Stand Out as an Entry-Level Data Scientist Candidate&lt;/a&gt;.
 I liked it very much, and I think it contains pretty much true points. Here they are.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Software engineering skills&lt;/li&gt;
-&lt;li&gt;Good GitHub projects, writing production-level code&lt;/li&gt;
-&lt;li&gt;Be able to deeply understand commonly used ML algorithms AND to explain them to a laymen:
-
-&lt;ul&gt;
-&lt;li&gt;Linear regression&lt;/li&gt;
-&lt;li&gt;Logistic regression&lt;/li&gt;
-&lt;li&gt;SVM&lt;/li&gt;
-&lt;li&gt;Random forest&lt;/li&gt;
-&lt;li&gt;Boosting&lt;/li&gt;
-&lt;li&gt;K-means&lt;/li&gt;
-&lt;li&gt;KNN&lt;/li&gt;
-&lt;li&gt;PCA&lt;/li&gt;
-&lt;li&gt;Collaborative filtering&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Be able to compare and contrast commonly used ML algorithms, explaining their relative pros and cons&lt;/li&gt;
-&lt;li&gt;Be able to walk through the business value of every project they worked on&lt;/li&gt;
-&lt;li&gt;Be able to complete every exercise from Cracking the Coding Interview in Python, writing clear, efficient code&lt;/li&gt;
-&lt;li&gt;High ranking on a public Kaggle board (top 3%)&lt;/li&gt;
-&lt;li&gt;CLEAR, PROFESSIONAL COMMUNICATION SKILLS!!!&lt;/li&gt;
-&lt;/ol&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1597,65 +184,7 @@ I liked it very much, and I think it contains pretty much true points. Here they
       <guid>http://iryndin.net/post/optimistic_and_pessimistic_concurrency_control/</guid>
       <description>&lt;p&gt;Here we consider two most widely used approaches to transactional locking: pessimistic and optimistic locking.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Transactional isolation is usually implemented by locking whatever is accessed in a transaction.
-There are two different approaches to transactional locking:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Pessimistic locking&lt;/li&gt;
-&lt;li&gt;Optimistic locking&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;pessimistic-concurrency-control-locking&#34;&gt;Pessimistic concurrency control (locking)&lt;/h2&gt;
-
-&lt;p&gt;Pessimistic locking is called &amp;ldquo;pessimistic&amp;rdquo; because the system assumes the worst —
-it assumes that two or more users will want to update the same record at the same time,
-and then prevents that possibility by locking the record, no matter how unlikely conflicts actually are.&lt;/p&gt;
-
-&lt;p&gt;Pessimistic locking assumes that data will be changed by another transaction and so locks it.
-Pessimistic locking locks the records as soon as it selects rows to update.
-The pessimistic locking strategy guarantees the changes are made safely and consistently.&lt;/p&gt;
-
-&lt;p&gt;The disadvantage of pessimistic locking is that a resource is locked from the time it is first accessed in a transaction
-until the transaction is finished, making it inaccessible to other transactions during that time.
-If most transactions simply look at the resource and never change it, an exclusive lock may be overkill
-as it may cause lock contention, and optimistic locking may be a better approach.&lt;/p&gt;
-
-&lt;h2 id=&#34;optimistic-concurrency-control-locking&#34;&gt;Optimistic concurrency control (locking)&lt;/h2&gt;
-
-&lt;p&gt;Optimistic locking assumes that although conflicts are possible, they will be very rare.
-Instead of locking every record every time that it is used, the system merely looks for indications
-that two users actually did try to update the same record at the same time.&lt;/p&gt;
-
-&lt;p&gt;Optimistic locking locks the record only when updating takes place.
-It ensures that the locks are held between selecting, updating, or deleting rows.
-This process needs a way to ensure that the changes to data are not performed between the time of being read and being altered.
-This is achieved using version numbers, timestamps, hashing, etc.&lt;/p&gt;
-
-&lt;p&gt;The primary advantage of optimistic locking is , it minimizes the time for which a given resource is unavailable
-which is used by another transaction and in this way it more scalable locking alternative.&lt;/p&gt;
-
-&lt;h2 id=&#34;what-to-use-optimistic-or-pessimistic-concurrency-control&#34;&gt;What to use - optimistic or pessimistic concurrency control?&lt;/h2&gt;
-
-&lt;p&gt;In most scenarios, optimistic concurrency control is more efficient and offers higher performance.
-When choosing between pessimistic and optimistic locking, consider the following:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Pessimistic locking is useful if there are a lot of updates and relatively high chances of users trying to update data at the same time.&lt;/li&gt;
-&lt;li&gt;Pessimistic concurrency control is also more appropriate in applications that contain small tables that are frequently updated.&lt;/li&gt;
-&lt;li&gt;Optimistic locking is useful if the possibility for conflicts is very low – there are many records but relatively few users, or very few updates and mostly read-type operations.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;So, there is no correct answer – it depends. You should pick your locking scheme based on your application requirements.&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Optimistic_concurrency_control&#34;&gt;Wikipedia - Optimistic concurrency control&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.ibm.com/support/knowledgecenter/en/SSPK3V_7.0.0/com.ibm.swg.im.soliddb.sql.doc/doc/pessimistic.vs.optimistic.concurrency.control.html&#34;&gt;IBM SolidDB Guide - PESSIMISTIC vs. OPTIMISTIC concurrency control&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.objectdb.com/java/jpa/persistence/lock&#34;&gt;ObjectDB Manual - Locking in JPA&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1666,70 +195,156 @@ When choosing between pessimistic and optimistic locking, consider the following
       <guid>http://iryndin.net/post/postgresql_transaction_isolation_levels/</guid>
       <description>&lt;p&gt;Details of transaction isolation in PostgreSQL.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Transaction isolation levels</title>
+      <link>http://iryndin.net/post/transaction_isolation_levels/</link>
+      <pubDate>Tue, 28 Nov 2017 07:14:59 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/transaction_isolation_levels/</guid>
+      <description>&lt;p&gt;Transaction isolation levels in relational databases. A reminder post.&lt;/p&gt;
 
-&lt;p&gt;On previous post &lt;a href=&#34;http://iryndin.net/post/transaction_isolation_levels/&#34;&gt;about transaction isolation levels&lt;/a&gt; we considered what is
-transaction isolation level and how this influence the result we get from transaction. But from database to database
-details are diferent, so let&amp;rsquo;s consider transaction isolation details for PostgreSQL.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Spring: destroy prototype beans</title>
+      <link>http://iryndin.net/post/spring_destroy_prototype_beans/</link>
+      <pubDate>Mon, 27 Nov 2017 18:53:22 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/spring_destroy_prototype_beans/</guid>
+      <description>&lt;p&gt;Prototype-scoped beans destruction is not managed by Spring container (only construction is managed).
+But we can manage it ourselves with Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt;s.&lt;/p&gt;
 
-&lt;p&gt;Let&amp;rsquo;s again repeat a little bit about transaction islolation level.
-The SQL standard defines four levels of transaction isolation.
-The most strict is &lt;code&gt;Serializable&lt;/code&gt;, which is defined by the standard in a paragraph which says
-that any concurrent execution of a set of &lt;code&gt;Serializable&lt;/code&gt; transactions is guaranteed to produce the same effect
-as running them one at a time in some order.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Spring Bean PostProcessors</title>
+      <link>http://iryndin.net/post/spring_beanpostprocessors/</link>
+      <pubDate>Mon, 27 Nov 2017 15:45:43 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/spring_beanpostprocessors/</guid>
+      <description>&lt;p&gt;Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt; is a nice feature that gives you much power into hands.
+You can do a lot of fun things with &lt;code&gt;BeanPostProcessor&lt;/code&gt;s, and this post demonstrates some of them with a series of short examples.&lt;/p&gt;
 
-&lt;p&gt;The other three levels are defined in terms of phenomena, resulting from interaction between concurrent transactions, which must not occur at each level.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Copy folder from AWS S3</title>
+      <link>http://iryndin.net/post/copy_folder_from_aws_s3/</link>
+      <pubDate>Sat, 18 Nov 2017 12:19:37 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/copy_folder_from_aws_s3/</guid>
+      <description>&lt;p&gt;How could we copy a folder from AWS S3 to local machine using AWS CLI?&lt;/p&gt;
 
-&lt;p&gt;The phenomena which are prohibited at various levels are:&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java objects memory size</title>
+      <link>http://iryndin.net/post/java_objects_memory_size/</link>
+      <pubDate>Fri, 27 Oct 2017 16:40:07 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/java_objects_memory_size/</guid>
+      <description>&lt;p&gt;Here we try to analyze how much memory will consume Java objects. All numbers are given for 64-bit machines.&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;dirty read&lt;/strong&gt; - A transaction reads data written by a concurrent uncommitted transaction.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;nonrepeatable read&lt;/strong&gt; - A transaction re-reads data it has previously read and finds that data has been modified by another transaction (that committed since the initial read).&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;phantom read&lt;/strong&gt; - A transaction re-executes a query returning a set of rows that satisfy a search condition and finds that the set of rows satisfying the condition has changed due to another recently-committed transaction.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Serialize list of dates into JSON with Jackson</title>
+      <link>http://iryndin.net/post/json-serialize-list-of-dates-with-jackson/</link>
+      <pubDate>Mon, 02 Oct 2017 10:50:35 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/json-serialize-list-of-dates-with-jackson/</guid>
+      <description>&lt;p&gt;There are a lot of examples about how to serialize &lt;code&gt;Date&lt;/code&gt; objects into JSON.
+But I was not able to find examples that explain how to serialize a collection of dates: &lt;code&gt;Collection&amp;lt;Date&amp;gt;&lt;/code&gt;.
+I had to dive into code and find out it myself. In this post I share my findings with you.&lt;/p&gt;
 
-&lt;h2 id=&#34;only-3-isolation-level-internally&#34;&gt;Only 3 isolation level internally&lt;/h2&gt;
-
-&lt;p&gt;Internally, there are only three distinct isolation levels, which correspond to the levels &lt;code&gt;Read Committed&lt;/code&gt;,
-&lt;code&gt;Repeatable Read&lt;/code&gt;, and &lt;code&gt;Serializable&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;When you select the level &lt;code&gt;Read Uncommitted&lt;/code&gt; you really get &lt;code&gt;Read Committed&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;Phantom reads&lt;/code&gt; are not possible in the PostgreSQL implementation of &lt;code&gt;Repeatable Read&lt;/code&gt;, so the actual isolation level might be stricter than what you select.
-This is permitted by the SQL standard: the four isolation levels only define which phenomena must not happen, they do not define which phenomena must happen.&lt;/p&gt;
-
-&lt;p&gt;The reason that PostgreSQL only provides three isolation levels is that this is the only sensible way to map the standard isolation levels
-to the MVCC architecture.&lt;/p&gt;
-
-&lt;h2 id=&#34;read-commited-default&#34;&gt;Read commited (default)&lt;/h2&gt;
-
-&lt;p&gt;A &lt;code&gt;SELECT&lt;/code&gt; query (without a &lt;code&gt;FOR UPDATE/SHARE&lt;/code&gt; clause) sees only data &lt;strong&gt;committed before the query (not transaction!!) began&lt;/strong&gt;;
-it never sees either uncommitted data or changes committed during query execution by concurrent transactions.
-In effect, a SELECT query sees a snapshot of the database &lt;strong&gt;as of the instant the query (not transaction!!) begins to run&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;However, &lt;code&gt;SELECT&lt;/code&gt; does see the effects of previous updates executed within its own transaction, even though they are not yet committed.
-Also note that two successive &lt;code&gt;SELECT&lt;/code&gt; commands &lt;strong&gt;can see different data&lt;/strong&gt;, even though they are within a single transaction,
-if other transactions commit changes during execution of the first &lt;code&gt;SELECT&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;repeatable-read&#34;&gt;Repeatable read&lt;/h2&gt;
-
-&lt;p&gt;The &lt;code&gt;Repeatable Read&lt;/code&gt; isolation level only sees data &lt;strong&gt;committed before the transaction began&lt;/strong&gt;. This is the difference wit hprevious level -
-&lt;code&gt;Read commited&lt;/code&gt; which sees data &lt;strong&gt;before query began&lt;/strong&gt;.
-Thus, successive &lt;code&gt;SELECT&lt;/code&gt; commands within a single transaction see the same data, i.e.,
-they do not see changes made by other transactions that committed after their own transaction started.&lt;/p&gt;
-
-&lt;p&gt;Applications using this level must be prepared to retry transactions due to serialization failures.
-Note that only updating transactions might need to be retried; read-only transactions will never have serialization conflicts.&lt;/p&gt;
-
-&lt;h2 id=&#34;serializable-isolation-level&#34;&gt;Serializable Isolation Level&lt;/h2&gt;
-
-&lt;p&gt;The &lt;code&gt;Serializable&lt;/code&gt; isolation level provides the strictest transaction isolation.
-This level emulates serial transaction execution, as if transactions had been executed one after another, serially, rather than concurrently.
-However, like the Repeatable Read level, applications using this level must be prepared to retry transactions due to serialization failures.&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;More details can be taken here: &lt;a href=&#34;https://www.postgresql.org/docs/9.2/static/transaction-iso.html&#34;&gt;PostgreSQL Documentation. Chapter 13. Concurrency Control. 13.2. Transaction Isolation&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Spring Boot and AWT headless</title>
+      <link>http://iryndin.net/post/spring_boot_and_awt_headless/</link>
+      <pubDate>Wed, 20 Sep 2017 15:08:51 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/spring_boot_and_awt_headless/</guid>
+      <description>The problem with AWT headless app in Spring Boot Recently I needed to create console Java Spring Boot app that does some stuff with AWT (not so important what exactly). I found that simple run with a normat Spring Boot stub simply does not work. Running this:
+@SpringBootApplication public class MyAwtApplication { public static void main(String[] args) { SpringApplication.run(MyAwtApplication.class, args); } }  generates following exception when AWT-related processing happens:</description>
+    </item>
+    
+    <item>
+      <title>AWS permissions to S3 folder</title>
+      <link>http://iryndin.net/post/aws-permissions-to-s3-folder/</link>
+      <pubDate>Wed, 26 Apr 2017 23:46:17 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/aws-permissions-to-s3-folder/</guid>
+      <description>Let&amp;rsquo;s imagine that we have a project, which actually use AWS S3 as file storage. The project consists of 2 parts: one part puts files into S3, and the other part only reads them from S3. Moreover, files are stored not in the bucket root, but in some folder which is placed in the bucket root.
+According to best AWS practices, we need 2 security and access control policies. One policy is for that part of software which puts files into S3 folder.</description>
+    </item>
+    
+    <item>
+      <title>How SSH get port 22</title>
+      <link>http://iryndin.net/post/how-ssh-get-port-22/</link>
+      <pubDate>Sun, 23 Apr 2017 18:56:58 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/how-ssh-get-port-22/</guid>
+      <description>A nice story from SSH creator (Tatu Ylonen) about how SSH got its port 22.
+Briefly, initial SSH version was created in Spring 1995, time when FTP and Telnet were widely used. SSH was designed to replace FTP (port 21) and Telnet (port 23). Port 22 was free. So it was chosen to be used in SSH. At that time Internet was small, and port numbers were allocated by IANA, managed by Internet pioneers Jon Postel and Joyce K.</description>
+    </item>
+    
+    <item>
+      <title>Interesting HackerNews posts by 21 April 2017</title>
+      <link>http://iryndin.net/post/interesting-hacker-news-posts-by-21-april-2017/</link>
+      <pubDate>Fri, 21 Apr 2017 19:57:28 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/interesting-hacker-news-posts-by-21-april-2017/</guid>
+      <description>Recursive DNS Server Fingerprint
+They try to identify DNS hijacking by creating a database of DNS server fingerprints and comparing response of a particular DNS server (suspected to be hijacked) with its normal fingerprint.
+Introducing Token
+Token is a browser for the Ethereum network that provides universal access to financial services. It combines messaging app, Ethereum wallet and browser for Ethereum apps.
+Scalable, Lie-Detecting Timeserving with Roughtime
+Roughtime is a protocol designed to provide internet-scale secure time synchronization and address shortcomings of older protocols like NTP.</description>
+    </item>
+    
+    <item>
+      <title>Blockchain and Bitcoin links</title>
+      <link>http://iryndin.net/post/blockchain-and-bitcoin-links/</link>
+      <pubDate>Mon, 17 Apr 2017 22:50:22 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/blockchain-and-bitcoin-links/</guid>
+      <description>This posts contains links to some articles, blog posts and other materials which looks interesting for me, give good explanation/description of the field and simply put are pleasure to read.
+A blockchain in 200 lines of code
+The blockchain explained to web developers. Part 1: The Theory
+How migh we use blockchains outside cryptocurrencies
+Mastering Bitcoin - open source book on Bitcoin published by OReilly
+Awesome Bitcoin - GitHub repo with bitcoin-related links collection</description>
+    </item>
+    
+    <item>
+      <title>Timus 1005. Stone pile</title>
+      <link>http://iryndin.net/post/timus-1005-stone-pile/</link>
+      <pubDate>Mon, 17 Apr 2017 11:38:06 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/timus-1005-stone-pile/</guid>
+      <description>This is a first post which describes how to solve some particular programming task. Today we will consider Stone pile task from Timus. It is clear and easy. The task sounds like:
+Task Stone pile
+Task You have a number of stones with known weights w1, …, wn. Write a program that will rearrange the stones into two piles such that weight difference between the piles is minimal.
+Input Input contains the number of stones n (1 ≤ n ≤ 20) and weights of the stones w1, …, wn (integers, 1 ≤ wi ≤ 100000) delimited by white spaces.</description>
+    </item>
+    
+    <item>
+      <title>First post</title>
+      <link>http://iryndin.net/post/first-post/</link>
+      <pubDate>Fri, 14 Apr 2017 23:34:18 +0300</pubDate>
+      
+      <guid>http://iryndin.net/post/first-post/</guid>
+      <description>Hi, after a long pause I decided to relaunch my blog. Here I am planning to tell mostly about technical things, put some useful findings, etc.</description>
     </item>
     
   </channel>

@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Spring on Just my blog</title>
-    <link>http://iryndin.net/tags/spring/index.xml</link>
+    <link>http://iryndin.net/tags/spring/</link>
     <description>Recent content in Spring on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://iryndin.net/tags/spring/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Nov 2017 18:53:22 +0300</lastBuildDate>
+    
+	<atom:link href="http://iryndin.net/tags/spring/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Spring: destroy prototype beans</title>
@@ -17,122 +20,7 @@
       <description>&lt;p&gt;Prototype-scoped beans destruction is not managed by Spring container (only construction is managed).
 But we can manage it ourselves with Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt;s.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;In previos post (&lt;a href=&#34;http://iryndin.net/post/spring_beanpostprocessors/&#34;&gt;Spring Bean PostProcessors&lt;/a&gt;) we considered some trivial examples of using &lt;code&gt;BeanPostProcessor&lt;/code&gt;.
-Now let&amp;rsquo;s consider more interesting case - destruction of prototype-scoped beans.
-The reason for this is that &lt;strong&gt;Spring does not manage desctruction phase of prototype-scoped beans&lt;/strong&gt;, as it is mentioned in the docs:
-&lt;a href=&#34;https://docs.spring.io/spring/docs/4.3.9.RELEASE/spring-framework-reference/html/beans.html#beans-factory-scopes-prototype&#34;&gt;7.5.2 The prototype scope&lt;/a&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean:
-the container instantiates, configures, and otherwise assembles a prototype object,
-and hands it to the client, with no further record of that prototype instance.
-Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
-in the case of prototypes, configured destruction lifecycle callbacks are not called.
-The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s) are holding.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;And Spring offers to use &lt;code&gt;BeanPostProcessor&lt;/code&gt; for this:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;To get the Spring container to release resources held by prototype-scoped beans,
-try using a custom bean post-processor, which holds a reference to beans that need to be cleaned up.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;OK, let&amp;rsquo;s consider how could we do this.&lt;/p&gt;
-
-&lt;h2 id=&#34;destructionawarebeanpostprocessor-can-we-use-it&#34;&gt;DestructionAwareBeanPostProcessor - can we use it?&lt;/h2&gt;
-
-&lt;p&gt;We have a special &lt;code&gt;BeanPostProcessor&lt;/code&gt; for applying some custom actions when destroying beans -
-&lt;a href=&#34;https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/config/DestructionAwareBeanPostProcessor.html&#34;&gt;DestructionAwareBeanPostProcessor&lt;/a&gt;.
-It defined 2 new methods:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException&lt;/li&gt;
-&lt;li&gt;boolean requiresDestruction(Object bean)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We should return &lt;code&gt;true&lt;/code&gt; in &lt;code&gt;requiresDestruction&lt;/code&gt; when beans comes into it, and then, when destruction phase begin,
-method &lt;code&gt;postProcessBeforeDestruction&lt;/code&gt; will be called, and this particular bean will be passed to this method.&lt;/p&gt;
-
-&lt;p&gt;Sounds like this is what we need, the only problem is that &lt;strong&gt;this is not applicable to prototype-scoped beans&lt;/strong&gt;!
-Yes, for this &lt;code&gt;DestructionAwareBeanPostProcessor&lt;/code&gt; only singletone-scoped beans are passed inso, so for desctruction of prototype-scoped beans this will not work.&lt;/p&gt;
-
-&lt;p&gt;OK, then it looks that we should create our own implementation of &lt;code&gt;BeanPostProcessor&lt;/code&gt; that handles destruction of prototype-scoped beans.&lt;/p&gt;
-
-&lt;h2 id=&#34;implement-beanpostprocessor-for-destruction-of-prototype-scoped-beans&#34;&gt;Implement BeanPostProcessor for destruction of prototype-scoped beans&lt;/h2&gt;
-
-&lt;p&gt;OK, let&amp;rsquo;s implement our prototype beans having one condition in mind: they all should implement &lt;code&gt;DisposableBean&lt;/code&gt;, and put destruction code
-into method &lt;code&gt;destroy&lt;/code&gt; - to allow unified processing. As we know, Spring container itself will not call this method itself (for prototype beans) -
-so we will take care about it.&lt;/p&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s consider the code of &lt;code&gt;BeanPostProcessor&lt;/code&gt; that handles destruction of prototype beans:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/**
- * Bean PostProcessor that handles destruction of prototype beans
- */
-@Component
-public class DestroyPrototypeBeansPostProcessor implements BeanPostProcessor, BeanFactoryAware, DisposableBean {
-
-    private BeanFactory beanFactory;
-
-    private final List&amp;lt;Object&amp;gt; prototypeBeans = new LinkedList&amp;lt;&amp;gt;();
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (beanFactory.isPrototype(beanName)) {
-            synchronized (prototypeBeans) {
-                prototypeBeans.add(bean);
-            }
-        }
-        return bean;
-    }
-
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        this.beanFactory = beanFactory;
-    }
-
-    @Override
-    public void destroy() throws Exception {
-        synchronized (prototypeBeans) {
-            for (Object bean : prototypeBeans) {
-                if (bean instanceof DisposableBean) {
-                    DisposableBean disposable = (DisposableBean)bean;
-                    try {
-                        disposable.destroy();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            prototypeBeans.clear();
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It is simple:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Save reference to bean if and only if it is of prototype scope&lt;/li&gt;
-&lt;li&gt;This &lt;code&gt;DestroyPrototypeBeansPostProcessor&lt;/code&gt; is Spring bean itself, so when it&amp;rsquo;s &lt;code&gt;destroy&lt;/code&gt; method is called - we destroy all prototype beans.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Here is full code of the project: &lt;a href=&#34;https://github.com/iryndin/misc/tree/master/blogprjs/03-beanpostprocessor-destroyprototypes&#34;&gt;https://github.com/iryndin/misc/tree/master/blogprjs/03-beanpostprocessor-destroyprototypes&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;useful&#34;&gt;Useful&lt;/h2&gt;
-
-&lt;p&gt;It is useful to take a look at implementation of
-&lt;a href=&#34;https://github.com/spring-projects/spring-framework/blob/v4.3.13.RELEASE/spring-context/src/main/java/org/springframework/scheduling/annotation/ScheduledAnnotationBeanPostProcessor.java&#34;&gt;ScheduledAnnotationBeanPostProcessor&lt;/a&gt;.
-This class handles desctruction actions for sheduled tasks. Exactly the case where additional actions should be taken.
-Also this class implements &lt;code&gt;DestructionAwareBeanPostProcessor&lt;/code&gt; methods, so it is always useful to see how these methods can be implemented.&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -144,165 +32,7 @@ Also this class implements &lt;code&gt;DestructionAwareBeanPostProcessor&lt;/cod
       <description>&lt;p&gt;Spring &lt;code&gt;BeanPostProcessor&lt;/code&gt; is a nice feature that gives you much power into hands.
 You can do a lot of fun things with &lt;code&gt;BeanPostProcessor&lt;/code&gt;s, and this post demonstrates some of them with a series of short examples.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s speak about Bean PostProcessors in Spring Framework.&lt;/p&gt;
-
-&lt;p&gt;The &lt;a href=&#34;https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html&#34;&gt;BeanPostProcessor&lt;/a&gt;
-interface defines callback methods that you can implement to provide your own (or override the container’s default) instantiation logic,
-dependency-resolution logic, and so forth. In Spring Framework Reference you can read about Bean PostProcessors in more details here:
-&lt;a href=&#34;https://docs.spring.io/spring/docs/4.3.9.RELEASE/spring-framework-reference/html/beans.html#beans-factory-extension-bpp&#34;&gt;7.8.1 Customizing beans using a BeanPostProcessor&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Shortly, you can use &lt;code&gt;BeanPostProcessor&lt;/code&gt; for various initialization actions, as well as destroying actions, do some smart init/destroy actions &lt;em&gt;en masse&lt;/em&gt; etc.
-Here let me give some examples on using BeanPostProcessors.&lt;/p&gt;
-
-&lt;h2 id=&#34;example-1-inject-some-random-variable-on-integer-fields-in-beans&#34;&gt;Example 1. Inject some random variable on integer fields in beans&lt;/h2&gt;
-
-&lt;p&gt;Here let&amp;rsquo;s create &lt;code&gt;BeanPostProcessor&lt;/code&gt; that injects random integer variable for bean fields marked with special annotation: &lt;code&gt;InjectRandomInt&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Here is this annotation code:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface InjectRandomInt {
-    int min();
-    int max();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And here is &lt;code&gt;BeanPostProcessor&lt;/code&gt; code, which is really self-descriptive:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/**
- * Bean PostProcessor that injects random int value for fields marked with annotation &amp;lt;link&amp;gt;@InjectRandomInt&amp;lt;/link&amp;gt;
- */
-public class InjectRandomIntBeanPostProcessor implements BeanPostProcessor {
-
-    static final Class[] allowedTypes = new Class[]{Integer.class, Long.class, int.class, long.class};
-
-    private Random random = new Random();
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        Field[] fields = bean.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            InjectRandomInt annotation = field.getAnnotation(InjectRandomInt.class);
-            if (annotation != null) {
-                if (!isAllowedType(field)) {
-                    throw new RuntimeException(&amp;quot;Don&#39;t put @InjectRandomInt above &amp;quot; + field.getType());
-                }
-                if (Modifier.isFinal(field.getModifiers())) {
-                    throw new RuntimeException(&amp;quot;Can&#39;t inject to final fields&amp;quot;);
-                }
-                int randomInt = generateRadomIntValue(annotation);
-                try {
-                    field.setAccessible(true);
-                    field.set(bean, randomInt);
-                    System.out.println(format(&amp;quot;Init bean &#39;%s.%s&#39; with value %d&amp;quot;, beanName, field.getName(), randomInt));
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return bean;
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    private int generateRadomIntValue(InjectRandomInt annotation) {
-        int min = annotation.min();
-        int max = annotation.max();
-        int randomInt = min + random.nextInt(max - min);
-        return randomInt;
-    }
-
-    private boolean isAllowedType(Field field) {
-        for (Class c : allowedTypes) {
-            if (field.getType().equals(c)) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Please see full code of the project here: &lt;a href=&#34;https://github.com/iryndin/misc/tree/master/blogprjs/01-beanpostprocessor-injectrandomvar&#34;&gt;https://github.com/iryndin/misc/tree/master/blogprjs/01-beanpostprocessor-injectrandomvar&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;This example is inspired by this article: &lt;a href=&#34;https://www.dataart.ru/news/malen-kie-sekrety-spring/&#34;&gt;Small Spring secrets&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;example-2-inject-logger-with-annotation&#34;&gt;Example 2. Inject logger with annotation&lt;/h2&gt;
-
-&lt;p&gt;This is another example of using &lt;code&gt;BeanPostProcessor&lt;/code&gt; - here we inject logger for each bean that is marked with proper annotation.
-This example is inspired by this article: &lt;a href=&#34;https://memorynotfound.com/spring-inject-logger-annotation-example/&#34;&gt;Spring Inject Logger by Annotation Example&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Here is &lt;code&gt;InjectLog&lt;/code&gt; annotation:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-    public @interface InjectLog {
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;and its processor:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/**
- * Bean PostProcessor that injects properly created logger into Spring bean
- */
-@Component
-public class InjectLogPostProcessor implements BeanPostProcessor {
-
-    private Logger log = LoggerFactory.getLogger(InjectLogPostProcessor.class);
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        ReflectionUtils.doWithFields(bean.getClass(), field -&amp;gt; {
-            if (field.getAnnotation(InjectLog.class) != null) {
-                ReflectionUtils.makeAccessible(field);
-                Logger logger = LoggerFactory.getLogger(bean.getClass());
-                field.set(bean, logger);
-                log.info(&amp;quot;Injected logger into bean &#39;{}&#39;&amp;quot;, beanName);
-            }
-        });
-        return bean;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here is example of bean with this annotation:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Component
-public class SimpleBean {
-
-    @InjectLog
-    private Logger log;
-
-    public void doSmth() {
-        log.info(&amp;quot;doSmth is called&amp;quot;);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can see that this is pretty much similar to the first example.&lt;/p&gt;
-
-&lt;p&gt;You can see the code of the project here: &lt;a href=&#34;https://github.com/iryndin/misc/tree/master/blogprjs/02-beanpostprocessor-injectlogger&#34;&gt;https://github.com/iryndin/misc/tree/master/blogprjs/02-beanpostprocessor-injectlogger&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;Here are some good examples of usage of &lt;code&gt;BeanPostProcessor&lt;/code&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.dataart.ru/news/malen-kie-sekrety-spring/&#34;&gt;Small Spring secrets&lt;/a&gt; (in Russian)&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://memorynotfound.com/spring-inject-logger-annotation-example/&#34;&gt;Spring Inject Logger by Annotation Example&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.baeldung.com/spring-annotation-bean-pre-processor&#34;&gt;A Spring Custom Annotation for a Better DAO&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>
