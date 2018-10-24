@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://iryndin.net/post/great-github-and-reddit-resources-for-machine-learning/</loc>
+    <lastmod>2018-10-24T03:20:39+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/simple_mysql_backup_to_amazon_s3_using_docker/</loc>
     <lastmod>2018-10-11T03:20:39+00:00</lastmod>
   </url>
@@ -226,7 +231,7 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2018-10-11T03:20:39+00:00</lastmod>
+    <lastmod>2018-10-24T03:20:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -238,7 +243,7 @@
   
   <url>
     <loc>http://iryndin.net/tags/machine-learning/</loc>
-    <lastmod>2018-03-22T19:59:44-04:00</lastmod>
+    <lastmod>2018-10-24T03:20:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -268,7 +273,7 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2018-10-11T03:20:39+00:00</lastmod>
+    <lastmod>2018-10-24T03:20:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
