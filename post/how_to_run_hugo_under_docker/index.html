@@ -192,7 +192,7 @@ One nice thing for this image is that it is updated on time and all versions of 
 
 <p>Now, let&rsquo;s run Hugo docker image to run a webserver on localhost, so that we would be able to look at our website in browser:</p>
 
-<pre><code>docker run --rm --name &quot;hugo1&quot; -p 1313:1313 -v $(pwd)/src:/src -v $(pwd)/output:/output -e HUGO_THEME=&quot;hugo-redlounge&quot; -e HUGO_WATCH=&quot;true&quot; jojomi/hugo:0.19
+<pre><code>docker run --rm --name &quot;hugo1&quot; -p 1313:1313 -v $(pwd)/src:/src -v $(pwd)/output:/output -e HUGO_THEME=&quot;hugo-redlounge&quot; -e HUGO_WATCH=&quot;true&quot; jojomi/hugo:0.26
 </code></pre>
 
 <p>Now we will be able to see our website in browser at <code>http://localhost:1313</code></p>
@@ -211,7 +211,7 @@ One nice thing for this image is that it is updated on time and all versions of 
 <p>Now let&rsquo;s generate static content for our site. To generate static content in <code>output2</code> folder you need to run command similar to what we used to run webserver on localhost, but without <code>HUGO_WATCH</code> variable and without necessity to map ports. Also, you should run it under another name, if you do not want to shutdown
 container named <code>hugo1</code> (that used in this example to run local webserver).</p>
 
-<pre><code>docker run --rm --name &quot;hugo2&quot; -v $(pwd)/src:/src -v $(pwd)/output2:/output -e HUGO_THEME=&quot;hugo-redlounge&quot; jojomi/hugo:0.19
+<pre><code>docker run --rm --name &quot;hugo2&quot; -v $(pwd)/src:/src -v $(pwd)/output2:/output -e HUGO_THEME=&quot;hugo-redlounge&quot; jojomi/hugo:0.26
 </code></pre>
 
 <p>And you will have your static site in <code>output2</code> folder.</p>
