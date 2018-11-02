@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Nov 2018 14:20:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Nov 2018 17:20:39 +0000</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Run Jupyter notebooks with Docker</title>
+      <link>http://iryndin.net/post/run-jupyter-with-docker/</link>
+      <pubDate>Fri, 02 Nov 2018 17:20:39 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/run-jupyter-with-docker/</guid>
+      <description>&lt;p&gt;Let me show the way I am running Jupyter notebooks on my laptop. No surprise, I am doing using Docker. Why? Because this is fast, convenient, platform-agnostic and allows to have clean host system.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Log loss metric explained</title>
