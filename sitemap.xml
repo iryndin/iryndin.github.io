@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://iryndin.net/post/kaggle-whats-cooking/</loc>
+    <lastmod>2018-11-05T16:49:39+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/run-jupyter-with-docker/</loc>
     <lastmod>2018-11-02T17:20:39+00:00</lastmod>
   </url>
@@ -241,7 +246,19 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2018-11-02T17:20:39+00:00</lastmod>
+    <lastmod>2018-11-05T16:49:39+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iryndin.net/tags/kaggle/</loc>
+    <lastmod>2018-11-05T16:49:39+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iryndin.net/tags/kaggle-whats-cooking/</loc>
+    <lastmod>2018-11-05T16:49:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -253,7 +270,7 @@
   
   <url>
     <loc>http://iryndin.net/tags/machine-learning/</loc>
-    <lastmod>2018-11-02T17:20:39+00:00</lastmod>
+    <lastmod>2018-11-05T16:49:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -283,7 +300,7 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2018-11-02T17:20:39+00:00</lastmod>
+    <lastmod>2018-11-05T16:49:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
