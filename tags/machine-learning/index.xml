@@ -6,10 +6,21 @@
     <description>Recent content in Machine Learning on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Nov 2018 16:49:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Nov 2018 21:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MNIST digit recognition with CNN and Keras</title>
+      <link>http://iryndin.net/post/mnist-with-cnn-and-keras/</link>
+      <pubDate>Sun, 18 Nov 2018 21:00:00 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/mnist-with-cnn-and-keras/</guid>
+      <description>&lt;p&gt;In this post I will briefly go through application of CNN (Convolutional Neural Networks) to well known MNIST dataset. I will use Keras for this. There is a well-known example at Keras repo: &lt;a href=&#34;https://github.com/keras-team/keras/blob/master/examples/mnist_cnn.py&#34;&gt;mnist_cnn.py&lt;/a&gt;, and I will use its code for this blog post. So there is nothing new in this blog post. Rather it is a try to put some basics into my head for further use.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Kaggle What&#39;s cooking competition</title>

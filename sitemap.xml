@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://iryndin.net/post/mnist-with-cnn-and-keras/</loc>
+    <lastmod>2018-11-18T21:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/kaggle-whats-cooking/</loc>
     <lastmod>2018-11-05T16:49:39+00:00</lastmod>
   </url>
@@ -239,6 +244,12 @@
   </url>
   
   <url>
+    <loc>http://iryndin.net/tags/image-classigication/</loc>
+    <lastmod>2018-11-18T21:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/tags/jdbc/</loc>
     <lastmod>2017-11-28T07:14:59+03:00</lastmod>
     <priority>0</priority>
@@ -246,7 +257,7 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2018-11-05T16:49:39+00:00</lastmod>
+    <lastmod>2018-11-18T21:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -270,7 +281,7 @@
   
   <url>
     <loc>http://iryndin.net/tags/machine-learning/</loc>
-    <lastmod>2018-11-05T16:49:39+00:00</lastmod>
+    <lastmod>2018-11-18T21:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -300,7 +311,7 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2018-11-05T16:49:39+00:00</lastmod>
+    <lastmod>2018-11-18T21:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

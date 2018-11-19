@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    MNIST digit recognition with CNN and Keras // Just my blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.26" />
+
+  <meta property="og:title" content="MNIST digit recognition with CNN and Keras" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="http://iryndin.net/post/mnist-with-cnn-and-keras/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="http://iryndin.net/css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Just my blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', "UA-55566999-1", 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    
+    
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://iryndin.net">Home</a></li>
+        
+      </ul>
+    </nav>
+
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#imports">Imports</a></li>
+<li><a href="#define-variables-and-load-mnist-dataset">Define variables and load MNIST dataset</a></li>
+<li><a href="#data-preparation-and-reshaping">Data preparation and reshaping</a></li>
+<li><a href="#build-model">Build model</a></li>
+<li><a href="#train-model">Train model</a></li>
+<li><a href="#save-model">Save model</a></li>
+<li><a href="#load-model-and-use-it-for-prediction">Load model and use it for prediction</a></li>
+<li><a href="#links">Links</a></li>
+</ul></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/post/mnist-with-cnn-and-keras/">MNIST digit recognition with CNN and Keras</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>18</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Nov</span> <span class="post-date-year">2018</span>
+            	</span>
+            	
+            
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            <p>In this post I will briefly go through application of CNN (Convolutional Neural Networks) to well known MNIST dataset. I will use Keras for this. There is a well-known example at Keras repo: <a href="https://github.com/keras-team/keras/blob/master/examples/mnist_cnn.py">mnist_cnn.py</a>, and I will use its code for this blog post. So there is nothing new in this blog post. Rather it is a try to put some basics into my head for further use.</p>
+
+<p></p>
+
+<h2 id="imports">Imports</h2>
+
+<pre><code class="language-python">from __future__ import print_function
+import keras
+from keras.datasets import mnist
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Flatten
+from keras.layers import Conv2D, MaxPooling2D
+from keras import backend as K
+</code></pre>
+
+<h2 id="define-variables-and-load-mnist-dataset">Define variables and load MNIST dataset</h2>
+
+<pre><code class="language-python">batch_size = 128
+num_classes = 10
+epochs = 12
+
+# input image dimensions
+img_rows, img_cols = 28, 28
+
+# the data, split between train and test sets
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+</code></pre>
+
+<p>After this we have train data (<code>x_train</code>, <code>y_train</code>) and test data (<code>x_test</code>, <code>y_test</code>).</p>
+
+<h2 id="data-preparation-and-reshaping">Data preparation and reshaping</h2>
+
+<pre><code class="language-python">if K.image_data_format() == 'channels_first':
+    x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
+    x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
+    input_shape = (1, img_rows, img_cols)
+else:
+    x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
+    x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
+    input_shape = (img_rows, img_cols, 1)
+
+x_train = x_train.astype('float32')
+x_test = x_test.astype('float32')
+x_train /= 255
+x_test /= 255
+print('x_train shape:', x_train.shape)
+print(x_train.shape[0], 'train samples')
+print(x_test.shape[0], 'test samples')
+
+# convert class vectors to binary class matrices
+y_train = keras.utils.to_categorical(y_train, num_classes)
+y_test = keras.utils.to_categorical(y_test, num_classes)
+</code></pre>
+
+<p>For <code>tensorflow</code> backend <code>K.image_data_format()</code> is: <code>channels_last</code> so <code>else</code> branch works.</p>
+
+<h2 id="build-model">Build model</h2>
+
+<pre><code class="language-python">model = Sequential()
+model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=input_shape))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(num_classes, activation='softmax'))
+
+model.compile(loss=keras.losses.categorical_crossentropy,
+              optimizer=keras.optimizers.Adadelta(),
+              metrics=['accuracy'])
+</code></pre>
+
+<p>For given model we have <code>Conv2D -&gt; Conv2D -&gt; MaxPool -&gt; Dropout -&gt; Flatten -&gt; Dense -&gt; Dropout -&gt; Dense</code> layers.</p>
+
+<h2 id="train-model">Train model</h2>
+
+<pre><code class="language-python">model.fit(x_train, y_train,
+          batch_size=batch_size,
+          epochs=epochs,
+          verbose=1,
+          validation_data=(x_test, y_test))
+</code></pre>
+
+<p>On my laptop each epoch takes almost 1 minute to complete, so overall time is arouunf 10-11 minutes:</p>
+
+<pre><code>Train on 60000 samples, validate on 10000 samples
+Epoch 1/12
+60000/60000 [==============================] - 49s 824us/step - loss: 0.2677 - acc: 0.9180 - val_loss: 0.0588 - val_acc: 0.9805
+Epoch 2/12
+60000/60000 [==============================] - 47s 790us/step - loss: 0.0872 - acc: 0.9738 - val_loss: 0.0388 - val_acc: 0.9864
+Epoch 3/12
+60000/60000 [==============================] - 50s 828us/step - loss: 0.0650 - acc: 0.9808 - val_loss: 0.0356 - val_acc: 0.9880
+Epoch 4/12
+60000/60000 [==============================] - 57s 950us/step - loss: 0.0533 - acc: 0.9836 - val_loss: 0.0302 - val_acc: 0.9891
+Epoch 5/12
+60000/60000 [==============================] - 56s 931us/step - loss: 0.0464 - acc: 0.9859 - val_loss: 0.0280 - val_acc: 0.9901
+Epoch 6/12
+60000/60000 [==============================] - 51s 858us/step - loss: 0.0415 - acc: 0.9875 - val_loss: 0.0291 - val_acc: 0.9900
+Epoch 7/12
+60000/60000 [==============================] - 56s 933us/step - loss: 0.0373 - acc: 0.9889 - val_loss: 0.0280 - val_acc: 0.9913
+Epoch 8/12
+60000/60000 [==============================] - 58s 966us/step - loss: 0.0341 - acc: 0.9899 - val_loss: 0.0256 - val_acc: 0.9922
+Epoch 9/12
+60000/60000 [==============================] - 52s 860us/step - loss: 0.0316 - acc: 0.9905 - val_loss: 0.0259 - val_acc: 0.9917
+Epoch 10/12
+60000/60000 [==============================] - 50s 828us/step - loss: 0.0276 - acc: 0.9915 - val_loss: 0.0268 - val_acc: 0.9910
+Epoch 11/12
+60000/60000 [==============================] - 48s 805us/step - loss: 0.0285 - acc: 0.9913 - val_loss: 0.0270 - val_acc: 0.9921
+Epoch 12/12
+60000/60000 [==============================] - 53s 888us/step - loss: 0.0252 - acc: 0.9925 - val_loss: 0.0265 - val_acc: 0.9919
+</code></pre>
+
+<h2 id="save-model">Save model</h2>
+
+<p>Let&rsquo;s save model and weights for further use:</p>
+
+<pre><code class="language-python">model.save(&quot;./mnist_cnn_trained_model.h5&quot;)
+</code></pre>
+
+<h2 id="load-model-and-use-it-for-prediction">Load model and use it for prediction</h2>
+
+<pre><code class="language-python">from keras.models import load_model
+model = load_model('./mnist_cnn_trained_model.h5')
+</code></pre>
+
+<p>Then let&rsquo;s load test data (imagine the we do not have <code>x_test</code>, <code>y_test</code> data):</p>
+
+<pre><code class="language-python">(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# preprocess test data
+num_classes = 10
+img_rows, img_cols = 28, 28
+
+x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
+x_test = x_test.astype('float32')
+x_test /= 255
+y_test = keras.utils.to_categorical(y_test, num_classes)
+</code></pre>
+
+<p>Then predict test data:</p>
+
+<pre><code class="language-python">score = model.evaluate(x_test, y_test, verbose=1)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
+</code></pre>
+
+<p>We get following results:</p>
+
+<pre><code>10000/10000 [==============================] - 2s 249us/step
+Test loss: 0.0264956298373
+Test accuracy: 0.9919
+</code></pre>
+
+<p>Of course, after going through this example there are a lot of questions, e.g.:</p>
+
+<ul>
+<li>Why exactly this architecture of neural network is selected?</li>
+<li>Why exactly these parameters of layers are selected?</li>
+<li>Based on what assumptions should we tune parameters of layers?</li>
+<li>How test loss is calculated?</li>
+<li>How test accuracy is calculated?</li>
+<li>Why optimizer <code>keras.optimizers.Adadelta</code> was chosen?</li>
+</ul>
+
+<p>At the moment I do not have answers to these questions, so this is subject for further study from my side.</p>
+
+<p>Also, I understand, that it would be greatly beneficial to implement CNN myself from scratch, using some general-purpose programming language (C++/Java/Python/Go/Javascript). I think this willl give me a key to understanding how Neural Networks work and a key to more clear decisions on neural network architectures and parameters of network layers.</p>
+
+<h2 id="links">Links</h2>
+
+<p>Trying to find answers to my questions I have found a number of great posts/articles which I want to put here for further usage in my studies.</p>
+
+<ul>
+<li><a href="https://github.com/keras-team/keras/blob/master/examples/mnist_mlp.py">Keras examples - mnist_mlp.py</a>. This is another example of neural network applied to MNIST dataset. Good getaway from this example would be an understanding why that particular architecture was chosen, why that values of layer parameters were chosen, etc, etc. Also it is useful to look at another examples in <a href="https://github.com/keras-team/keras/tree/master/examples">Keras examples folder</a> - there is a dozen of examples of solving MNIST problem with another approaches.</li>
+<li><a href="https://towardsdatascience.com/a-simple-2d-cnn-for-mnist-digit-recognition-a998dbc1e79a">A simple 2D CNN for MNIST digit recognition</a>. This post is exactly about the same - solving MNIST with CNN and Keras. This is just step-by-step implementation of CNN neural network with Keras, without any detailed explanations why this or that value was chosen.</li>
+<li><a href="https://www.kaggle.com/cdeotte/how-to-choose-cnn-architecture-mnist">What is the best CNN architecture for MNIST?</a>. Great kernel on Kaggle which describes how to choose the best CNN architecture for MNIST challenge. I need to go through this, reproduce it and try to understand.</li>
+<li><a href="https://www.kaggle.com/cdeotte/25-million-images-0-99757-mnist">Accuracy=99.75% using 25 Million Training Images</a>. This is another MNIST example. Good points here: generating additional images, ensembling 15 CNNs for more accuracy, data augmentation. I need to reproduce this and try to understand.</li>
+<li><a href="https://jacobgil.github.io/deeplearning/filter-visualizations">Visualizing CNN filters with keras</a>. It shows how to visualize CNN filters with Keras. Nice research!</li>
+</ul>
+	
+			
+
+			
+				<div class="tags-list">
+					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+					
+	                <a class="post-tag post-tag-machine-learning" href="http://iryndin.net/tags/machine-learning">machine learning</a>,
+	                
+	                <a class="post-tag post-tag-image-classigication" href="http://iryndin.net/tags/image-classigication">image classigication</a>,
+	                
+				</div>
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/post/kaggle-whats-cooking/">Kaggle What&#39;s cooking competition</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2018. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>
