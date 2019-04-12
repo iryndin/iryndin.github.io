@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://iryndin.net/post/xgboost_for_iris_dataset/</loc>
+    <lastmod>2019-04-10T13:29:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/mnist-with-cnn-and-keras/</loc>
     <lastmod>2018-11-18T21:00:00+00:00</lastmod>
   </url>
@@ -257,7 +262,7 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2018-11-18T21:00:00+00:00</lastmod>
+    <lastmod>2019-04-10T13:29:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -281,7 +286,7 @@
   
   <url>
     <loc>http://iryndin.net/tags/machine-learning/</loc>
-    <lastmod>2018-11-18T21:00:00+00:00</lastmod>
+    <lastmod>2019-04-10T13:29:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -311,7 +316,7 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2018-11-18T21:00:00+00:00</lastmod>
+    <lastmod>2019-04-10T13:29:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -348,6 +353,12 @@
   <url>
     <loc>http://iryndin.net/tags/trie/</loc>
     <lastmod>2018-06-28T03:20:39+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://iryndin.net/tags/xgboost/</loc>
+    <lastmod>2019-04-10T13:29:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
