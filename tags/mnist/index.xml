@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Xgboost on Just my blog</title>
-    <link>http://iryndin.net/tags/xgboost/</link>
-    <description>Recent content in Xgboost on Just my blog</description>
+    <title>Mnist on Just my blog</title>
+    <link>http://iryndin.net/tags/mnist/</link>
+    <description>Recent content in Mnist on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 12 Apr 2019 13:29:00 +0000</lastBuildDate>
     
-	<atom:link href="http://iryndin.net/tags/xgboost/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://iryndin.net/tags/mnist/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -21,17 +21,6 @@
 &lt;a href=&#34;http://iryndin.net/post/xgboost_for_iris_dataset/&#34;&gt;applying XGBoost to Iris&lt;/a&gt; or to MNIST.
 I will not comment much here, and just give here a python script with the solution.
 If something is unclear, go read my previous post about &lt;a href=&#34;http://iryndin.net/post/xgboost_for_iris_dataset/&#34;&gt;XGboost and Iris&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>XGBoost applied to Iris dataset</title>
-      <link>http://iryndin.net/post/xgboost_for_iris_dataset/</link>
-      <pubDate>Wed, 10 Apr 2019 13:29:00 +0000</pubDate>
-      
-      <guid>http://iryndin.net/post/xgboost_for_iris_dataset/</guid>
-      <description>&lt;p&gt;Let&amp;rsquo;s show here a very simple example of applying XGBoost to Iris dataset. Initial Iris dataset is at &lt;a href=&#34;http://archive.ics.uci.edu/ml/datasets/iris&#34;&gt;UCI data repository&lt;/a&gt;. But we will use ready-to-use &lt;a href=&#34;https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html&#34;&gt;Iris dataset contained in sklearn&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>

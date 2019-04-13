@@ -6,10 +6,24 @@
     <description>Recent content in Posts on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Apr 2019 13:29:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Apr 2019 13:29:00 +0000</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>XGBoost applied to MNIST</title>
+      <link>http://iryndin.net/post/xgboost_mnist/</link>
+      <pubDate>Fri, 12 Apr 2019 13:29:00 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/xgboost_mnist/</guid>
+      <description>&lt;p&gt;Continue playing with XGBoost. Today let&amp;rsquo;s apply it to MNIST dataset. In fact, there is very small difference between
+&lt;a href=&#34;http://iryndin.net/post/xgboost_for_iris_dataset/&#34;&gt;applying XGBoost to Iris&lt;/a&gt; or to MNIST.
+I will not comment much here, and just give here a python script with the solution.
+If something is unclear, go read my previous post about &lt;a href=&#34;http://iryndin.net/post/xgboost_for_iris_dataset/&#34;&gt;XGboost and Iris&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>XGBoost applied to Iris dataset</title>
