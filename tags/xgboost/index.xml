@@ -6,10 +6,22 @@
     <description>Recent content in Xgboost on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Apr 2019 13:29:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Apr 2019 20:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/tags/xgboost/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>XGBoost applied to Fashion MNIST</title>
+      <link>http://iryndin.net/post/xgboost_fashion_mnist/</link>
+      <pubDate>Fri, 12 Apr 2019 20:00:00 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/xgboost_fashion_mnist/</guid>
+      <description>&lt;p&gt;Now let&amp;rsquo;s consider applying XGBoost to Fashion MNIST dataset. As well as in 2 previous posts about XGBoost data are eready to use,
+and do not require any additional preprocessing in order to get accuracy near 90%. This makes this case similar to previous two (Iris and MNIST).&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>XGBoost applied to MNIST</title>

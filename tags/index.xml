@@ -102,6 +102,15 @@
     </item>
     
     <item>
+      <title>Fashion Mnist</title>
+      <link>http://iryndin.net/tags/fashion-mnist/</link>
+      <pubDate>Fri, 12 Apr 2019 20:00:00 +0000</pubDate>
+      
+      <guid>http://iryndin.net/tags/fashion-mnist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Hugo</title>
       <link>http://iryndin.net/tags/hugo/</link>
       <pubDate>Sat, 09 Jun 2018 00:50:44 +0000</pubDate>
@@ -158,7 +167,7 @@
     <item>
       <title>Machine Learning</title>
       <link>http://iryndin.net/tags/machine-learning/</link>
-      <pubDate>Fri, 12 Apr 2019 13:29:00 +0000</pubDate>
+      <pubDate>Fri, 12 Apr 2019 20:00:00 +0000</pubDate>
       
       <guid>http://iryndin.net/tags/machine-learning/</guid>
       <description></description>
@@ -257,7 +266,7 @@
     <item>
       <title>Xgboost</title>
       <link>http://iryndin.net/tags/xgboost/</link>
-      <pubDate>Fri, 12 Apr 2019 13:29:00 +0000</pubDate>
+      <pubDate>Fri, 12 Apr 2019 20:00:00 +0000</pubDate>
       
       <guid>http://iryndin.net/tags/xgboost/</guid>
       <description></description>
