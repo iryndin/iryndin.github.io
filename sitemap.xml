@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://iryndin.net/post/ad_exchange_core/</loc>
+    <lastmod>2019-09-11T02:55:26+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/xgboost_fashion_mnist/</loc>
     <lastmod>2019-04-12T20:00:00+00:00</lastmod>
   </url>
@@ -278,7 +283,7 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2019-04-12T20:00:00+00:00</lastmod>
+    <lastmod>2019-09-11T02:55:26+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -308,7 +313,7 @@
   
   <url>
     <loc>http://iryndin.net/tags/misc/</loc>
-    <lastmod>2017-04-23T18:56:58+03:00</lastmod>
+    <lastmod>2019-09-11T02:55:26+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -338,7 +343,7 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2019-04-12T20:00:00+00:00</lastmod>
+    <lastmod>2019-09-11T02:55:26+00:00</lastmod>
     <priority>0</priority>
   </url>
   

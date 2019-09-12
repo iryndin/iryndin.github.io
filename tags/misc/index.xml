@@ -6,10 +6,24 @@
     <description>Recent content in Misc on Just my blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Apr 2017 18:56:58 +0300</lastBuildDate>
+    <lastBuildDate>Wed, 11 Sep 2019 02:55:26 +0000</lastBuildDate>
     
 	<atom:link href="http://iryndin.net/tags/misc/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ad Exchange core implementation</title>
+      <link>http://iryndin.net/post/ad_exchange_core/</link>
+      <pubDate>Wed, 11 Sep 2019 02:55:26 +0000</pubDate>
+      
+      <guid>http://iryndin.net/post/ad_exchange_core/</guid>
+      <description>&lt;p&gt;Here is the task: implement the core of ad aggregator, abstracting away from network details.
+Just core functionality: receive requests, send them to partners, receive responses,
+select response with max price and notify partner that its response is selected as a winner.
+And do it all in a thread-safe non-blocking manner.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>How SSH get port 22</title>
