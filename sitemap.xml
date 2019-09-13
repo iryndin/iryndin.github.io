@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://iryndin.net/post/ml_course_fall_2019/</loc>
+    <lastmod>2019-09-12T02:55:26+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/post/ad_exchange_core/</loc>
     <lastmod>2019-09-11T02:55:26+00:00</lastmod>
   </url>
@@ -228,6 +233,12 @@
   </url>
   
   <url>
+    <loc>http://iryndin.net/tags/courses/</loc>
+    <lastmod>2019-09-12T02:55:26+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/tags/data-science/</loc>
     <lastmod>2018-02-11T16:04:46-05:00</lastmod>
     <priority>0</priority>
@@ -258,6 +269,12 @@
   </url>
   
   <url>
+    <loc>http://iryndin.net/tags/edu/</loc>
+    <lastmod>2019-09-12T02:55:26+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://iryndin.net/tags/fashion-mnist/</loc>
     <lastmod>2019-04-12T20:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -283,7 +300,7 @@
   
   <url>
     <loc>http://iryndin.net/</loc>
-    <lastmod>2019-09-11T02:55:26+00:00</lastmod>
+    <lastmod>2019-09-12T02:55:26+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -307,7 +324,7 @@
   
   <url>
     <loc>http://iryndin.net/tags/machine-learning/</loc>
-    <lastmod>2019-04-12T20:00:00+00:00</lastmod>
+    <lastmod>2019-09-12T02:55:26+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -343,7 +360,7 @@
   
   <url>
     <loc>http://iryndin.net/post/</loc>
-    <lastmod>2019-09-11T02:55:26+00:00</lastmod>
+    <lastmod>2019-09-12T02:55:26+00:00</lastmod>
     <priority>0</priority>
   </url>
   
